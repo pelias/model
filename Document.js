@@ -27,7 +27,7 @@ Document.prototype.getId = function(){
 // type
 Document.prototype.setType = function( type ){
   return model
-          .setChild( '_meta', [ valid.type('string'), valid.truthy() ], [ transform.stringify() ] )
+          .setChild( '_meta', [ valid.type('string'), valid.truthy() ] )
           .call( this, 'type', type );
 };
 Document.prototype.getType = function(){
