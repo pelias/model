@@ -1,0 +1,33 @@
+{
+  "name": "pelias-document",
+  "author": "mapzen",
+  "version": "0.0.0",
+  "description": "Pelias document model",
+  "homepage": "https://github.com/pelias/document",
+  "license": "MIT",
+  "main": "Document.js",
+  "scripts": {
+    "test": "node test/run.js | tap-spec"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/pelias/document.git"
+  },
+  "keywords": [
+    "pelias",
+    "document"
+  ],
+  "bugs": {
+    "url": "https://github.com/pelias/document/issues"
+  },
+  "engines": {
+    "node": ">=0.10.26",
+    "npm": ">=1.4.3"
+  },
+  "dependencies": {
+  },
+  "devDependencies": {
+    "tape": "^2.13.4",
+    "tap-spec": "^0.2.0"
+  }
+}
