@@ -6,7 +6,7 @@ module.exports.tests = {};
 module.exports.tests.getId = function(test, common) {
   test('getId', function(t) {
     var doc = new Document('mytype','myid');
-    doc.id = 'foo';
+    doc._meta.id = 'foo';
     t.equal(doc.getId(), 'foo', 'getter works');
     t.end();
   });
@@ -15,9 +15,9 @@ module.exports.tests.getId = function(test, common) {
 module.exports.tests.setId = function(test, common) {
   test('setId', function(t) {
     var doc = new Document('mytype','myid');
-    t.equal(doc.id, 'myid', 'id set in constructor');
+    t.equal(doc._meta.id, 'myid', 'id set in constructor');
     t.equal(doc.setId('foo'), doc, 'chainable');
-    t.equal(doc.id, 'foo', 'id set');
+    t.equal(doc._meta.id, 'foo', 'id set');
     t.end();
   });
   test('setId - validate', function(t) {
@@ -29,7 +29,7 @@ module.exports.tests.setId = function(test, common) {
   test('setId - transform', function(t) {
     var doc = new Document('mytype','myid');
     doc.setId(100);
-    t.equal(doc.id, '100', 'accepts numbers');
+    t.equal(doc._meta.id, '100', 'accepts numbers');
     t.end();
   });
 };

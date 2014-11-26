@@ -6,7 +6,7 @@ module.exports.tests = {};
 module.exports.tests.getType = function(test, common) {
   test('getType', function(t) {
     var doc = new Document('mytype','myid');
-    doc.type = 'foo';
+    doc._meta.type = 'foo';
     t.equal(doc.getType(), 'foo', 'getter works');
     t.end();
   });
@@ -15,9 +15,9 @@ module.exports.tests.getType = function(test, common) {
 module.exports.tests.setType = function(test, common) {
   test('setType', function(t) {
     var doc = new Document('mytype','myid');
-    t.equal(doc.type, 'mytype', 'id set in constructor');
+    t.equal(doc._meta.type, 'mytype', 'id set in constructor');
     t.equal(doc.setType('foo'), doc, 'chainable');
-    t.equal(doc.type, 'foo', 'id set');
+    t.equal(doc._meta.type, 'foo', 'id set');
     t.end();
   });
   test('setType - validate', function(t) {

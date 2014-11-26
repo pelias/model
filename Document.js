@@ -1,11 +1,12 @@
 
-var model = require('./util/model'),
+var pkg = require('./package'),
+    model = require('./util/model'),
     valid = require('./util/valid'),
     transform = require('./util/transform');
 
 function Document( type, id ){
   this.name = {};
-  this._meta = {};
+  this._meta = { version: pkg.version };
   this.center_point = {};
 
   // mandatory properties
@@ -14,12 +15,20 @@ function Document( type, id ){
 }
 
 // id
-Document.prototype.setId = model.set( 'id', [ valid.type('string'), valid.truthy() ], [ transform.stringify() ] );
-Document.prototype.getId = model.get( 'id' );
+Document.prototype.setId = function( id ){
+  return model.setChild( '_meta', [ valid.type('string'), valid.truthy() ], [ transform.stringify() ] ).call( this, 'id', id );
+};
+Document.prototype.getId = function(){
+  return model.getChild( '_meta' ).call( this, 'id' );
+};
 
 // type
-Document.prototype.setType = model.set( 'type', [ valid.type('string'), valid.truthy() ] );
-Document.prototype.getType = model.get( 'type' );
+Document.prototype.setType = function( type ){
+  return model.setChild( '_meta', [ valid.type('string'), valid.truthy() ], [ transform.stringify() ] ).call( this, 'type', type );
+};
+Document.prototype.getType = function(){
+  return model.getChild( '_meta' ).call( this, 'type' );
+};
 
 // alpha3
 Document.prototype.setAlpha3 = model.set( 'alpha3', [ valid.type('string'), valid.truthy(), valid.length(3) ], [ transform.uppercase() ] );
