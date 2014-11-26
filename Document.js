@@ -16,7 +16,9 @@ function Document( type, id ){
 
 // id
 Document.prototype.setId = function( id ){
-  return model.setChild( '_meta', [ valid.type('string'), valid.truthy() ], [ transform.stringify() ] ).call( this, 'id', id );
+  return model
+          .setChild( '_meta', [ valid.type('string'), valid.truthy() ], [ transform.stringify() ] )
+          .call( this, 'id', id );
 };
 Document.prototype.getId = function(){
   return model.getChild( '_meta' ).call( this, 'id' );
@@ -24,7 +26,9 @@ Document.prototype.getId = function(){
 
 // type
 Document.prototype.setType = function( type ){
-  return model.setChild( '_meta', [ valid.type('string'), valid.truthy() ], [ transform.stringify() ] ).call( this, 'type', type );
+  return model
+          .setChild( '_meta', [ valid.type('string'), valid.truthy() ], [ transform.stringify() ] )
+          .call( this, 'type', type );
 };
 Document.prototype.getType = function(){
   return model.getChild( '_meta' ).call( this, 'type' );
@@ -68,7 +72,9 @@ Document.prototype.getAdmin = function( prop ){
 
 // latitude
 Document.prototype.setLon = function( lon ){
-  return model.setChild( 'center_point', [ valid.type('number'), valid.geo('longitude') ], [ transform.floatify(6) ] ).call( this, 'lon', lon );
+  return model
+          .setChild( 'center_point', [ valid.type('number'), valid.geo('longitude') ], [ transform.floatify(6) ] )
+          .call( this, 'lon', lon );
 };
 Document.prototype.getLon = function(){
   return model.getChild( 'center_point' ).call( this, 'lon' );
@@ -76,7 +82,9 @@ Document.prototype.getLon = function(){
 
 // longitude
 Document.prototype.setLat = function( lat ){
-  return model.setChild( 'center_point', [ valid.type('number'), valid.geo('latitude') ], [ transform.floatify(6) ] ).call( this, 'lat', lat );
+  return model
+          .setChild( 'center_point', [ valid.type('number'), valid.geo('latitude') ], [ transform.floatify(6) ] )
+          .call( this, 'lat', lat );
 };
 Document.prototype.getLat = function(){
   return model.getChild( 'center_point' ).call( this, 'lat' );
