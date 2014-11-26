@@ -6,8 +6,11 @@ var pkg = require('./package'),
 
 function Document( type, id ){
   this.name = {};
-  this._meta = { version: pkg.version };
   this.center_point = {};
+
+  // create a non-enumerable property for metadata
+  Object.defineProperty( this, '_meta', { writable: true, value: {} });
+  this._meta.version = pkg.version;
 
   // mandatory properties
   this.setId( id );

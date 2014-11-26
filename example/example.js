@@ -12,3 +12,5 @@ var poi = new Document( 'geoname', 1003 )
   .setCentroid( 0.5, 50.1 );
 
 console.log( poi );
+console.log( poi._meta );
+console.log( JSON.stringify( poi, null, 2 ) );
