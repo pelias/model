@@ -8,7 +8,9 @@ module.exports.get = function( prop ){
 
 module.exports.set = function( prop, validators, transformers ){
   if( !prop ){ throw new Error( 'invalid property' ); }
-  return function( val ){
+  if( !validators ){ validators = []; }
+  if( !transformers ){ transformers = []; }
+  var setter = function( val ){
     if( !val ){ throw new Error( 'invalid value' ); }
     
     val = transform( val, transformers );
@@ -18,6 +20,15 @@ module.exports.set = function( prop, validators, transformers ){
     // chain
     return this;
   };
+  setter.validate = function( validator ){
+    validators.push( validator );
+    return setter;
+  };
+  setter.transform = function( transformer ){
+    transformers.push( transformer );
+    return setter;
+  };
+  return setter;
 };
 
 module.exports.getChild = function( child ){
@@ -38,7 +49,9 @@ module.exports.hasChild = function( child ){
 
 module.exports.setChild = function( child, validators, transformers ){
   if( !child ){ throw new Error( 'invalid child' ); }
-  return function( prop, val ){
+  if( !validators ){ validators = []; }
+  if( !transformers ){ transformers = []; }
+  var setter = function( prop, val ){
     if( !prop ){ throw new Error( 'invalid property' ); }
     if( !val ){ throw new Error( 'invalid value' ); }
 
@@ -49,6 +62,15 @@ module.exports.setChild = function( child, validators, transformers ){
     // chain
     return this;
   };
+  setter.validate = function( validator ){
+    validators.push( validator );
+    return setter;
+  };
+  setter.transform = function( transformer ){
+    transformers.push( transformer );
+    return setter;
+  };
+  return setter;
 };
 
 module.exports.delChild = function( child ){
