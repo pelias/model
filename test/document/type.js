@@ -1,5 +1,5 @@
 
-var Document = require('../Document');
+var Document = require('../../Document');
 
 module.exports.tests = {};
 

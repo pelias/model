@@ -4,16 +4,16 @@ var common = {};
 
 var tests = [
   require('./Document.js'),
-  require('./admin.js'),
-  require('./alpha3.js'),
-  require('./centroid.js'),
-  require('./gid.js'),
-  require('./id.js'),
-  require('./latlon.js'),
-  require('./meta.js'),
-  require('./name.js'),
-  require('./polygon.js'),
-  require('./type.js')
+  require('./document/admin.js'),
+  require('./document/alpha3.js'),
+  require('./document/centroid.js'),
+  require('./document/gid.js'),
+  require('./document/id.js'),
+  require('./document/latlon.js'),
+  require('./document/meta.js'),
+  require('./document/name.js'),
+  require('./document/polygon.js'),
+  require('./document/type.js')
 ];
 
 tests.map(function(t) {
