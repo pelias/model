@@ -1,5 +1,5 @@
 
-var Document = require('../Document');
+var Document = require('../index').Document;
 
 var poi = new Document( 'geoname', 1003 )
   .setAlpha3( 'GBR' )
