@@ -3,7 +3,9 @@ var tape = require('tape');
 var common = {};
 
 var tests = [
+  require('./index.js'),
   require('./Document.js'),
+  require('./Centroid.js'),
   require('./document/admin.js'),
   require('./document/alpha3.js'),
   require('./document/centroid.js'),

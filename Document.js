@@ -2,7 +2,8 @@
 var pkg = require('./package'),
     model = require('./util/model'),
     valid = require('./util/valid'),
-    transform = require('./util/transform');
+    transform = require('./util/transform'),
+    Centroid = require('./Centroid');
 
 function Document( type, id ){
   this.name = {};
