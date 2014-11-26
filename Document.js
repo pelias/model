@@ -115,9 +115,10 @@ Document.prototype.getLat = function(){
 };
 
 // centroid
-Document.prototype.setCentroid = function( lon, lat ){
-  this.setLon.call( this, lon );
-  this.setLat.call( this, lat );
+Document.prototype.setCentroid = function( centroid ){
+  centroid = centroid || {};
+  this.setLon.call( this, centroid.lon );
+  this.setLat.call( this, centroid.lat );
   return this;
 };
 Document.prototype.getCentroid = model.get( 'center_point' );
