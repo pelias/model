@@ -59,4 +59,4 @@ $ npm test
 
 Travis tests every release against node version `0.10`
 
-[![Build Status](https://travis-ci.org/pelias/document.png?branch=master)](https://travis-ci.org/pelias/document)
+[![Build Status](https://travis-ci.org/pelias/model.png?branch=master)](https://travis-ci.org/pelias/model)
