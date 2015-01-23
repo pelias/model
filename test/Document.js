@@ -3,7 +3,7 @@ var Document = require('../Document');
 
 module.exports.tests = {};
 
-module.exports.tests.interface = function(test, common) {
+module.exports.tests.interface = function(test) {
   test('valid interface', function(t) {
     t.equal(typeof Document, 'function', 'Document is a function');
 

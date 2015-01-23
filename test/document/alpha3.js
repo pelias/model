@@ -3,7 +3,7 @@ var Document = require('../../Document');
 
 module.exports.tests = {};
 
-module.exports.tests.getAlpha3 = function(test, common) {
+module.exports.tests.getAlpha3 = function(test) {
   test('getAlpha3', function(t) {
     var doc = new Document('mytype','myid');
     doc.alpha3 = 'GBR';
@@ -12,7 +12,7 @@ module.exports.tests.getAlpha3 = function(test, common) {
   });
 };
 
-module.exports.tests.setAlpha3 = function(test, common) {
+module.exports.tests.setAlpha3 = function(test) {
   test('setAlpha3', function(t) {
     var doc = new Document('mytype','myid');
     t.equal(doc.alpha3, undefined, 'id undefined');
