@@ -3,7 +3,7 @@ var Document = require('../../Document');
 
 module.exports.tests = {};
 
-module.exports.tests.getCentroid = function(test, common) {
+module.exports.tests.getCentroid = function(test) {
   test('getCentroid', function(t) {
     var doc = new Document('mytype','myid');
     t.deepEqual(doc.getCentroid(), {}, 'getter works');
@@ -13,7 +13,7 @@ module.exports.tests.getCentroid = function(test, common) {
   });
 };
 
-module.exports.tests.setCentroid = function(test, common) {
+module.exports.tests.setCentroid = function(test) {
   test('setCentroid', function(t) {
     var doc = new Document('mytype','myid');
     t.equal(doc.setCentroid({ lon: 1, lat: 2 }), doc, 'chainable');

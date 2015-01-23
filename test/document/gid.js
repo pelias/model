@@ -3,7 +3,7 @@ var Document = require('../../Document');
 
 module.exports.tests = {};
 
-module.exports.tests.getGid = function(test, common) {
+module.exports.tests.getGid = function(test) {
   test('getGid', function(t) {
     var doc = new Document('mytype','myid');
     t.equal(doc.getGid(), 'myid:mytype', 'getter works');

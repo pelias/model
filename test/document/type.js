@@ -3,7 +3,7 @@ var Document = require('../../Document');
 
 module.exports.tests = {};
 
-module.exports.tests.getType = function(test, common) {
+module.exports.tests.getType = function(test) {
   test('getType', function(t) {
     var doc = new Document('mytype','myid');
     doc._meta.type = 'foo';
@@ -12,7 +12,7 @@ module.exports.tests.getType = function(test, common) {
   });
 };
 
-module.exports.tests.setType = function(test, common) {
+module.exports.tests.setType = function(test) {
   test('setType', function(t) {
     var doc = new Document('mytype','myid');
     t.equal(doc._meta.type, 'mytype', 'id set in constructor');

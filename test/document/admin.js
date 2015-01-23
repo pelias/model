@@ -3,7 +3,7 @@ var Document = require('../../Document');
 
 module.exports.tests = {};
 
-module.exports.tests.getAdmin = function(test, common) {
+module.exports.tests.getAdmin = function(test) {
   Document.adminFields.forEach( function( field ){
     test('getAdmin - ' + field, function(t) {
       var doc = new Document('mytype','myid');
@@ -14,7 +14,7 @@ module.exports.tests.getAdmin = function(test, common) {
   });
 };
 
-module.exports.tests.setAdmin = function(test, common) {
+module.exports.tests.setAdmin = function(test) {
   Document.adminFields.forEach( function( field ){
     test('setAdmin - ' + field, function(t) {
       var doc = new Document('mytype','myid');

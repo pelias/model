@@ -3,7 +3,7 @@ var Document = require('../../Document');
 
 module.exports.tests = {};
 
-module.exports.tests.getPolygon = function(test, common) {
+module.exports.tests.getPolygon = function(test) {
   test('getPolygon', function(t) {
     var doc = new Document('mytype','myid');
     doc.boundaries = { 'foo': 'bar' };
@@ -12,7 +12,7 @@ module.exports.tests.getPolygon = function(test, common) {
   });
 };
 
-module.exports.tests.setPolygon = function(test, common) {
+module.exports.tests.setPolygon = function(test) {
   test('setPolygon', function(t) {
     var doc = new Document('mytype','myid');
     t.equal(doc.boundaries, undefined, 'polygon undefined');

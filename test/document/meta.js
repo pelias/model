@@ -3,7 +3,7 @@ var Document = require('../../Document');
 
 module.exports.tests = {};
 
-module.exports.tests.getMeta = function(test, common) {
+module.exports.tests.getMeta = function(test) {
   test('getMeta', function(t) {
     var doc = new Document('mytype','myid');
     t.equal(doc.getMeta('foo'), undefined, 'getter works');
@@ -13,7 +13,7 @@ module.exports.tests.getMeta = function(test, common) {
   });
 };
 
-module.exports.tests.setMeta = function(test, common) {
+module.exports.tests.setMeta = function(test) {
   test('setMeta', function(t) {
     var doc = new Document('mytype','myid');
     t.equal(doc.setMeta('foo','bar'), doc, 'chainable');
@@ -22,7 +22,7 @@ module.exports.tests.setMeta = function(test, common) {
   });
 };
 
-module.exports.tests.hasMeta = function(test, common) {
+module.exports.tests.hasMeta = function(test) {
   test('hasMeta', function(t) {
     var doc = new Document('mytype','myid');
     t.equal(doc.hasMeta('foo'), false, 'hasser works');
@@ -32,7 +32,7 @@ module.exports.tests.hasMeta = function(test, common) {
   });
 };
 
-module.exports.tests.delMeta = function(test, common) {
+module.exports.tests.delMeta = function(test) {
   test('delMeta', function(t) {
     var doc = new Document('mytype','myid');
     t.equal(doc.delMeta('foo'), false, 'deller works');

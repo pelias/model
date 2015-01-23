@@ -3,7 +3,7 @@ var Document = require('../../Document');
 
 module.exports.tests = {};
 
-module.exports.tests.getLat = function(test, common) {
+module.exports.tests.getLat = function(test) {
   test('getLat', function(t) {
     var doc = new Document('mytype','myid');
     t.equal(doc.getLat(), undefined, 'getter works');
@@ -13,7 +13,7 @@ module.exports.tests.getLat = function(test, common) {
   });
 };
 
-module.exports.tests.setLat = function(test, common) {
+module.exports.tests.setLat = function(test) {
   test('setLat', function(t) {
     var doc = new Document('mytype','myid');
     t.equal(doc.center_point.lat, undefined, 'lat undefined');
@@ -41,7 +41,7 @@ module.exports.tests.setLat = function(test, common) {
   });
 };
 
-module.exports.tests.getLon = function(test, common) {
+module.exports.tests.getLon = function(test) {
   test('getLon', function(t) {
     var doc = new Document('mytype','myid');
     t.equal(doc.getLon(), undefined, 'getter works');
@@ -51,7 +51,7 @@ module.exports.tests.getLon = function(test, common) {
   });
 };
 
-module.exports.tests.setLon = function(test, common) {
+module.exports.tests.setLon = function(test) {
   test('setLon', function(t) {
     var doc = new Document('mytype','myid');
     t.equal(doc.center_point.lon, undefined, 'lat undefined');

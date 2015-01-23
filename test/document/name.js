@@ -3,7 +3,7 @@ var Document = require('../../Document');
 
 module.exports.tests = {};
 
-module.exports.tests.getName = function(test, common) {
+module.exports.tests.getName = function(test) {
   test('getName', function(t) {
     var doc = new Document('mytype','myid');
     t.equal(doc.getName('foo'), undefined, 'getter works');
@@ -13,7 +13,7 @@ module.exports.tests.getName = function(test, common) {
   });
 };
 
-module.exports.tests.setName = function(test, common) {
+module.exports.tests.setName = function(test) {
   test('setName', function(t) {
     var doc = new Document('mytype','myid');
     t.equal(doc.setName('foo','bar'), doc, 'chainable');
@@ -28,7 +28,7 @@ module.exports.tests.setName = function(test, common) {
   });
 };
 
-module.exports.tests.hasName = function(test, common) {
+module.exports.tests.hasName = function(test) {
   test('hasName', function(t) {
     var doc = new Document('mytype','myid');
     t.equal(doc.hasName('foo'), false, 'hasser works');
@@ -38,7 +38,7 @@ module.exports.tests.hasName = function(test, common) {
   });
 };
 
-module.exports.tests.delName = function(test, common) {
+module.exports.tests.delName = function(test) {
   test('delName', function(t) {
     var doc = new Document('mytype','myid');
     t.equal(doc.delName('foo'), false, 'deller works');
