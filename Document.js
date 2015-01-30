@@ -72,6 +72,11 @@ Document.prototype.getName = model.getChild( 'name' );
 Document.prototype.hasName = model.hasChild( 'name' );
 Document.prototype.delName = model.delChild( 'name' );
 
+
+// multiplier
+Document.prototype.setMultiplier = model.setChild( 'multiplier' )
+                                  .validate( valid.type('number') );
+
 // admin
 Document.prototype.setAdmin = function( prop, val ){
   
