@@ -75,7 +75,12 @@ Document.prototype.delName = model.delChild( 'name' );
 
 // multiplier
 Document.prototype.setMultiplier = model.setChild( 'multiplier' )
-                                  .validate( valid.type('number') );
+                                  .validate( valid.type('number') )
+                                  .validate( valid.truthy() );
+
+Document.prototype.getMultiplier = model.getChild( 'multiplier' );
+Document.prototype.hasMultiplier = model.hasChild( 'multiplier' );
+Document.prototype.delMultiplier = model.delChild( 'multiplier' );
 
 // admin
 Document.prototype.setAdmin = function( prop, val ){
