@@ -6,12 +6,12 @@ module.exports.get = function( prop ){
   };
 };
 
-module.exports.set = function( prop, validators, transformers ){
+module.exports.set = function( prop, validators, transformers, zeroIsValid ){
   if( !prop ){ throw new Error( 'invalid property' ); }
   if( !validators ){ validators = []; }
   if( !transformers ){ transformers = []; }
   var setter = function( val ){
-    if( !val ){ throw new Error( 'invalid value' ); }
+    if( !val && !zeroIsValid){ throw new Error( 'invalid value' ); }
     
     val = transform( val, transformers );
     validate( val, validators );
