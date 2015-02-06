@@ -76,7 +76,7 @@ Document.prototype.delName = model.delChild( 'name' );
 // population
 Document.prototype.setPopulation = model.set( 'population' )
                                         .validate( valid.type('number') )
-                                        .validate( valid.truthy() );
+                                        .validate( valid.population() );
 
 Document.prototype.getPopulation = model.get( 'population' );
 
