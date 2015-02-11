@@ -72,6 +72,14 @@ Document.prototype.getName = model.getChild( 'name' );
 Document.prototype.hasName = model.hasChild( 'name' );
 Document.prototype.delName = model.delChild( 'name' );
 
+
+// population
+Document.prototype.setPopulation = model.set( 'population', null, null, true)
+                                        .validate( valid.type('number') )
+                                        .validate( valid.population() );
+
+Document.prototype.getPopulation = model.get( 'population' );
+
 // admin
 Document.prototype.setAdmin = function( prop, val ){
   

@@ -30,6 +30,14 @@ module.exports.truthy = function(){
   };
 };
 
+module.exports.population = function(){
+  return function( val ){
+    if( val < 0 ){
+      throw new Error( 'invalid document type, expecting: 0 or a positive number, got: ' + val );
+    }
+  };
+};
+
 module.exports.length = function( length ){
   return function( val ){
     if( val.length !== length ){
