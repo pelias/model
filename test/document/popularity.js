@@ -23,9 +23,21 @@ module.exports.tests.setPopularity = function(test) {
   test('setPopularity - validate', function(t) {
     var doc = new Document('mytype','myid');
     t.throws( doc.setPopularity.bind(doc,-1), null, 'invalid: negative value' );
-    t.throws( doc.setPopularity.bind(doc,''), null, 'invalid length' );
+    t.throws( doc.setPopularity.bind(doc,undefined), null, 'invalid length' );
     t.throws( doc.setPopularity.bind(doc,'XX'), null, 'invalid format' );
-    t.throws( doc.setPopularity.bind(doc,'12.3'), null, 'invalid: float value' );
+    t.throws( doc.setPopularity.bind(doc,NaN), null, 'invalid: float value' );
+    t.end();
+  });
+  test('setPopularity - transform', function(t) {
+    var doc = new Document('mytype','myid');
+    doc.setPopularity(12.3);
+    t.equal(doc.popularity, 12, 'transforms: rounding the odd float value (floor)');
+    doc.setPopularity(12.7);
+    t.equal(doc.popularity, 13, 'transforms: rounding the odd float value (ceil)');
+    doc.setPopularity(12.49999);
+    t.equal(doc.popularity, 12, 'transforms: rounding the odd float value (floor)');
+    doc.setPopularity('');
+    t.equal(doc.popularity, 0, 'transforms: returns 0 incase of empty string');
     t.end();
   });
 };

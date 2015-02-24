@@ -82,6 +82,7 @@ Document.prototype.getPopulation = model.get( 'population' );
 
 // popularity
 Document.prototype.setPopularity = model.set( 'popularity', null, null, true)
+                                        .transform( transform.roundify() )
                                         .validate( valid.type('number') )
                                         .validate( valid.positive() );
 
