@@ -76,9 +76,16 @@ Document.prototype.delName = model.delChild( 'name' );
 // population
 Document.prototype.setPopulation = model.set( 'population', null, null, true)
                                         .validate( valid.type('number') )
-                                        .validate( valid.population() );
+                                        .validate( valid.positive() );
 
 Document.prototype.getPopulation = model.get( 'population' );
+
+// popularity
+Document.prototype.setPopularity = model.set( 'popularity', null, null, true)
+                                        .validate( valid.type('number') )
+                                        .validate( valid.positive() );
+
+Document.prototype.getPopularity = model.get( 'popularity' );
 
 // admin
 Document.prototype.setAdmin = function( prop, val ){
