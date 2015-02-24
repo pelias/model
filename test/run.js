@@ -11,6 +11,7 @@ var tests = [
   require('./document/id.js'),
   require('./document/latlon.js'),
   require('./document/meta.js'),
+  require('./document/population.js'),
   require('./document/name.js'),
   require('./document/polygon.js'),
   require('./document/type.js')
