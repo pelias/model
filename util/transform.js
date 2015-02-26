@@ -22,3 +22,9 @@ module.exports.floatify = function( precision ){
     return parseFloat( val ).toFixed( precision || 10 )/1;
   };
 };
+
+module.exports.roundify = function(){
+  return function( val ){
+    return Math.round(val);
+  };
+};
