@@ -23,6 +23,8 @@ var poi = new Document( 'geoname', 1003 )
   .setName( 'alt', 'Haggerston City Farm' )
   .setAdmin( 'admin0', 'Great Britain' )
   .setAdmin( 'neighborhood', 'Shoreditch' )
+  .setAddress( 'number', '10' )
+  .setAddress( 'street', 'pelias place' )
   .setCentroid({ lon: 0.5, lat: 50.1 });
 
 console.log( poi );
