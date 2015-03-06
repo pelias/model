@@ -6,6 +6,7 @@ var pkg = require('./package'),
 
 function Document( type, id ){
   this.name = {};
+  this.address = {};
   this.center_point = {};
 
   // create a non-enumerable property for metadata
@@ -72,6 +73,14 @@ Document.prototype.getName = model.getChild( 'name' );
 Document.prototype.hasName = model.hasChild( 'name' );
 Document.prototype.delName = model.delChild( 'name' );
 
+// address
+Document.prototype.setAddress = model.setChild( 'address' )
+                                  .validate( valid.type('string') )
+                                  .validate( valid.truthy() );
+
+Document.prototype.getAddress = model.getChild( 'address' );
+Document.prototype.hasAddress = model.hasChild( 'address' );
+Document.prototype.delAddress = model.delChild( 'address' );
 
 // population
 Document.prototype.setPopulation = model.set( 'population', null, null, true)
