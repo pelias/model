@@ -9,6 +9,8 @@ var poi = new Document( 'geoname', 1003 )
   .setName( 'alt', 'Haggerston City Farm' )
   .setAdmin( 'admin0', 'Great Britain' )
   .setAdmin( 'neighborhood', 'Shoreditch' )
+  .setPopulation(1000)
+  .setPopularity(10)
   .setCentroid({ lon: 0.5, lat: 50.1 });
 
 console.log( poi );

@@ -25,6 +25,8 @@ var poi = new Document( 'geoname', 1003 )
   .setAdmin( 'neighborhood', 'Shoreditch' )
   .setAddress( 'number', '10' )
   .setAddress( 'street', 'pelias place' )
+  .setPopulation(10)
+  .setPopularity(3)
   .setCentroid({ lon: 0.5, lat: 50.1 });
 
 console.log( poi );
