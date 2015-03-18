@@ -83,14 +83,14 @@ Document.prototype.hasAddress = model.hasChild( 'address' );
 Document.prototype.delAddress = model.delChild( 'address' );
 
 // population
-Document.prototype.setPopulation = model.set( 'population', null, null, true)
+Document.prototype.setPopulation = model.set( 'population', null, null )
                                         .validate( valid.type('number') )
                                         .validate( valid.positive() );
 
 Document.prototype.getPopulation = model.get( 'population' );
 
 // popularity
-Document.prototype.setPopularity = model.set( 'popularity', null, null, true)
+Document.prototype.setPopularity = model.set( 'popularity', null, null )
                                         .transform( transform.roundify() )
                                         .validate( valid.type('number') )
                                         .validate( valid.positive() );
@@ -99,7 +99,7 @@ Document.prototype.getPopularity = model.get( 'popularity' );
 
 // admin
 Document.prototype.setAdmin = function( prop, val ){
-  
+
   validAdminField( prop );
 
   return model.set( prop )

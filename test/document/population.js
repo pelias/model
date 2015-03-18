@@ -28,6 +28,12 @@ module.exports.tests.setPopulation = function(test) {
     t.throws( doc.setPopulation.bind(doc,NaN), null, 'invalid: float value' );
     t.end();
   });
+  test('setPopulation - accept zero value', function(t) {
+    var doc = new Document('mytype','myid');
+    doc.setPopulation(0);
+    t.equal(doc.population, 0, 'allow zero population');
+    t.end();
+  });
 };
 
 module.exports.all = function (tape, common) {

@@ -40,6 +40,12 @@ module.exports.tests.setPopularity = function(test) {
     t.equal(doc.popularity, 0, 'transforms: returns 0 incase of empty string');
     t.end();
   });
+  test('setPopularity - accept zero value', function(t) {
+    var doc = new Document('mytype','myid');
+    doc.setPopularity(0);
+    t.equal(doc.popularity, 0, 'allow zero popularity');
+    t.end();
+  });
 };
 
 module.exports.all = function (tape, common) {
