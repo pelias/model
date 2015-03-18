@@ -13,6 +13,10 @@ module.exports.lowercase = function(){
 
 module.exports.stringify = function(){
   return function( val ){
+    // because javascript: (''+undefined) === 'undefined'
+    if( 'undefined' === typeof val ){
+      return '';
+    }
     return '' + val;
   };
 };

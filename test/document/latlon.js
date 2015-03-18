@@ -39,6 +39,16 @@ module.exports.tests.setLat = function(test) {
     t.equal(doc.center_point.lat, 1.476877, 'fixed precision');
     t.end();
   });
+  test('setLat - extremes', function(t) {
+    var doc = new Document('mytype','myid');
+    doc.setLat(-90);
+    t.equal(doc.center_point.lat, -90, 'accepts min');
+    doc.setLat(0);
+    t.equal(doc.center_point.lat, 0, 'accepts zero');
+    doc.setLat(90);
+    t.equal(doc.center_point.lat, 90, 'accepts max');
+    t.end();
+  });
 };
 
 module.exports.tests.getLon = function(test) {
@@ -75,6 +85,16 @@ module.exports.tests.setLon = function(test) {
     t.equal(doc.center_point.lon, 1.4, 'accepts strings');
     doc.setLon('1.476876786');
     t.equal(doc.center_point.lon, 1.476877, 'fixed precision');
+    t.end();
+  });
+  test('setLon - extremes', function(t) {
+    var doc = new Document('mytype','myid');
+    doc.setLon(-180);
+    t.equal(doc.center_point.lon, -180, 'accepts min');
+    doc.setLon(0);
+    t.equal(doc.center_point.lon, 0, 'accepts zero');
+    doc.setLon(+180);
+    t.equal(doc.center_point.lon, 180, 'accepts max');
     t.end();
   });
 };

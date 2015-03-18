@@ -20,10 +20,18 @@ module.exports.tests.setId = function(test) {
     t.equal(doc._meta.id, 'foo', 'id set');
     t.end();
   });
-  test('setId - validate', function(t) {
+  test('setId - validate id type', function(t) {
     var doc = new Document('mytype','myid');
-    t.throws( doc.setId.bind(doc,undefined), null, 'invalid type' );
-    t.throws( doc.setId.bind(doc,''), null, 'invalid length' );
+    t.throws( function(){
+      doc.setId( undefined );
+    });
+    t.end();
+  });
+  test('setId - validate id length', function(t) {
+    var doc = new Document('mytype','myid');
+    t.throws( function(){
+      doc.setId( '' );
+    });
     t.end();
   });
   test('setId - transform', function(t) {
