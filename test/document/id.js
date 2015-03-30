@@ -34,6 +34,13 @@ module.exports.tests.setId = function(test) {
     });
     t.end();
   });
+  test('setId - validate not empty', function(t) {
+    var doc = new Document('mytype','myid');
+    t.throws( function(){
+      doc.setId( ' ' );
+    });
+    t.end();
+  });
   test('setId - transform', function(t) {
     var doc = new Document('mytype','myid');
     doc.setId(100);

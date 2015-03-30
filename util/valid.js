@@ -24,7 +24,7 @@ module.exports.type = function( type ){
 
 module.exports.truthy = function(){
   return function( val ){
-    if( !val ){
+    if( (typeof val === 'string' && !val.trim() ) || !val ){
       throw new Error( 'invalid document type, expecting: truthy, got: ' + val );
     }
   };

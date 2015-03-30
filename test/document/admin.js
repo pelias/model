@@ -29,6 +29,7 @@ module.exports.tests.setAdmin = function(test) {
       var doc = new Document('mytype','myid');
       t.throws( doc.setAdmin.bind(doc,field,undefined), null, 'invalid type' );
       t.throws( doc.setAdmin.bind(doc,field,''), null, 'invalid length' );
+      t.throws( doc.setAdmin.bind(doc,field,' '), null, 'invalid length' );
       t.end();
     });
   });

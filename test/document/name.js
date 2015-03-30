@@ -24,6 +24,7 @@ module.exports.tests.setName = function(test) {
     var doc = new Document('mytype','myid');
     t.throws( doc.setName.bind(doc,1), null, 'invalid type' );
     t.throws( doc.setName.bind(doc,''), null, 'invalid length' );
+    t.throws( doc.setName.bind(doc,' '), null, 'invalid length' );
     t.end();
   });
 };
