@@ -108,6 +108,11 @@ Document.prototype.setAdmin = function( prop, val ){
               .call( this, val );
 };
 
+Document.prototype.delAdmin = function ( prop ){
+  validAdminField( prop );
+  delete this[ prop ];
+};
+
 Document.prototype.getAdmin = function( prop ){
 
   validAdminField( prop );
