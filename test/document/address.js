@@ -6,9 +6,9 @@ module.exports.tests = {};
 module.exports.tests.getAddress = function(test) {
   test('getAddress', function(t) {
     var doc = new Document('mytype','myid');
-    t.equal(doc.getAddress('foo'), undefined, 'getter works');
-    doc.address = { 'foo': 'bar' };
-    t.equal(doc.getAddress('foo'), 'bar', 'getter works');
+    t.equal(doc.getAddress('zip'), undefined, 'getter works');
+    doc.address = { 'zip': 'bar' };
+    t.equal(doc.getAddress('zip'), 'bar', 'getter works');
     t.end();
   });
 };
@@ -16,14 +16,20 @@ module.exports.tests.getAddress = function(test) {
 module.exports.tests.setAddress = function(test) {
   test('setAddress', function(t) {
     var doc = new Document('mytype','myid');
-    t.equal(doc.setAddress('foo','bar'), doc, 'chainable');
-    t.equal(doc.address.foo, 'bar', 'setter works');
+    t.equal(doc.setAddress('zip','bar'), doc, 'chainable');
+    t.equal(doc.address.zip, 'bar', 'setter works');
     t.end();
   });
   test('setAddress - validate', function(t) {
     var doc = new Document('mytype','myid');
-    t.throws( doc.setAddress.bind(doc,1), null, 'invalid type' );
-    t.throws( doc.setAddress.bind(doc,''), null, 'invalid length' );
+    t.throws( doc.setAddress.bind(doc, 1), null, 'invalid type' );
+    t.throws( doc.setAddress.bind(doc, ''), null, 'invalid length' );
+    t.throws( doc.setAddress.bind(doc, 'foo', 1), null, 'invalid property' );
+    t.throws( doc.setAddress.bind(doc, '4', 2), null, 'invalid property' );
+    t.throws( doc.setAddress.bind(doc, 'zip', 2), null, 'invalid property' );
+    t.throws( doc.setAddress.bind(doc, 'street', true), null, 'invalid property' );
+    t.doesNotThrow( doc.setAddress.bind(doc, 'zip', 'foo'), null, 'invalid property' );
+    t.doesNotThrow( doc.setAddress.bind(doc, 'street', '1'), null, 'invalid property' );
     t.end();
   });
 };
@@ -31,9 +37,9 @@ module.exports.tests.setAddress = function(test) {
 module.exports.tests.hasAddress = function(test) {
   test('hasAddress', function(t) {
     var doc = new Document('mytype','myid');
-    t.equal(doc.hasAddress('foo'), false, 'hasser works');
-    doc.address.foo = 'bar';
-    t.equal(doc.hasAddress('foo'), true, 'hasser works');
+    t.equal(doc.hasAddress('zip'), false, 'hasser works');
+    doc.address.zip = 'bar';
+    t.equal(doc.hasAddress('zip'), true, 'hasser works');
     t.end();
   });
 };
@@ -41,10 +47,11 @@ module.exports.tests.hasAddress = function(test) {
 module.exports.tests.delAddress = function(test) {
   test('delAddress', function(t) {
     var doc = new Document('mytype','myid');
-    t.equal(doc.delAddress('foo'), false, 'deller works');
-    doc.address.foo = 'bar';
-    t.equal(doc.delAddress('foo'), true, 'deller works');
-    t.equal(doc.address.foo, undefined, 'deller works');
+    doc.address.zip = 'bar';
+    doc.delAddress( 'zip' );
+    t.equal(doc.address.zip, undefined, 'deller works');
+    t.doesNotThrow(doc.delAddress.bind(doc, 'zip'));
+    t.throws(doc.delAddress.bind(doc, 'foo'));
     t.end();
   });
 };
