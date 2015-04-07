@@ -84,6 +84,44 @@ module.exports.delChild = function( child ){
   };
 };
 
+module.exports.push = function( prop, validators, transformers ){
+  if( !prop ){ throw new Error( 'invalid property' ); }
+  if( !validators ){ validators = []; }
+  if( !transformers ){ transformers = []; }
+  var adder = function( val ){
+
+    val = transform( val, transformers );
+    validate( val, validators );
+
+    if( -1 === this[prop].indexOf(val) ){
+      this[prop].push(val);
+    }
+
+    // chain
+    return this;
+  };
+  adder.validate = function( validator ){
+    validators.push( validator );
+    return adder;
+  };
+  adder.transform = function( transformer ){
+    transformers.push( transformer );
+    return adder;
+  };
+  return adder;
+};
+
+module.exports.splice = function( prop ){
+  if( !prop ){ throw new Error( 'invalid property' ); }
+  return function( val ){
+    for(var i = this[prop].length - 1; i >= 0; i--) {
+      if(this[prop][i] === val) {
+        this[prop].splice(i, 1);
+      }
+    }
+  };
+};
+
 function validate( val, validators ){
   if( validators ){
     validators.forEach( function( validator ) {

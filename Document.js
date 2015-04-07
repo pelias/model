@@ -8,6 +8,7 @@ function Document( type, id ){
   this.name = {};
   this.address = {};
   this.center_point = {};
+  this.category = [];
 
   // create a non-enumerable property for metadata
   Object.defineProperty( this, '_meta', { writable: true, value: {} });
@@ -143,6 +144,15 @@ Document.prototype.setLat = function( lat ){
 Document.prototype.getLat = function(){
   return model.getChild( 'center_point' ).call( this, 'lat' );
 };
+
+// categories
+Document.prototype.addCategory = model.push( 'category' )
+                                  .transform( transform.lowercase() )
+                                  .validate( valid.type('string') )
+                                  .validate( valid.truthy() );
+
+
+Document.prototype.removeCategory = model.splice( 'category' );
 
 // centroid
 Document.prototype.setCentroid = function( centroid ){

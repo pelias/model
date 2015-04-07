@@ -16,7 +16,8 @@ var tests = [
   require('./document/name.js'),
   require('./document/address.js'),
   require('./document/polygon.js'),
-  require('./document/type.js')
+  require('./document/type.js'),
+  require('./document/category.js')
 ];
 
 tests.map(function(t) {
