@@ -1,7 +1,7 @@
 {
   "name": "pelias-model",
   "author": "mapzen",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "Pelias data models",
   "homepage": "https://github.com/pelias/model",
   "license": "MIT",
@@ -24,8 +24,7 @@
     "node": ">=0.10.26",
     "npm": ">=1.4.3"
   },
-  "dependencies": {
-  },
+  "dependencies": {},
   "devDependencies": {
     "tape": "^2.13.4",
     "tap-spec": "^0.2.0",
