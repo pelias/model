@@ -75,13 +75,25 @@ Document.prototype.hasName = model.hasChild( 'name' );
 Document.prototype.delName = model.delChild( 'name' );
 
 // address
-Document.prototype.setAddress = model.setChild( 'address' )
-                                  .validate( valid.type('string') )
-                                  .validate( valid.truthy() );
+Document.prototype.setAddress = function ( prop, val ){
+  validAddressField( prop );
+  return model.setChild( 'address' )
+    .validate( valid.type('string') )
+    .validate( valid.truthy() )
+    .call( this, prop, val );
+};
 
-Document.prototype.getAddress = model.getChild( 'address' );
+Document.prototype.getAddress = function ( prop ){
+  validAddressField( prop );
+  return this.address[ prop ];
+};
+
+Document.prototype.delAddress = function ( prop ){
+  validAddressField( prop );
+  delete this.address[ prop ];
+};
+
 Document.prototype.hasAddress = model.hasChild( 'address' );
-Document.prototype.delAddress = model.delChild( 'address' );
 
 // population
 Document.prototype.setPopulation = model.set( 'population', null, null )
@@ -173,6 +185,8 @@ Document.prototype.getPolygon = model.get( 'boundaries' );
 // admin fields whitelist
 Document.adminFields = ['admin0','admin1','admin1_abbr','admin2','local_admin','locality','neighborhood'];
 
+Document.addressFields = ['name', 'number', 'street', 'zip'];
+
 // export
 module.exports = Document;
 
@@ -180,5 +194,11 @@ module.exports = Document;
 function validAdminField( prop ){
   if( -1 === Document.adminFields.indexOf( prop ) ){
     throw new Error( 'invalid admin field: ' + prop + ', should be one of: ' + Document.adminFields.join(',') );
+  }
+}
+
+function validAddressField( prop ){
+  if( Document.addressFields.indexOf( prop ) === -1 ){
+    throw new Error( 'invalid address field: ' + prop + ', should be one of: ' + Document.addressFields.join(',') );
   }
 }
