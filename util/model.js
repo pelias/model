@@ -13,7 +13,7 @@ module.exports.set = function( prop, validators, transformers ){
   var setter = function( val ){
 
     val = transform( val, transformers );
-    validate( val, validators );
+    validate( val, prop, validators );
     this[prop] = val;
 
     // chain
@@ -54,7 +54,7 @@ module.exports.setChild = function( child, validators, transformers ){
     if( !prop ){ throw new Error( 'invalid property' ); }
 
     val = transform( val, transformers );
-    validate( val, validators );
+    validate( val, prop, validators );
     this[child][prop] = val;
 
     // chain
@@ -91,7 +91,7 @@ module.exports.push = function( prop, validators, transformers ){
   var adder = function( val ){
 
     val = transform( val, transformers );
-    validate( val, validators );
+    validate( val, prop, validators );
 
     if( -1 === this[prop].indexOf(val) ){
       this[prop].push(val);
@@ -122,10 +122,10 @@ module.exports.splice = function( prop ){
   };
 };
 
-function validate( val, validators ){
+function validate( val, prop, validators ){
   if( validators ){
     validators.forEach( function( validator ) {
-      validator( val );
+      validator( val, prop );
     });
   }
 }

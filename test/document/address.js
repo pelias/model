@@ -44,18 +44,6 @@ module.exports.tests.hasAddress = function(test) {
   });
 };
 
-module.exports.tests.delAddress = function(test) {
-  test('delAddress', function(t) {
-    var doc = new Document('mytype','myid');
-    doc.address.zip = 'bar';
-    doc.delAddress( 'zip' );
-    t.equal(doc.address.zip, undefined, 'deller works');
-    t.doesNotThrow(doc.delAddress.bind(doc, 'zip'));
-    t.throws(doc.delAddress.bind(doc, 'foo'));
-    t.end();
-  });
-};
-
 module.exports.all = function (tape, common) {
 
   function test(name, testFunction) {
