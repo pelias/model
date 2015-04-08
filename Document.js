@@ -76,20 +76,18 @@ Document.prototype.delName = model.delChild( 'name' );
 
 // address
 Document.prototype.setAddress = function ( prop, val ){
-  validAddressField( prop );
   return model.setChild( 'address' )
+    .validate( valid.property( Document.addressFields ) )
     .validate( valid.type('string') )
     .validate( valid.truthy() )
     .call( this, prop, val );
 };
 
 Document.prototype.getAddress = function ( prop ){
-  validAddressField( prop );
   return this.address[ prop ];
 };
 
 Document.prototype.delAddress = function ( prop ){
-  validAddressField( prop );
   delete this.address[ prop ];
 };
 
@@ -112,24 +110,18 @@ Document.prototype.getPopularity = model.get( 'popularity' );
 
 // admin
 Document.prototype.setAdmin = function( prop, val ){
-
-  validAdminField( prop );
-
   return model.set( prop )
+              .validate( valid.property( Document.adminFields ) )
               .validate( valid.type('string') )
               .validate( valid.truthy() )
               .call( this, val );
 };
 
 Document.prototype.delAdmin = function ( prop ){
-  validAdminField( prop );
   delete this[ prop ];
 };
 
 Document.prototype.getAdmin = function( prop ){
-
-  validAdminField( prop );
-
   return model.get( prop ).call( this );
 };
 
@@ -189,16 +181,3 @@ Document.addressFields = ['name', 'number', 'street', 'zip'];
 
 // export
 module.exports = Document;
-
-// convenience function
-function validAdminField( prop ){
-  if( -1 === Document.adminFields.indexOf( prop ) ){
-    throw new Error( 'invalid admin field: ' + prop + ', should be one of: ' + Document.adminFields.join(',') );
-  }
-}
-
-function validAddressField( prop ){
-  if( Document.addressFields.indexOf( prop ) === -1 ){
-    throw new Error( 'invalid address field: ' + prop + ', should be one of: ' + Document.addressFields.join(',') );
-  }
-}

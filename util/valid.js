@@ -64,3 +64,12 @@ module.exports.geo = function( axis ){
     }
   };
 };
+
+// validate prop against a properties whitelist
+module.exports.property = function( propList ){
+  return function( val, prop ){
+    if( -1 === propList.indexOf( prop ) ){
+      throw new Error( 'invalid property: ' + prop + ', should be one of: ' + propList.join(',') );
+    }
+  };
+};
