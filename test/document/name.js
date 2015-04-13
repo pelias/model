@@ -20,11 +20,22 @@ module.exports.tests.setName = function(test) {
     t.equal(doc.name.foo, 'bar', 'setter works');
     t.end();
   });
-  test('setName - validate', function(t) {
+  test('setName - validate key', function(t) {
     var doc = new Document('mytype','myid');
     t.throws( doc.setName.bind(doc,1), null, 'invalid type' );
     t.throws( doc.setName.bind(doc,''), null, 'invalid length' );
     t.throws( doc.setName.bind(doc,' '), null, 'invalid length' );
+    t.throws( doc.setName.bind(doc,null), null, 'invalid length' );
+    t.end();
+  });
+  test('setName - validate val', function(t) {
+    var doc = new Document('mytype','myid');
+    t.throws( doc.setName.bind(doc,'test',1), null, 'invalid value' );
+    t.throws( doc.setName.bind(doc,'test',''), null, 'invalid value' );
+    t.throws( doc.setName.bind(doc,'test',' '), null, 'invalid value' );
+    t.throws( doc.setName.bind(doc,'test',null), null, 'invalid value' );
+    t.throws( doc.setName.bind(doc,'test','\t'), null, 'invalid value' );
+    t.equal(doc.getName('test'), undefined, 'property not set');
     t.end();
   });
 };
