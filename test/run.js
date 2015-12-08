@@ -17,7 +17,8 @@ var tests = [
   require('./document/address.js'),
   require('./document/polygon.js'),
   require('./document/type.js'),
-  require('./document/category.js')
+  require('./document/category.js'),
+  require('./document/boundingbox.js')
 ];
 
 tests.map(function(t) {

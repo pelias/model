@@ -174,6 +174,12 @@ Document.prototype.setPolygon = model.set( 'boundaries' )
 
 Document.prototype.getPolygon = model.get( 'boundaries' );
 
+// bounding box
+Document.prototype.setBoundingBox = model.set( 'bounding_box' )
+                                         .validate( valid.type('object') )
+                                         .validate( valid.boundingBox() );
+Document.prototype.getBoundingBox = model.get( 'bounding_box' );
+
 // admin fields whitelist
 Document.adminFields = ['admin0','admin1','admin1_abbr','admin2','local_admin','locality','neighborhood'];
 

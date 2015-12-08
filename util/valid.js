@@ -1,3 +1,4 @@
+var _ = require('lodash');
 
 module.exports.type = function( type ){
   return function( val ){
@@ -73,3 +74,57 @@ module.exports.property = function( propList ){
     }
   };
 };
+
+module.exports.boundingBox = function() {
+  return function ( val ) {
+    if (!val.hasOwnProperty('upperLeft')) {
+      throw new Error('invalid boundingBox, missing property \'upperLeft\'');
+    }
+    if (!_.isObject(val.upperLeft)) {
+      throw new Error('invalid boundingBox, non-object property \'upperLeft\'');
+    }
+    if (!_.isFinite(val.upperLeft.lat) || val.upperLeft.lat < -90 || val.upperLeft.lat > 90) {
+      throw new Error('invalid boundingBox, property \'upperLeft\.lat\' must be within range -90 to 90');
+    }
+    if (!val.upperLeft.hasOwnProperty('lon')) {
+      throw new Error('invalid boundingBox, missing property \'upperLeft.lon\'');
+    }
+    if (!_.isFinite(val.upperLeft.lon) || val.upperLeft.lon < -180 || val.upperLeft.lon > 180) {
+      throw new Error('invalid boundingBox, property \'upperLeft\.lon\' must be within range -180 to 180');
+    }
+
+    if (!val.hasOwnProperty('lowerRight')) {
+      throw new Error('invalid boundingBox, missing property \'lowerRight\'');
+    }
+    if (!_.isObject(val.lowerRight)) {
+      throw new Error('invalid boundingBox, non-object property \'lowerRight\'');
+    }
+    if (!_.isFinite(val.lowerRight.lat) || val.lowerRight.lat < -90 || val.lowerRight.lat > 90) {
+      throw new Error('invalid boundingBox, property \'lowerRight\.lat\' must be within range -90 to 90');
+    }
+    if (!val.lowerRight.hasOwnProperty('lon')) {
+      throw new Error('invalid boundingBox, missing property \'lowerRight.lon\'');
+    }
+    if (!_.isFinite(val.lowerRight.lon) || val.lowerRight.lon < -180 || val.lowerRight.lon > 180) {
+      throw new Error('invalid boundingBox, property \'lowerRight\.lon\' must be within range -180 to 180');
+    }
+
+    if (val.upperLeft.lat < val.lowerRight.lat) {
+      throw new Error('invalid boundingBox, upperLeft.lat must be >= lowerRight.lat');
+    }
+
+    if (normalizeLon(val.upperLeft.lon) > normalizeLon(val.lowerRight.lon)) {
+      throw new Error('invalid boundingBox, upperLeft.lon must be <= lowerRight.lon');
+    }
+
+  }
+
+}
+
+// helper method that makes lon positive for wrapping comparison purposes
+function normalizeLon(lon) {
+  if (lon < 0) {
+    return lon + 360;
+  }
+  return lon;
+}
