@@ -6,14 +6,17 @@ module.exports.get = function( prop ){
   };
 };
 
-module.exports.set = function( prop, validators, transformers ){
+module.exports.set = function( prop, validators, transformers, postValidationTransformers ){
   if( !prop ){ throw new Error( 'invalid property' ); }
   if( !validators ){ validators = []; }
   if( !transformers ){ transformers = []; }
+  if( !postValidationTransformers ) { postValidationTransformers = []; }
   var setter = function( val ){
 
     val = transform( val, transformers );
     validate( val, prop, validators );
+    val = transform( val, postValidationTransformers );
+
     this[prop] = val;
 
     // chain
@@ -27,6 +30,10 @@ module.exports.set = function( prop, validators, transformers ){
     transformers.push( transformer );
     return setter;
   };
+  setter.postValidationTransform = function( transformer ) {
+    postValidationTransformers.push( transformer);
+    return setter;
+  }
   return setter;
 };
 
@@ -136,5 +143,6 @@ function transform( val, transformers ){
       val = transformer( val );
     });
   }
+
   return val;
 }

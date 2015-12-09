@@ -24,7 +24,7 @@ module.exports.tests.setBoundingBox = function(test) {
     }
 
     t.throws(doc.setBoundingBox.bind(doc, invalidBoundingBox),
-      /invalid boundingBox, missing property 'upperLeft'/);
+      /invalid boundingBox, non-object property 'upperLeft'/);
     t.equals(doc.getBoundingBox(), undefined);
     t.end();
 
@@ -166,7 +166,7 @@ module.exports.tests.setBoundingBox = function(test) {
     }
 
     t.throws(doc.setBoundingBox.bind(doc, invalidBoundingBox),
-      /invalid boundingBox, missing property 'upperLeft\.lon'/);
+      /invalid boundingBox, property 'upperLeft\.lon' must be within range -180 to 180/);
     t.equals(doc.getBoundingBox(), undefined);
     t.end();
 
@@ -267,7 +267,7 @@ module.exports.tests.setBoundingBox = function(test) {
     }
 
     t.throws(doc.setBoundingBox.bind(doc, invalidBoundingBox),
-      /invalid boundingBox, missing property 'lowerRight'/);
+      /invalid boundingBox, non-object property 'lowerRight'/);
     t.equals(doc.getBoundingBox(), undefined);
     t.end();
 
@@ -409,7 +409,7 @@ module.exports.tests.setBoundingBox = function(test) {
     }
 
     t.throws(doc.setBoundingBox.bind(doc, invalidBoundingBox),
-      /invalid boundingBox, missing property 'lowerRight\.lon'/);
+      /invalid boundingBox, property 'lowerRight\.lon' must be within range -180 to 180/);
     t.equals(doc.getBoundingBox(), undefined);
     t.end();
 
@@ -547,11 +547,11 @@ module.exports.tests.setBoundingBox = function(test) {
     var validBoundingBox = {
       upperLeft: {
         lat: 2.000000,
-        lon: 179.000000
+        lon: -179.000000
       },
       lowerRight: {
         lat: 1.000000,
-        lon: -179.0000
+        lon: 179.0000
       }
     }
 
@@ -575,6 +575,27 @@ module.exports.tests.setBoundingBox = function(test) {
         lon: 31.313131
       }
     }
+
+    doc.setBoundingBox(validBoundingBox);
+
+    t.deepEquals(doc.getBoundingBox(), validBoundingBox);
+    t.end();
+
+  });
+
+  test('valid boundingBox parameter should be returned as input from getBoundingBox', function(t) {
+    var doc = new Document('type', 'id');
+
+    var validBoundingBox = {
+      "upperLeft":{
+        "lat":11.166667,
+        "lon":-3.260676
+      },
+      "lowerRight":{
+        "lat":4.735416889,
+        "lon":1.19947914281
+      }
+    };
 
     doc.setBoundingBox(validBoundingBox);
 

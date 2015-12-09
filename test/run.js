@@ -1,4 +1,3 @@
-
 var tape = require('tape');
 var common = {};
 
@@ -18,7 +17,8 @@ var tests = [
   require('./document/polygon.js'),
   require('./document/type.js'),
   require('./document/category.js'),
-  require('./document/boundingbox.js')
+  require('./document/boundingbox.js'),
+  require('./util/transform.js')
 ];
 
 tests.map(function(t) {
