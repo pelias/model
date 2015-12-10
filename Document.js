@@ -2,7 +2,8 @@
 var pkg = require('./package'),
     model = require('./util/model'),
     valid = require('./util/valid'),
-    transform = require('./util/transform');
+    transform = require('./util/transform'),
+    _ = require('lodash');
 
 function Document( type, id ){
   this.name = {};
@@ -173,6 +174,36 @@ Document.prototype.setPolygon = model.set( 'boundaries' )
                                      .validate( valid.truthy() );
 
 Document.prototype.getPolygon = model.get( 'boundaries' );
+
+// bounding box
+// verify that the supplied bounding_box is a well-formed object, finally
+// marshaling into a ES-specific format
+Document.prototype.setBoundingBox = model.set( 'bounding_box' )
+                                         .validate( valid.type('object') )
+                                         .validate( valid.boundingBox() )
+                                         .postValidationTransform( transform.boundingBoxify() );
+
+// marshal the internal bounding_box back into the representation the caller supplied
+Document.prototype.getBoundingBox = function() {
+  // if there is no bounding_box set, just return undefined
+  if (_.isUndefined(this.bounding_box)) {
+    return undefined;
+  }
+
+  var internalBoundingBox = this.bounding_box;
+
+  return {
+    upperLeft: {
+      lat: internalBoundingBox.coordinates[0][1],
+      lon: internalBoundingBox.coordinates[0][0]
+    },
+    lowerRight: {
+      lat: internalBoundingBox.coordinates[1][1],
+      lon: internalBoundingBox.coordinates[1][0]
+    }
+  };
+
+}
 
 // admin fields whitelist
 Document.adminFields = ['admin0','admin1','admin1_abbr','admin2','local_admin','locality','neighborhood'];

@@ -1,3 +1,4 @@
+var _ = require('lodash');
 
 module.exports.type = function( type ){
   return function( val ){
@@ -73,3 +74,45 @@ module.exports.property = function( propList ){
     }
   };
 };
+
+module.exports.boundingBox = function() {
+  return function ( val ) {
+    // upperLeft must be an object
+    if (!_.isObject(val.upperLeft)) {
+      throw new Error('invalid boundingBox, non-object property \'upperLeft\'');
+    }
+    // must have upperLeft.lat within valid range
+    if (!_.isFinite(val.upperLeft.lat) || val.upperLeft.lat < -90 || val.upperLeft.lat > 90) {
+      throw new Error('invalid boundingBox, property \'upperLeft\.lat\' must be within range -90 to 90');
+    }
+    // must have upperLeft.lon within valid range
+    if (!_.isFinite(val.upperLeft.lon) || val.upperLeft.lon < -180 || val.upperLeft.lon > 180) {
+      throw new Error('invalid boundingBox, property \'upperLeft\.lon\' must be within range -180 to 180');
+    }
+
+    // lowerRight must be an object
+    if (!_.isObject(val.lowerRight)) {
+      throw new Error('invalid boundingBox, non-object property \'lowerRight\'');
+    }
+    // must have lowerRight.lat within valid range
+    if (!_.isFinite(val.lowerRight.lat) || val.lowerRight.lat < -90 || val.lowerRight.lat > 90) {
+      throw new Error('invalid boundingBox, property \'lowerRight\.lat\' must be within range -90 to 90');
+    }
+    // must have lowerRight.lon within valid range
+    if (!_.isFinite(val.lowerRight.lon) || val.lowerRight.lon < -180 || val.lowerRight.lon > 180) {
+      throw new Error('invalid boundingBox, property \'lowerRight\.lon\' must be within range -180 to 180');
+    }
+
+    // geometry must be internally consistent
+    if (val.upperLeft.lat < val.lowerRight.lat) {
+      throw new Error('invalid boundingBox, upperLeft.lat must be >= lowerRight.lat');
+    }
+
+    // normalize lon values by adding 360 so that only positives are compared
+    if (val.upperLeft.lon+360 > val.lowerRight.lon+360) {
+      throw new Error('invalid boundingBox, upperLeft.lon must be <= lowerRight.lon');
+    }
+
+  }
+
+}

@@ -32,3 +32,16 @@ module.exports.roundify = function(){
     return Math.round(val);
   };
 };
+
+module.exports.boundingBoxify = function() {
+  return function( val ){
+    return {
+      type: 'envelope',
+      coordinates: [
+        [val.upperLeft.lon, val.upperLeft.lat],
+        [val.lowerRight.lon, val.lowerRight.lat]
+      ]
+    };
+
+  };
+};
