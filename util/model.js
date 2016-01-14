@@ -33,7 +33,7 @@ module.exports.set = function( prop, validators, transformers, postValidationTra
   setter.postValidationTransform = function( transformer ) {
     postValidationTransformers.push( transformer);
     return setter;
-  }
+  };
   return setter;
 };
 

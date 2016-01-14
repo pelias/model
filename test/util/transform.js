@@ -21,14 +21,14 @@ module.exports.tests.setBoundingBox = function(test) {
         [21.212121, 13.131313],
         [31.313131, 12.121212]
       ]
-    }
+    };
 
     t.deepEquals(boundingBoxify(inputBoundingBox), expectedBoundingBox);
     t.end();
 
   });
 
-}
+};
 
 module.exports.all = function (tape, common) {
 

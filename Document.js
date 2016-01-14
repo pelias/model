@@ -203,7 +203,7 @@ Document.prototype.getBoundingBox = function() {
     }
   };
 
-}
+};
 
 // admin fields whitelist
 Document.adminFields = ['admin0','admin1','admin1_abbr','admin2','local_admin','locality','neighborhood'];
