@@ -1,4 +1,12 @@
 
+/**
+  Get the value of a property from the root of the model.
+
+  // example:
+  var get = model.get('myKey')
+  get() // returns: model['myKey']
+
+**/
 module.exports.get = function( prop ){
   if( !prop ){ throw new Error( 'invalid property' ); }
   return function(){
@@ -6,6 +14,29 @@ module.exports.get = function( prop ){
   };
 };
 
+/**
+  Set the value of a property on the root of the model.
+
+  // example:
+  var set = model.set('myKey')
+  set('example') // returns: model
+  // effect: model['myKey'] = 'example'
+
+  // validators example:
+  var set = model.set('myKey', [ valid.type('string') ])
+  set(1) // throws Error
+
+  // transformers example:
+  var set = model.set('myKey', null, [ transform.uppercase() ])
+  set('example') // returns: model
+  // effect: model['myKey'] = 'EXAMPLE'
+
+  // post validation transformers example:
+  var set = model.set('myKey', null, null, [ transform.roundify() ])
+  set(1.11111) // returns: model
+  // effect: model['myKey'] = 1
+
+**/
 module.exports.set = function( prop, validators, transformers, postValidationTransformers ){
   if( !prop ){ throw new Error( 'invalid property' ); }
   if( !validators ){ validators = []; }
@@ -33,10 +64,18 @@ module.exports.set = function( prop, validators, transformers, postValidationTra
   setter.postValidationTransform = function( transformer ) {
     postValidationTransformers.push( transformer);
     return setter;
-  };
+  }
   return setter;
 };
 
+/**
+  Get the value of a property from a *second level* property of the model.
+
+  // example:
+  var get = model.getChild('myKey')
+  get('myChildKey') // returns: model['myKey']['myChildKey']
+
+**/
 module.exports.getChild = function( child ){
   if( !child ){ throw new Error( 'invalid child' ); }
   return function( prop ){
@@ -45,6 +84,14 @@ module.exports.getChild = function( child ){
   };
 };
 
+/**
+  Test the existence of a *second level* property of the model.
+
+  // example:
+  var has = model.hasChild('myKey')
+  has('myChildKey') // returns: false
+
+**/
 module.exports.hasChild = function( child ){
   if( !child ){ throw new Error( 'invalid child' ); }
   return function( prop ){
@@ -53,6 +100,18 @@ module.exports.hasChild = function( child ){
   };
 };
 
+/**
+  Set the value of a *second level* property of the model.
+
+  // example:
+  var set = model.setChild('myKey')
+  set('myChildKey', 'example') // returns: model
+  // effect: model['myKey']['myChildKey'] = 'example'
+
+  // validators & transformers behave the same as model.get()
+  // see: the code comments above for more info.
+
+**/
 module.exports.setChild = function( child, validators, transformers ){
   if( !child ){ throw new Error( 'invalid child' ); }
   if( !validators ){ validators = []; }
@@ -78,6 +137,15 @@ module.exports.setChild = function( child, validators, transformers ){
   return setter;
 };
 
+/**
+  Remove the *second level* property of the model.
+  Returns true if the property was found and deleted, else false.
+
+  // example:
+  var del = model.delChild('myKey')
+  del('myChildKey') // returns: false
+
+**/
 module.exports.delChild = function( child ){
   if( !child ){ throw new Error( 'invalid child' ); }
   return function( prop ){
@@ -91,6 +159,18 @@ module.exports.delChild = function( child ){
   };
 };
 
+/**
+  Push a value on to the Array stored at a root property of the model.
+  Note: the Array enforced uniqueness and will not store duplicates.
+
+  // example:
+  model.items = [];
+  var push = model.push('items')
+  push('item1') // returns: model
+  push('item2') // returns: model
+  // effect: model.items = ['item1', 'item2']
+
+**/
 module.exports.push = function( prop, validators, transformers ){
   if( !prop ){ throw new Error( 'invalid property' ); }
   if( !validators ){ validators = []; }
@@ -118,6 +198,16 @@ module.exports.push = function( prop, validators, transformers ){
   return adder;
 };
 
+/**
+  Remove a value from the Array stored at a root property of the model.
+
+  // example:
+  model.items = ['item1', 'item2'];
+  var splice = model.splice('items')
+  splice('item1') // returns: model
+  // effect: model.items = ['item2']
+
+**/
 module.exports.splice = function( prop ){
   if( !prop ){ throw new Error( 'invalid property' ); }
   return function( val ){
@@ -129,6 +219,9 @@ module.exports.splice = function( prop ){
   };
 };
 
+/**
+  Utility function to run an Array of validators against a property
+**/
 function validate( val, prop, validators ){
   if( validators ){
     validators.forEach( function( validator ) {
@@ -137,6 +230,9 @@ function validate( val, prop, validators ){
   }
 }
 
+/**
+  Utility function to run an Array of transformers against a property
+**/
 function transform( val, transformers ){
   if( transformers ){
     transformers.forEach( function( transformer ) {
