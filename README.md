@@ -15,14 +15,15 @@ Using this model ensures that your import script will continue to work even when
 ```javascript
 var Document = require('pelias-model').Document;
 
-var poi = new Document( 'geoname', 1003 )
+var poi = new Document( 'geoname', 'venue', 1003 )
   .setAlpha3( 'GBR' )
   .setMeta( 'author', 'peter' )
-  .setMeta( 'date', new Date().getTime() )
   .setName( 'default', 'Hackney City Farm' )
   .setName( 'alt', 'Haggerston City Farm' )
   .setAdmin( 'admin0', 'Great Britain' )
   .setAdmin( 'neighborhood', 'Shoreditch' )
+  .setParent( 'country', 'Great Britain' )
+  .setParent( 'neighbourhood', 'Shoreditch' )
   .setAddress( 'number', '10' )
   .setAddress( 'street', 'pelias place' )
   .addCategory( 'foo' )
@@ -30,7 +31,9 @@ var poi = new Document( 'geoname', 1003 )
   .removeCategory( 'foo' )
   .setPopulation(10)
   .setPopularity(3)
-  .setCentroid({ lon: 0.5, lat: 50.1 });
+  .setCentroid({ lon: 0.5, lat: 50.1 })
+  .setPolygon( geojsonObject /* any valid geojson object */ )
+  .setBoundingBox( bboxObject /* see tests for bbox syntax */ );
 
 console.log( poi );
 ```

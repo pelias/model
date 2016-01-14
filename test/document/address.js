@@ -5,7 +5,7 @@ module.exports.tests = {};
 
 module.exports.tests.getAddress = function(test) {
   test('getAddress', function(t) {
-    var doc = new Document('mytype','myid');
+    var doc = new Document('mysource','mylayer','myid');
     t.equal(doc.getAddress('zip'), undefined, 'getter works');
     doc.address = { 'zip': 'bar' };
     t.equal(doc.getAddress('zip'), 'bar', 'getter works');
@@ -15,13 +15,13 @@ module.exports.tests.getAddress = function(test) {
 
 module.exports.tests.setAddress = function(test) {
   test('setAddress', function(t) {
-    var doc = new Document('mytype','myid');
+    var doc = new Document('mysource','mylayer','myid');
     t.equal(doc.setAddress('zip','bar'), doc, 'chainable');
     t.equal(doc.address.zip, 'bar', 'setter works');
     t.end();
   });
   test('setAddress - validate', function(t) {
-    var doc = new Document('mytype','myid');
+    var doc = new Document('mysource','mylayer','myid');
     t.throws( doc.setAddress.bind(doc, 1), null, 'invalid type' );
     t.throws( doc.setAddress.bind(doc, ''), null, 'invalid length' );
     t.throws( doc.setAddress.bind(doc, 'foo', 1), null, 'invalid property' );
@@ -39,7 +39,7 @@ module.exports.tests.setAddress = function(test) {
 
 module.exports.tests.hasAddress = function(test) {
   test('hasAddress', function(t) {
-    var doc = new Document('mytype','myid');
+    var doc = new Document('mysource','mylayer','myid');
     t.equal(doc.hasAddress('zip'), false, 'hasser works');
     doc.address.zip = 'bar';
     t.equal(doc.hasAddress('zip'), true, 'hasser works');

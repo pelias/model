@@ -4,7 +4,7 @@ module.exports.tests = {};
 
 module.exports.tests.setBoundingBox = function(test) {
   test('attempting to set boundingBox to a non-object should throw an exception', function(t) {
-    var doc = new Document('type', 'id');
+    var doc = new Document('mysource','mylayer','myid');
 
     t.throws(doc.setBoundingBox.bind(doc, 'this is not an object'),
       /invalid document type, expecting: object got: this is not an object/);
@@ -14,7 +14,7 @@ module.exports.tests.setBoundingBox = function(test) {
   });
 
   test('boundingBox parameter without upperLeft should throw an exception', function(t) {
-    var doc = new Document('type', 'id');
+    var doc = new Document('mysource','mylayer','myid');
 
     var invalidBoundingBox = {
       lowerRight: {
@@ -31,7 +31,7 @@ module.exports.tests.setBoundingBox = function(test) {
   });
 
   test('boundingBox parameter with non-object upperLeft should throw an exception', function(t) {
-    var doc = new Document('type', 'id');
+    var doc = new Document('mysource','mylayer','myid');
 
     var invalidBoundingBox = {
       upperLeft: 'this is not an object',
@@ -49,7 +49,7 @@ module.exports.tests.setBoundingBox = function(test) {
   });
 
   test('boundingBox parameter without upperLeft.lat should throw an exception', function(t) {
-    var doc = new Document('type', 'id');
+    var doc = new Document('mysource','mylayer','myid');
 
     var invalidBoundingBox = {
       upperLeft: {
@@ -69,7 +69,7 @@ module.exports.tests.setBoundingBox = function(test) {
   });
 
   test('boundingBox parameter with non-number upperLeft.lat should throw an exception', function(t) {
-    var doc = new Document('type', 'id');
+    var doc = new Document('mysource','mylayer','myid');
 
     var invalidBoundingBox = {
       upperLeft: {
@@ -90,7 +90,7 @@ module.exports.tests.setBoundingBox = function(test) {
   });
 
   test('boundingBox parameter with NaN upperLeft.lat should throw an exception', function(t) {
-    var doc = new Document('type', 'id');
+    var doc = new Document('mysource','mylayer','myid');
 
     var invalidBoundingBox = {
       upperLeft: {
@@ -111,7 +111,7 @@ module.exports.tests.setBoundingBox = function(test) {
   });
 
   test('boundingBox parameter with upperLeft.lat < -90 should throw an exception', function(t) {
-    var doc = new Document('type', 'id');
+    var doc = new Document('mysource','mylayer','myid');
 
     var invalidBoundingBox = {
       upperLeft: {
@@ -132,7 +132,7 @@ module.exports.tests.setBoundingBox = function(test) {
   });
 
   test('boundingBox parameter with upperLeft.lat > 90 should throw an exception', function(t) {
-    var doc = new Document('type', 'id');
+    var doc = new Document('mysource','mylayer','myid');
 
     var invalidBoundingBox = {
       upperLeft: {
@@ -153,7 +153,7 @@ module.exports.tests.setBoundingBox = function(test) {
   });
 
   test('boundingBox parameter without upperLeft.lon should throw an exception', function(t) {
-    var doc = new Document('type', 'id');
+    var doc = new Document('mysource','mylayer','myid');
 
     var invalidBoundingBox = {
       upperLeft: {
@@ -173,7 +173,7 @@ module.exports.tests.setBoundingBox = function(test) {
   });
 
   test('boundingBox parameter with non-number upperLeft.lon should throw an exception', function(t) {
-    var doc = new Document('type', 'id');
+    var doc = new Document('mysource','mylayer','myid');
 
     var invalidBoundingBox = {
       upperLeft: {
@@ -194,7 +194,7 @@ module.exports.tests.setBoundingBox = function(test) {
   });
 
   test('boundingBox parameter with NaN upperLeft.lon should throw an exception', function(t) {
-    var doc = new Document('type', 'id');
+    var doc = new Document('mysource','mylayer','myid');
 
     var invalidBoundingBox = {
       upperLeft: {
@@ -215,7 +215,7 @@ module.exports.tests.setBoundingBox = function(test) {
   });
 
   test('boundingBox parameter with upperLeft.lon < -180 should throw an exception', function(t) {
-    var doc = new Document('type', 'id');
+    var doc = new Document('mysource','mylayer','myid');
 
     var invalidBoundingBox = {
       upperLeft: {
@@ -236,7 +236,7 @@ module.exports.tests.setBoundingBox = function(test) {
   });
 
   test('boundingBox parameter with upperLeft.lon > 180 should throw an exception', function(t) {
-    var doc = new Document('type', 'id');
+    var doc = new Document('mysource','mylayer','myid');
 
     var invalidBoundingBox = {
       upperLeft: {
@@ -257,7 +257,7 @@ module.exports.tests.setBoundingBox = function(test) {
   });
 
   test('boundingBox parameter without lowerRight should throw an exception', function(t) {
-    var doc = new Document('type', 'id');
+    var doc = new Document('mysource','mylayer','myid');
 
     var invalidBoundingBox = {
       upperLeft: {
@@ -274,7 +274,7 @@ module.exports.tests.setBoundingBox = function(test) {
   });
 
   test('boundingBox parameter with non-object lowerRight should throw an exception', function(t) {
-    var doc = new Document('type', 'id');
+    var doc = new Document('mysource','mylayer','myid');
 
     var invalidBoundingBox = {
       upperLeft: {
@@ -292,7 +292,7 @@ module.exports.tests.setBoundingBox = function(test) {
   });
 
   test('boundingBox parameter without lowerRight.lat should throw an exception', function(t) {
-    var doc = new Document('type', 'id');
+    var doc = new Document('mysource','mylayer','myid');
 
     var invalidBoundingBox = {
       upperLeft: {
@@ -312,7 +312,7 @@ module.exports.tests.setBoundingBox = function(test) {
   });
 
   test('boundingBox parameter with non-number lowerRight.lat should throw an exception', function(t) {
-    var doc = new Document('type', 'id');
+    var doc = new Document('mysource','mylayer','myid');
 
     var invalidBoundingBox = {
       upperLeft: {
@@ -333,7 +333,7 @@ module.exports.tests.setBoundingBox = function(test) {
   });
 
   test('boundingBox parameter with NaN lowerRight.lat should throw an exception', function(t) {
-    var doc = new Document('type', 'id');
+    var doc = new Document('mysource','mylayer','myid');
 
     var invalidBoundingBox = {
       upperLeft: {
@@ -354,7 +354,7 @@ module.exports.tests.setBoundingBox = function(test) {
   });
 
   test('boundingBox parameter with lowerRight.lat < -90 should throw an exception', function(t) {
-    var doc = new Document('type', 'id');
+    var doc = new Document('mysource','mylayer','myid');
 
     var invalidBoundingBox = {
       upperLeft: {
@@ -375,7 +375,7 @@ module.exports.tests.setBoundingBox = function(test) {
   });
 
   test('boundingBox parameter with lowerRight.lat > 90 should throw an exception', function(t) {
-    var doc = new Document('type', 'id');
+    var doc = new Document('mysource','mylayer','myid');
 
     var invalidBoundingBox = {
       upperLeft: {
@@ -396,7 +396,7 @@ module.exports.tests.setBoundingBox = function(test) {
   });
 
   test('boundingBox parameter without lowerRight.lon should throw an exception', function(t) {
-    var doc = new Document('type', 'id');
+    var doc = new Document('mysource','mylayer','myid');
 
     var invalidBoundingBox = {
       upperLeft: {
@@ -416,7 +416,7 @@ module.exports.tests.setBoundingBox = function(test) {
   });
 
   test('boundingBox parameter with non-number lowerRight.lon should throw an exception', function(t) {
-    var doc = new Document('type', 'id');
+    var doc = new Document('mysource','mylayer','myid');
 
     var invalidBoundingBox = {
       upperLeft: {
@@ -437,7 +437,7 @@ module.exports.tests.setBoundingBox = function(test) {
   });
 
   test('boundingBox parameter with NaN lowerRight.lon should throw an exception', function(t) {
-    var doc = new Document('type', 'id');
+    var doc = new Document('mysource','mylayer','myid');
 
     var invalidBoundingBox = {
       upperLeft: {
@@ -458,7 +458,7 @@ module.exports.tests.setBoundingBox = function(test) {
   });
 
   test('boundingBox parameter with lowerRight.lon < -180 should throw an exception', function(t) {
-    var doc = new Document('type', 'id');
+    var doc = new Document('mysource','mylayer','myid');
 
     var invalidBoundingBox = {
       upperLeft: {
@@ -479,7 +479,7 @@ module.exports.tests.setBoundingBox = function(test) {
   });
 
   test('boundingBox parameter with lowerRight.lon > 180 should throw an exception', function(t) {
-    var doc = new Document('type', 'id');
+    var doc = new Document('mysource','mylayer','myid');
 
     var invalidBoundingBox = {
       upperLeft: {
@@ -500,7 +500,7 @@ module.exports.tests.setBoundingBox = function(test) {
   });
 
   test('upperLeft lat < lowerRight lat should throw an exception', function(t) {
-    var doc = new Document('type', 'id');
+    var doc = new Document('mysource','mylayer','myid');
 
     var invalidBoundingBox = {
       upperLeft: {
@@ -521,7 +521,7 @@ module.exports.tests.setBoundingBox = function(test) {
   });
 
   test('upperLeft lon > lowerRight lon should throw an exception', function(t) {
-    var doc = new Document('type', 'id');
+    var doc = new Document('mysource','mylayer','myid');
 
     var invalidBoundingBox = {
       upperLeft: {
@@ -542,7 +542,7 @@ module.exports.tests.setBoundingBox = function(test) {
   });
 
   test('lon values should wrap', function(t) {
-    var doc = new Document('type', 'id');
+    var doc = new Document('mysource','mylayer','myid');
 
     var validBoundingBox = {
       upperLeft: {
@@ -563,7 +563,7 @@ module.exports.tests.setBoundingBox = function(test) {
   });
 
   test('valid boundingBox parameter should be returned as input from getBoundingBox', function(t) {
-    var doc = new Document('type', 'id');
+    var doc = new Document('mysource','mylayer','myid');
 
     var validBoundingBox = {
       upperLeft: {
@@ -584,7 +584,7 @@ module.exports.tests.setBoundingBox = function(test) {
   });
 
   test('valid boundingBox parameter should be returned as input from getBoundingBox', function(t) {
-    var doc = new Document('type', 'id');
+    var doc = new Document('mysource','mylayer','myid');
 
     var validBoundingBox = {
       upperLeft:{

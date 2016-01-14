@@ -203,20 +203,22 @@ module.exports.push = function( prop, validators, transformers ){
 
   // example:
   model.items = ['item1', 'item2'];
-  var splice = model.splice('items')
+  var splice = model.splice('items') // returns: model
   splice('item1') // returns: model
   // effect: model.items = ['item2']
 
 **/
 module.exports.splice = function( prop ){
   if( !prop ){ throw new Error( 'invalid property' ); }
-  return function( val ){
+  var splicer = function( val ){
     for(var i = this[prop].length - 1; i >= 0; i--) {
       if(this[prop][i] === val) {
         this[prop].splice(i, 1);
       }
     }
+    return this;
   };
+  return splicer;
 };
 
 /**

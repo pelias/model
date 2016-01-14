@@ -14,11 +14,16 @@ var tests = [
   require('./document/population.js'),
   require('./document/name.js'),
   require('./document/address.js'),
+  require('./document/parent.js'),
   require('./document/polygon.js'),
   require('./document/type.js'),
   require('./document/category.js'),
   require('./document/boundingbox.js'),
-  require('./util/transform.js')
+  require('./document/source.js'),
+  require('./document/layer.js'),
+  require('./document/source_id.js'),
+  require('./util/transform.js'),
+  require('./serialize/test.js'),
 ];
 
 tests.map(function(t) {

@@ -5,8 +5,9 @@ var pkg = require('./package'),
     transform = require('./util/transform'),
     _ = require('lodash');
 
-function Document( type, id ){
+function Document( source, layer, source_id ){
   this.name = {};
+  this.parent = {};
   this.address = {};
   this.center_point = {};
   this.category = [];
@@ -16,9 +17,22 @@ function Document( type, id ){
   this._meta.version = pkg.version;
 
   // mandatory properties
-  this.setId( id );
-  this.setType( type );
+  this.setSource( source );
+  this.setLayer( layer );
+  this.setSourceId( source_id );
+  this.setId( source_id );
+
+  // set the elasticsearch '_type' property to be the same as $layer
+  // this may be removed/modified in the future if required but will mean
+  // that; for example; all 'address' data ends up in the same '_type', even
+  // if it comes from different sources.
+  this.setType( layer );
 }
+
+Document.prototype.toJSON = function(){
+  this.phrase = this.name;
+  return this;
+};
 
 // id
 Document.prototype.setId = function( id ){
@@ -45,6 +59,31 @@ Document.prototype.getType = function(){
               .call( this, 'type' );
 };
 
+// source
+Document.prototype.setSource = model.set( 'source' )
+                                    .transform( transform.lowercase() )
+                                    .validate( valid.type('string') )
+                                    .validate( valid.truthy() );
+
+Document.prototype.getSource = model.get( 'source' );
+
+// layer
+Document.prototype.setLayer = model.set( 'layer' )
+                                    .transform( transform.lowercase() )
+                                    .validate( valid.type('string') )
+                                    .validate( valid.truthy() );
+
+Document.prototype.getLayer = model.get( 'layer' );
+
+// source
+Document.prototype.setSourceId = model.set( 'source_id' )
+                                    .transform( transform.stringify() )
+                                    .transform( transform.lowercase() )
+                                    .validate( valid.type('string') )
+                                    .validate( valid.truthy() );
+
+Document.prototype.getSourceId = model.get( 'source_id' );
+
 // alpha3
 Document.prototype.setAlpha3 = model.set( 'alpha3' )
                                     .transform( transform.uppercase() )
@@ -57,7 +96,7 @@ Document.prototype.getAlpha3 = model.get( 'alpha3' );
 
 // globally unique id
 Document.prototype.getGid = function(){
-  return this.getId() + ':' + this.getType();
+  return [ this.getSource(), this.getLayer(), this.getId() ].join(':');
 };
 
 // meta
@@ -74,6 +113,25 @@ Document.prototype.setName = model.setChild( 'name' )
 Document.prototype.getName = model.getChild( 'name' );
 Document.prototype.hasName = model.hasChild( 'name' );
 Document.prototype.delName = model.delChild( 'name' );
+
+// parent
+Document.prototype.setParent = function ( prop, val ){
+  return model.setChild( 'parent' )
+    .validate( valid.property( Document.parentFields ) )
+    .validate( valid.type('string') )
+    .validate( valid.truthy() )
+    .call( this, prop, val );
+};
+
+Document.prototype.getParent = function ( prop ){
+  return this.parent[ prop ];
+};
+
+Document.prototype.delParent = function ( prop ){
+  delete this.parent[ prop ];
+};
+
+Document.prototype.hasParent = model.hasChild( 'parent' );
 
 // address
 Document.prototype.setAddress = function ( prop, val ){
@@ -168,12 +226,12 @@ Document.prototype.setCentroid = function( centroid ){
 };
 Document.prototype.getCentroid = model.get( 'center_point' );
 
-// boundaries
-Document.prototype.setPolygon = model.set( 'boundaries' )
+// shape
+Document.prototype.setPolygon = model.set( 'shape' )
                                      .validate( valid.type('object') )
                                      .validate( valid.truthy() );
 
-Document.prototype.getPolygon = model.get( 'boundaries' );
+Document.prototype.getPolygon = model.get( 'shape' );
 
 // bounding box
 // verify that the supplied bounding_box is a well-formed object, finally
@@ -209,6 +267,10 @@ Document.prototype.getBoundingBox = function() {
 Document.adminFields = ['admin0','admin1','admin1_abbr','admin2','local_admin','locality','neighborhood'];
 
 Document.addressFields = ['name', 'number', 'street', 'zip'];
+
+Document.parentFields = ['alpha3','country','country_abbr','country_id','region','region_abbr',
+  'region_id','county','county_abbr','county_id','locality','locality_abbr','locality_id',
+  'localadmin','localadmin_abbr','localadmin_id','neighbourhood','neighbourhood_abbr','neighbourhood_id'];
 
 // export
 module.exports = Document;
