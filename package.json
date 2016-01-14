@@ -1,7 +1,7 @@
 {
   "name": "pelias-model",
   "author": "mapzen",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "Pelias data models",
   "homepage": "https://github.com/pelias/model",
   "license": "MIT",
