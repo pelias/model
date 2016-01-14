@@ -95,7 +95,7 @@ module.exports.tests.complete = function(test) {
         'street': 'pelias place'
       },
 
-      // geonames fields
+      // Quattroshapes fields
       'alpha3': 'GBR',
       'admin0': 'Great Britain',
       'neighborhood': 'Shoreditch',
