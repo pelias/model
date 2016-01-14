@@ -15,7 +15,8 @@
   },
   "keywords": [
     "pelias",
-    "model"
+    "model",
+    "blah"
   ],
   "bugs": {
     "url": "https://github.com/pelias/model/issues"
