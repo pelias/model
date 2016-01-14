@@ -21,7 +21,7 @@ module.exports.tests.setBoundingBox = function(test) {
         lat: 12.121212,
         lon: 31.313131
       }
-    }
+    };
 
     t.throws(doc.setBoundingBox.bind(doc, invalidBoundingBox),
       /invalid boundingBox, non-object property 'upperLeft'/);
@@ -39,7 +39,7 @@ module.exports.tests.setBoundingBox = function(test) {
         lat: 12.121212,
         lon: 31.313131
       }
-    }
+    };
 
     t.throws(doc.setBoundingBox.bind(doc, invalidBoundingBox),
       /invalid boundingBox, non-object property 'upperLeft'/);
@@ -59,7 +59,7 @@ module.exports.tests.setBoundingBox = function(test) {
         lat: 12.121212,
         lon: 31.313131
       }
-    }
+    };
 
     t.throws(doc.setBoundingBox.bind(doc, invalidBoundingBox),
       /invalid boundingBox, property 'upperLeft\.lat' must be within range -90 to 90/);
@@ -80,7 +80,7 @@ module.exports.tests.setBoundingBox = function(test) {
         lat: 12.121212,
         lon: 31.313131
       }
-    }
+    };
 
     t.throws(doc.setBoundingBox.bind(doc, invalidBoundingBox),
       /invalid boundingBox, property 'upperLeft\.lat' must be within range -90 to 90/);
@@ -101,7 +101,7 @@ module.exports.tests.setBoundingBox = function(test) {
         lat: 12.121212,
         lon: 31.313131
       }
-    }
+    };
 
     t.throws(doc.setBoundingBox.bind(doc, invalidBoundingBox),
       /invalid boundingBox, property 'upperLeft\.lat' must be within range -90 to 90/);
@@ -122,7 +122,7 @@ module.exports.tests.setBoundingBox = function(test) {
         lat: 12.121212,
         lon: 31.313131
       }
-    }
+    };
 
     t.throws(doc.setBoundingBox.bind(doc, invalidBoundingBox),
       /invalid boundingBox, property 'upperLeft\.lat' must be within range -90 to 90/);
@@ -143,7 +143,7 @@ module.exports.tests.setBoundingBox = function(test) {
         lat: 12.121212,
         lon: 31.313131
       }
-    }
+    };
 
     t.throws(doc.setBoundingBox.bind(doc, invalidBoundingBox),
       /invalid boundingBox, property 'upperLeft\.lat' must be within range -90 to 90/);
@@ -163,7 +163,7 @@ module.exports.tests.setBoundingBox = function(test) {
         lat: 12.121212,
         lon: 31.313131
       }
-    }
+    };
 
     t.throws(doc.setBoundingBox.bind(doc, invalidBoundingBox),
       /invalid boundingBox, property 'upperLeft\.lon' must be within range -180 to 180/);
@@ -184,7 +184,7 @@ module.exports.tests.setBoundingBox = function(test) {
         lat: 12.121212,
         lon: 31.313131
       }
-    }
+    };
 
     t.throws(doc.setBoundingBox.bind(doc, invalidBoundingBox),
       /invalid boundingBox, property 'upperLeft\.lon' must be within range -180 to 180/);
@@ -205,7 +205,7 @@ module.exports.tests.setBoundingBox = function(test) {
         lat: 12.121212,
         lon: 31.313131
       }
-    }
+    };
 
     t.throws(doc.setBoundingBox.bind(doc, invalidBoundingBox),
       /invalid boundingBox, property 'upperLeft\.lon' must be within range -180 to 180/);
@@ -226,7 +226,7 @@ module.exports.tests.setBoundingBox = function(test) {
         lat: 12.121212,
         lon: 31.313131
       }
-    }
+    };
 
     t.throws(doc.setBoundingBox.bind(doc, invalidBoundingBox),
       /invalid boundingBox, property 'upperLeft\.lon' must be within range -180 to 180/);
@@ -247,7 +247,7 @@ module.exports.tests.setBoundingBox = function(test) {
         lat: 12.121212,
         lon: 31.313131
       }
-    }
+    };
 
     t.throws(doc.setBoundingBox.bind(doc, invalidBoundingBox),
       /invalid boundingBox, property 'upperLeft\.lon' must be within range -180 to 180/);
@@ -264,7 +264,7 @@ module.exports.tests.setBoundingBox = function(test) {
         lat: 13.131313,
         lon: 21.212121
       }
-    }
+    };
 
     t.throws(doc.setBoundingBox.bind(doc, invalidBoundingBox),
       /invalid boundingBox, non-object property 'lowerRight'/);
@@ -282,7 +282,7 @@ module.exports.tests.setBoundingBox = function(test) {
         lon: 21.212121
       },
       lowerRight: 'this is not an object'
-    }
+    };
 
     t.throws(doc.setBoundingBox.bind(doc, invalidBoundingBox),
       /invalid boundingBox, non-object property 'lowerRight'/);
@@ -302,7 +302,7 @@ module.exports.tests.setBoundingBox = function(test) {
       lowerRight: {
         lon: 31.313131
       }
-    }
+    };
 
     t.throws(doc.setBoundingBox.bind(doc, invalidBoundingBox),
       /invalid boundingBox, property 'lowerRight\.lat' must be within range -90 to 90/);
@@ -323,7 +323,7 @@ module.exports.tests.setBoundingBox = function(test) {
         lat: 'this is not a number',
         lon: 31.313131
       }
-    }
+    };
 
     t.throws(doc.setBoundingBox.bind(doc, invalidBoundingBox),
       /invalid boundingBox, property 'lowerRight\.lat' must be within range -90 to 90/);
@@ -344,7 +344,7 @@ module.exports.tests.setBoundingBox = function(test) {
         lat: NaN,
         lon: 31.313131
       }
-    }
+    };
 
     t.throws(doc.setBoundingBox.bind(doc, invalidBoundingBox),
       /invalid boundingBox, property 'lowerRight\.lat' must be within range -90 to 90/);
@@ -365,7 +365,7 @@ module.exports.tests.setBoundingBox = function(test) {
         lat: -90.000001,
         lon: 31.313131
       }
-    }
+    };
 
     t.throws(doc.setBoundingBox.bind(doc, invalidBoundingBox),
       /invalid boundingBox, property 'lowerRight\.lat' must be within range -90 to 90/);
@@ -386,7 +386,7 @@ module.exports.tests.setBoundingBox = function(test) {
         lat: 90.000001,
         lon: 31.313131
       }
-    }
+    };
 
     t.throws(doc.setBoundingBox.bind(doc, invalidBoundingBox),
       /invalid boundingBox, property 'lowerRight\.lat' must be within range -90 to 90/);
@@ -406,7 +406,7 @@ module.exports.tests.setBoundingBox = function(test) {
       lowerRight: {
         lat: 12.121212
       }
-    }
+    };
 
     t.throws(doc.setBoundingBox.bind(doc, invalidBoundingBox),
       /invalid boundingBox, property 'lowerRight\.lon' must be within range -180 to 180/);
@@ -427,7 +427,7 @@ module.exports.tests.setBoundingBox = function(test) {
         lat: 12.121212,
         lon: 'this is not a number'
       }
-    }
+    };
 
     t.throws(doc.setBoundingBox.bind(doc, invalidBoundingBox),
       /invalid boundingBox, property 'lowerRight\.lon' must be within range -180 to 180/);
@@ -448,7 +448,7 @@ module.exports.tests.setBoundingBox = function(test) {
         lat: 12.121212,
         lon: NaN
       }
-    }
+    };
 
     t.throws(doc.setBoundingBox.bind(doc, invalidBoundingBox),
       /invalid boundingBox, property 'lowerRight\.lon' must be within range -180 to 180/);
@@ -469,7 +469,7 @@ module.exports.tests.setBoundingBox = function(test) {
         lat: 12.121212,
         lon: -180.000001
       }
-    }
+    };
 
     t.throws(doc.setBoundingBox.bind(doc, invalidBoundingBox),
       /invalid boundingBox, property 'lowerRight\.lon' must be within range -180 to 180/);
@@ -490,7 +490,7 @@ module.exports.tests.setBoundingBox = function(test) {
         lat: 12.121212,
         lon: 180.000001
       }
-    }
+    };
 
     t.throws(doc.setBoundingBox.bind(doc, invalidBoundingBox),
       /invalid boundingBox, property 'lowerRight\.lon' must be within range -180 to 180/);
@@ -511,7 +511,7 @@ module.exports.tests.setBoundingBox = function(test) {
         lat: 13.131313,
         lon: 31.313131
       }
-    }
+    };
 
     t.throws(doc.setBoundingBox.bind(doc, invalidBoundingBox),
       /invalid boundingBox, upperLeft.lat must be >= lowerRight.lat/);
@@ -532,7 +532,7 @@ module.exports.tests.setBoundingBox = function(test) {
         lat: 12.121212,
         lon: 21.212121
       }
-    }
+    };
 
     t.throws(doc.setBoundingBox.bind(doc, invalidBoundingBox),
       /invalid boundingBox, upperLeft.lon must be <= lowerRight.lon/);
@@ -553,7 +553,7 @@ module.exports.tests.setBoundingBox = function(test) {
         lat: 1.000000,
         lon: 179.0000
       }
-    }
+    };
 
     doc.setBoundingBox(validBoundingBox);
 
@@ -574,7 +574,7 @@ module.exports.tests.setBoundingBox = function(test) {
         lat: 12.121212,
         lon: 31.313131
       }
-    }
+    };
 
     doc.setBoundingBox(validBoundingBox);
 
@@ -587,13 +587,13 @@ module.exports.tests.setBoundingBox = function(test) {
     var doc = new Document('type', 'id');
 
     var validBoundingBox = {
-      "upperLeft":{
-        "lat":11.166667,
-        "lon":-3.260676
+      upperLeft:{
+        lat: 11.166667,
+        lon: -3.260676
       },
-      "lowerRight":{
-        "lat":4.735416889,
-        "lon":1.19947914281
+      lowerRight:{
+        lat: 4.735416889,
+        lon: 1.19947914281
       }
     };
 

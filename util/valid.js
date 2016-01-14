@@ -113,6 +113,6 @@ module.exports.boundingBox = function() {
       throw new Error('invalid boundingBox, upperLeft.lon must be <= lowerRight.lon');
     }
 
-  }
+  };
 
-}
+};
