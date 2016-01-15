@@ -181,6 +181,9 @@ module.exports.delChild = function( child ){
   push('item2') // returns: model
   // effect: model.items = ['item1', 'item2']
 
+  // validators & transformers behave the same as model.get()
+  // see: the code comments above for more info.
+
 **/
 module.exports.push = function( prop, validators, transformers ){
   if( !prop ){ throw new Error( 'invalid property' ); }
@@ -212,6 +215,54 @@ module.exports.push = function( prop, validators, transformers ){
 };
 
 /**
+  Push a value on to the Array stored at *second level* of the model.
+  Note: the Array enforced uniqueness and will not store duplicates.
+
+  // example:
+  model.items.child = [];
+  var push = model.pushChild('items')
+  push('child','item1') // returns: model
+  push('child','item2') // returns: model
+  // effect: model.items.child = ['item1', 'item2']
+
+  // validators & transformers behave the same as model.get()
+  // see: the code comments above for more info.
+
+**/
+module.exports.pushChild = function( child, validators, transformers ){
+  if( !child ){ throw new Error( 'invalid child' ); }
+  if( !validators ){ validators = []; }
+  if( !transformers ){ transformers = []; }
+  var setter = function( prop, val ){
+    if( !prop ){ throw new Error( 'invalid property' ); }
+    if( !this.hasOwnProperty(child) ){ throw new Error( 'invalid child' ); }
+    if( 'object' !== typeof this[child] ){ throw new Error( 'invalid child' ); }
+    if( null === this[child] ){ throw new Error( 'invalid child' ); }
+    if( !this[child].hasOwnProperty(prop) ){ throw new Error( 'invalid child' ); }
+    if( !Array.isArray(this[child][prop]) ){ throw new Error( 'invalid child' ); }
+
+    val = transform( val, transformers );
+    validate( val, prop, validators );
+
+    if( -1 === this[child][prop].indexOf(val) ){
+      this[child][prop].push(val);
+    }
+
+    // chain
+    return this;
+  };
+  setter.validate = function( validator ){
+    validators.push( validator );
+    return setter;
+  };
+  setter.transform = function( transformer ){
+    transformers.push( transformer );
+    return setter;
+  };
+  return setter;
+};
+
+/**
   Remove a value from the Array stored at a root property of the model.
 
   // example:
@@ -235,6 +286,38 @@ module.exports.splice = function( prop ){
     return this;
   };
   return splicer;
+};
+
+/**
+  Remove a value from the Array stored at *second level* property of the model.
+
+  // example:
+  model.items.child = ['item1', 'item2'];
+  var splice = model.spliceChild('items') // returns: model
+  splice('child','item1') // returns: model
+  // effect: model.items.child = ['item2']
+
+**/
+module.exports.spliceChild = function( child ){
+  if( !child ){ throw new Error( 'invalid child' ); }
+  var setter = function( prop, val ){
+    if( !prop ){ throw new Error( 'invalid property' ); }
+    if( !this.hasOwnProperty(child) ){ throw new Error( 'invalid child' ); }
+    if( 'object' !== typeof this[child] ){ throw new Error( 'invalid child' ); }
+    if( null === this[child] ){ throw new Error( 'invalid child' ); }
+    if( !this[child].hasOwnProperty(prop) ){ throw new Error( 'invalid child' ); }
+    if( !Array.isArray(this[child][prop]) ){ throw new Error( 'invalid child' ); }
+
+    for(var i = this[child][prop].length - 1; i >= 0; i--) {
+      if(this[child][prop][i] === val) {
+        this[child][prop].splice(i, 1);
+      }
+    }
+
+    // chain
+    return this;
+  };
+  return setter;
 };
 
 /**

@@ -240,7 +240,7 @@ module.exports.tests.splice = function(test) {
     // invalid prop
     t.throws( model.splice.bind(null, null), /invalid property/ );
 
-    // spliceer
+    // splicer
     var splice = model.splice('myKey');
     t.equal( typeof splice, 'function', 'returns function' );
     t.equal( splice.length, 1, 'returns function' );
@@ -255,6 +255,69 @@ module.exports.tests.splice = function(test) {
     obj.spliceFoo = model.splice('foo');
     var chain = obj.spliceFoo('BONG');
     t.deepEqual( obj.foo, ['bar'], 'remove value from set' );
+    t.equal( chain, obj, 'methods chainable' );
+
+    t.end();
+  });
+};
+
+module.exports.tests.pushChild = function(test) {
+  test('pushChild()', function(t) {
+
+    // invalid prop
+    t.throws( model.pushChild.bind(null, null), /invalid child/ );
+
+    // pusher
+    var push = model.pushChild('myKey');
+    t.equal( typeof push, 'function', 'returns function' );
+    t.equal( push.length, 2, 'returns function' );
+
+    // push on non-array
+    var invalid = { foo: { bar: 'string' } };
+    invalid.pushChildFoo = model.pushChild('foo');
+    t.throws( function(){ invalid.pushChildFoo('bar','item1'); }, /invalid child/ );
+
+    // inheritance
+    var obj = { foo: { baz: [] } };
+    obj.pushChildFoo = model.pushChild('foo');
+    var chain = obj.pushChildFoo('baz','item1');
+    t.deepEqual( obj.foo.baz, ['item1'], 'add value to set' );
+    t.equal( chain, obj, 'methods chainable' );
+
+    // validators
+    obj.pushChildFoo = model.pushChild('foo', [ valid.length(2) ]);
+    t.throws( obj.pushChildFoo.bind(null, 'baz', 'b') );
+
+    // transforms
+    obj.pushChildFoo = model.pushChild('foo', null, [ transform.uppercase() ]);
+    obj.pushChildFoo('baz','item2');
+    t.deepEqual( obj.foo.baz, ['item1','ITEM2'], 'runs transforms before pushing value' );
+
+    t.end();
+  });
+};
+
+module.exports.tests.spliceChild = function(test) {
+  test('spliceChild()', function(t) {
+
+    // invalid prop
+    t.throws( model.spliceChild.bind(null, null), /invalid child/ );
+
+    // splicer
+    var splice = model.spliceChild('myKey');
+    t.equal( typeof splice, 'function', 'returns function' );
+    t.equal( splice.length, 2, 'returns function' );
+
+    // splice on non-array
+    var invalid = { foo: { bar: 'string' } };
+    invalid.spliceChildFoo = model.spliceChild('foo');
+    t.throws( function(){ invalid.spliceChildFoo('bar','item1'); }, /invalid child/ );
+
+    // inheritance
+    var obj = { foo: { bar: ['item1','ITEM2'] } };
+    obj.spliceFoo = model.spliceChild('foo');
+    var chain = obj.spliceFoo('bar','ITEM2');
+    t.deepEqual( obj.foo.bar, ['item1'], 'remove value from set' );
     t.equal( chain, obj, 'methods chainable' );
 
     t.end();
