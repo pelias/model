@@ -1,4 +1,6 @@
 
+var PeliasModelError = require('../errors').PeliasModelError;
+
 /**
   Get the value of a property from the root of the model.
 
@@ -8,7 +10,7 @@
 
 **/
 module.exports.get = function( prop ){
-  if( !prop ){ throw new Error( 'invalid property' ); }
+  if( !prop ){ throw new PeliasModelError( 'invalid property' ); }
   return function(){
     return this[prop];
   };
@@ -38,7 +40,7 @@ module.exports.get = function( prop ){
 
 **/
 module.exports.set = function( prop, validators, transformers, postValidationTransformers ){
-  if( !prop ){ throw new Error( 'invalid property' ); }
+  if( !prop ){ throw new PeliasModelError( 'invalid property' ); }
   if( !validators ){ validators = []; }
   if( !transformers ){ transformers = []; }
   if( !postValidationTransformers ) { postValidationTransformers = []; }
@@ -77,12 +79,12 @@ module.exports.set = function( prop, validators, transformers, postValidationTra
 
 **/
 module.exports.getChild = function( child ){
-  if( !child ){ throw new Error( 'invalid child' ); }
+  if( !child ){ throw new PeliasModelError( 'invalid child' ); }
   return function( prop ){
-    if( !prop ){ throw new Error( 'invalid property' ); }
-    if( !this.hasOwnProperty(child) ){ throw new Error( 'invalid child' ); }
-    if( 'object' !== typeof this[child] ){ throw new Error( 'invalid child' ); }
-    if( null === this[child] ){ throw new Error( 'invalid child' ); }
+    if( !prop ){ throw new PeliasModelError( 'invalid property' ); }
+    if( !this.hasOwnProperty(child) ){ throw new PeliasModelError( 'invalid child' ); }
+    if( 'object' !== typeof this[child] ){ throw new PeliasModelError( 'invalid child' ); }
+    if( null === this[child] ){ throw new PeliasModelError( 'invalid child' ); }
 
     return this[child][prop];
   };
@@ -97,12 +99,12 @@ module.exports.getChild = function( child ){
 
 **/
 module.exports.hasChild = function( child ){
-  if( !child ){ throw new Error( 'invalid child' ); }
+  if( !child ){ throw new PeliasModelError( 'invalid child' ); }
   return function( prop ){
-    if( !prop ){ throw new Error( 'invalid property' ); }
-    if( !this.hasOwnProperty(child) ){ throw new Error( 'invalid child' ); }
-    if( 'object' !== typeof this[child] ){ throw new Error( 'invalid child' ); }
-    if( null === this[child] ){ throw new Error( 'invalid child' ); }
+    if( !prop ){ throw new PeliasModelError( 'invalid property' ); }
+    if( !this.hasOwnProperty(child) ){ throw new PeliasModelError( 'invalid child' ); }
+    if( 'object' !== typeof this[child] ){ throw new PeliasModelError( 'invalid child' ); }
+    if( null === this[child] ){ throw new PeliasModelError( 'invalid child' ); }
 
     return this.hasOwnProperty(child) && this[child].hasOwnProperty(prop);
   };
@@ -121,14 +123,14 @@ module.exports.hasChild = function( child ){
 
 **/
 module.exports.setChild = function( child, validators, transformers ){
-  if( !child ){ throw new Error( 'invalid child' ); }
+  if( !child ){ throw new PeliasModelError( 'invalid child' ); }
   if( !validators ){ validators = []; }
   if( !transformers ){ transformers = []; }
   var setter = function( prop, val ){
-    if( !prop ){ throw new Error( 'invalid property' ); }
-    if( !this.hasOwnProperty(child) ){ throw new Error( 'invalid child' ); }
-    if( 'object' !== typeof this[child] ){ throw new Error( 'invalid child' ); }
-    if( null === this[child] ){ throw new Error( 'invalid child' ); }
+    if( !prop ){ throw new PeliasModelError( 'invalid property' ); }
+    if( !this.hasOwnProperty(child) ){ throw new PeliasModelError( 'invalid child' ); }
+    if( 'object' !== typeof this[child] ){ throw new PeliasModelError( 'invalid child' ); }
+    if( null === this[child] ){ throw new PeliasModelError( 'invalid child' ); }
 
     val = transform( val, transformers );
     validate( val, prop, validators );
@@ -158,9 +160,9 @@ module.exports.setChild = function( child, validators, transformers ){
 
 **/
 module.exports.delChild = function( child ){
-  if( !child ){ throw new Error( 'invalid child' ); }
+  if( !child ){ throw new PeliasModelError( 'invalid child' ); }
   return function( prop ){
-    if( !prop ){ throw new Error( 'invalid property' ); }
+    if( !prop ){ throw new PeliasModelError( 'invalid property' ); }
 
     if( module.exports.hasChild( child ).call( this, prop ) ){
       delete this[child][prop];
@@ -186,12 +188,12 @@ module.exports.delChild = function( child ){
 
 **/
 module.exports.push = function( prop, validators, transformers ){
-  if( !prop ){ throw new Error( 'invalid property' ); }
+  if( !prop ){ throw new PeliasModelError( 'invalid property' ); }
   if( !validators ){ validators = []; }
   if( !transformers ){ transformers = []; }
   var adder = function( val ){
-    if( !this.hasOwnProperty(prop) ){ throw new Error( 'invalid child' ); }
-    if( !Array.isArray(this[prop]) ){ throw new Error( 'invalid child' ); }
+    if( !this.hasOwnProperty(prop) ){ throw new PeliasModelError( 'invalid child' ); }
+    if( !Array.isArray(this[prop]) ){ throw new PeliasModelError( 'invalid child' ); }
 
     val = transform( val, transformers );
     validate( val, prop, validators );
@@ -230,16 +232,16 @@ module.exports.push = function( prop, validators, transformers ){
 
 **/
 module.exports.pushChild = function( child, validators, transformers ){
-  if( !child ){ throw new Error( 'invalid child' ); }
+  if( !child ){ throw new PeliasModelError( 'invalid child' ); }
   if( !validators ){ validators = []; }
   if( !transformers ){ transformers = []; }
   var setter = function( prop, val ){
-    if( !prop ){ throw new Error( 'invalid property' ); }
-    if( !this.hasOwnProperty(child) ){ throw new Error( 'invalid child' ); }
-    if( 'object' !== typeof this[child] ){ throw new Error( 'invalid child' ); }
-    if( null === this[child] ){ throw new Error( 'invalid child' ); }
-    if( !this[child].hasOwnProperty(prop) ){ throw new Error( 'invalid child' ); }
-    if( !Array.isArray(this[child][prop]) ){ throw new Error( 'invalid child' ); }
+    if( !prop ){ throw new PeliasModelError( 'invalid property' ); }
+    if( !this.hasOwnProperty(child) ){ throw new PeliasModelError( 'invalid child' ); }
+    if( 'object' !== typeof this[child] ){ throw new PeliasModelError( 'invalid child' ); }
+    if( null === this[child] ){ throw new PeliasModelError( 'invalid child' ); }
+    if( !this[child].hasOwnProperty(prop) ){ throw new PeliasModelError( 'invalid child' ); }
+    if( !Array.isArray(this[child][prop]) ){ throw new PeliasModelError( 'invalid child' ); }
 
     val = transform( val, transformers );
     validate( val, prop, validators );
@@ -273,10 +275,10 @@ module.exports.pushChild = function( child, validators, transformers ){
 
 **/
 module.exports.splice = function( prop ){
-  if( !prop ){ throw new Error( 'invalid property' ); }
+  if( !prop ){ throw new PeliasModelError( 'invalid property' ); }
   var splicer = function( val ){
-    if( !this.hasOwnProperty(prop) ){ throw new Error( 'invalid child' ); }
-    if( !Array.isArray(this[prop]) ){ throw new Error( 'invalid child' ); }
+    if( !this.hasOwnProperty(prop) ){ throw new PeliasModelError( 'invalid child' ); }
+    if( !Array.isArray(this[prop]) ){ throw new PeliasModelError( 'invalid child' ); }
 
     for(var i = this[prop].length - 1; i >= 0; i--) {
       if(this[prop][i] === val) {
@@ -299,14 +301,14 @@ module.exports.splice = function( prop ){
 
 **/
 module.exports.spliceChild = function( child ){
-  if( !child ){ throw new Error( 'invalid child' ); }
+  if( !child ){ throw new PeliasModelError( 'invalid child' ); }
   var setter = function( prop, val ){
-    if( !prop ){ throw new Error( 'invalid property' ); }
-    if( !this.hasOwnProperty(child) ){ throw new Error( 'invalid child' ); }
-    if( 'object' !== typeof this[child] ){ throw new Error( 'invalid child' ); }
-    if( null === this[child] ){ throw new Error( 'invalid child' ); }
-    if( !this[child].hasOwnProperty(prop) ){ throw new Error( 'invalid child' ); }
-    if( !Array.isArray(this[child][prop]) ){ throw new Error( 'invalid child' ); }
+    if( !prop ){ throw new PeliasModelError( 'invalid property' ); }
+    if( !this.hasOwnProperty(child) ){ throw new PeliasModelError( 'invalid child' ); }
+    if( 'object' !== typeof this[child] ){ throw new PeliasModelError( 'invalid child' ); }
+    if( null === this[child] ){ throw new PeliasModelError( 'invalid child' ); }
+    if( !this[child].hasOwnProperty(prop) ){ throw new PeliasModelError( 'invalid child' ); }
+    if( !Array.isArray(this[child][prop]) ){ throw new PeliasModelError( 'invalid child' ); }
 
     for(var i = this[child][prop].length - 1; i >= 0; i--) {
       if(this[child][prop][i] === val) {
