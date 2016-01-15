@@ -30,12 +30,17 @@ module.exports.tests.constructor = function(test) {
 
     // initial values
     t.deepEqual(doc.name, {}, 'initial value');
-    t.deepEqual(doc.parent, {}, 'initial value');
     t.deepEqual(doc.address, {}, 'initial value');
     t.deepEqual(doc.center_point, {}, 'initial value');
     t.true(Array.isArray(doc.category), 'initial value');
     t.true(doc.hasOwnProperty('_meta'), 'initial value');
     t.true(doc._meta.hasOwnProperty('version'), 'initial value');
+
+    // initialize 'parent' fields to empty arrays
+    t.equal(typeof doc.parent, 'object', 'initial value');
+    Document.parentFields.forEach( function(field){
+      t.true(Array.isArray(doc.parent[field]), 'initial value');
+    });
 
     // setters called
     t.equal(doc.source, 'mysource', 'setter called');

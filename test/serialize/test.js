@@ -24,15 +24,35 @@ module.exports.tests.minimal = function(test) {
 
     // document body
     t.deepEqual(s, {
-      source: 'mysource',
-      layer: 'mylayer',
-      source_id: 'myid',
-      name: {},
-      phrase: {},
-      parent: {},
-      address: {},
-      category: [],
-      center_point: {}
+      'source': 'mysource',
+      'layer': 'mylayer',
+      'source_id': 'myid',
+      'name': {},
+      'phrase': {},
+      'parent': {
+        'alpha3': [],
+        'country': [],
+        'country_abbr': [],
+        'country_id': [],
+        'county': [],
+        'county_abbr': [],
+        'county_id': [],
+        'localadmin': [],
+        'localadmin_abbr': [],
+        'localadmin_id': [],
+        'locality': [],
+        'locality_abbr': [],
+        'locality_id': [],
+        'neighbourhood': [],
+        'neighbourhood_abbr': [],
+        'neighbourhood_id': [],
+        'region': [],
+        'region_abbr': [],
+        'region_id': []
+      },
+      'address': {},
+      'category': [],
+      'center_point': {}
     }, 'valid document body');
 
     t.end();
@@ -51,8 +71,10 @@ module.exports.tests.complete = function(test) {
       .setName( 'alt', 'Haggerston City Farm' )
       .setAdmin( 'admin0', 'Great Britain' )
       .setAdmin( 'neighborhood', 'Shoreditch' )
-      .setParent( 'country', 'Great Britain' )
-      .setParent( 'neighbourhood', 'Shoreditch' )
+      .addParent( 'country', 'Great Britain' )
+      .addParent( 'neighbourhood', 'Shoreditch' )
+      .addParent( 'alpha3', 'GBR' )
+      .removeParent( 'alpha3', 'GBR' )
       .setAddress( 'number', '10' )
       .setAddress( 'street', 'pelias place' )
       .addCategory( 'foo' )
@@ -101,9 +123,26 @@ module.exports.tests.complete = function(test) {
       'neighborhood': 'Shoreditch',
 
       // WOF fields
-      'parent':{
-        'country': 'Great Britain',
-        'neighbourhood': 'Shoreditch'
+      'parent': {
+        'alpha3': [],
+        'country': ['Great Britain'],
+        'country_abbr': [],
+        'country_id': [],
+        'county': [],
+        'county_abbr': [],
+        'county_id': [],
+        'localadmin': [],
+        'localadmin_abbr': [],
+        'localadmin_id': [],
+        'locality': [],
+        'locality_abbr': [],
+        'locality_id': [],
+        'neighbourhood': ['Shoreditch'],
+        'neighbourhood_abbr': [],
+        'neighbourhood_id': [],
+        'region': [],
+        'region_abbr': [],
+        'region_id': []
       },
 
       // geography

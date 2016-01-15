@@ -12,6 +12,11 @@ function Document( source, layer, source_id ){
   this.center_point = {};
   this.category = [];
 
+  // initialize 'parent' fields to empty arrays
+  Document.parentFields.forEach( function(field){
+    this.parent[field] = [];
+  }, this);
+
   // create a non-enumerable property for metadata
   Object.defineProperty( this, '_meta', { writable: true, value: {} });
   this._meta.version = pkg.version;
@@ -115,23 +120,11 @@ Document.prototype.hasName = model.hasChild( 'name' );
 Document.prototype.delName = model.delChild( 'name' );
 
 // parent
-Document.prototype.setParent = function ( prop, val ){
-  return model.setChild( 'parent' )
-    .validate( valid.property( Document.parentFields ) )
-    .validate( valid.type('string') )
-    .validate( valid.truthy() )
-    .call( this, prop, val );
-};
+Document.prototype.addParent = model.pushChild( 'parent' )
+                                  .validate( valid.type('string') )
+                                  .validate( valid.truthy() );
 
-Document.prototype.getParent = function ( prop ){
-  return this.parent[ prop ];
-};
-
-Document.prototype.delParent = function ( prop ){
-  delete this.parent[ prop ];
-};
-
-Document.prototype.hasParent = model.hasChild( 'parent' );
+Document.prototype.removeParent = model.spliceChild( 'parent' );
 
 // address
 Document.prototype.setAddress = function ( prop, val ){
