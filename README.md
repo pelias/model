@@ -43,8 +43,8 @@ console.log( poi );
 **Note** the `_meta` property is unenumerable, so you won't see it when you `console.log` or `JSON.stringify` the object, don't worry it's still there:
 
 ```javascript
-var poi = new Document( 'geoname', 1003 );
-poi.setMeta( 'author', 'peter' );
+var poi = new Document( 'geoname', 'venue', 1003 );
+poi.setMeta( 'author', 'mapzen' );
 
 console.log( poi, poi.getMeta( 'author' ), poi._meta );
 ```
