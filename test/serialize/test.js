@@ -30,7 +30,6 @@ module.exports.tests.minimal = function(test) {
       'name': {},
       'phrase': {},
       'parent': {
-        'alpha3': [],
         'country': [],
         'country_abbr': [],
         'country_id': [],
@@ -71,10 +70,8 @@ module.exports.tests.complete = function(test) {
       .setName( 'alt', 'Haggerston City Farm' )
       .setAdmin( 'admin0', 'Great Britain' )
       .setAdmin( 'neighborhood', 'Shoreditch' )
-      .addParent( 'country', 'Great Britain' )
-      .addParent( 'neighbourhood', 'Shoreditch' )
-      .addParent( 'alpha3', 'GBR' )
-      .removeParent( 'alpha3', 'GBR' )
+      .addParent( 'country', 'Great Britain', '1001', 'GreatB' )
+      .addParent( 'neighbourhood', 'Shoreditch', '2002' )
       .setAddress( 'number', '10' )
       .setAddress( 'street', 'pelias place' )
       .addCategory( 'foo' )
@@ -98,6 +95,7 @@ module.exports.tests.complete = function(test) {
       // data partitioning
       'source': 'geoname',
       'layer': 'venue',
+      'alpha3': 'GBR',
 
       // place name (ngram analysis)
       'name':{
@@ -118,16 +116,14 @@ module.exports.tests.complete = function(test) {
       },
 
       // Quattroshapes fields
-      'alpha3': 'GBR',
       'admin0': 'Great Britain',
       'neighborhood': 'Shoreditch',
 
       // WOF fields
       'parent': {
-        'alpha3': [],
         'country': ['Great Britain'],
-        'country_abbr': [],
-        'country_id': [],
+        'country_abbr': ['GreatB'],
+        'country_id': ['1001'],
         'county': [],
         'county_abbr': [],
         'county_id': [],
@@ -139,7 +135,7 @@ module.exports.tests.complete = function(test) {
         'locality_id': [],
         'neighbourhood': ['Shoreditch'],
         'neighbourhood_abbr': [],
-        'neighbourhood_id': [],
+        'neighbourhood_id': ['2002'],
         'region': [],
         'region_abbr': [],
         'region_id': []

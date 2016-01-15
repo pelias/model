@@ -1,4 +1,6 @@
 
+var util = require('util');
+
 /**
   Custom Errors used in order to distinguish them from generic Errors:
 
@@ -21,13 +23,13 @@
 
 // Custom Error - PeliasModelError
 function PeliasModelError(message) {
-    this.name = 'PeliasModelError';
-    this.message = message;
-    this.stack = (new Error()).stack;
+  Error.captureStackTrace(this, this.constructor);
+  this.name = 'PeliasModelError';
+  this.message = message;
 }
 
 // Extends from js Error object
-PeliasModelError.prototype = new Error();
+util.inherits(PeliasModelError, Error);
 
 // export
 module.exports.PeliasModelError = PeliasModelError;

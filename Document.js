@@ -120,11 +120,40 @@ Document.prototype.hasName = model.hasChild( 'name' );
 Document.prototype.delName = model.delChild( 'name' );
 
 // parent
-Document.prototype.addParent = model.pushChild( 'parent' )
-                                  .validate( valid.type('string') )
-                                  .validate( valid.truthy() );
+Document.prototype.addParent = function( field, name, id, abbr ){
+  var add = model.pushChild( 'parent' )
+    .validate( valid.type('string') )
+    .validate( valid.truthy() )
+    .bind(this);
 
-Document.prototype.removeParent = model.spliceChild( 'parent' );
+  // mandatory fields, eg: 'country', 'country_id'
+  add( field, name );
+  add( field + '_id', id );
+
+  // optional field, eg: 'country_abbr'
+  if( arguments.length > 3 ){
+    add( field + '_abbr', abbr );
+  }
+
+  // chainable
+  return this;
+};
+
+Document.prototype.removeParent = function( field, name, id, abbr ){
+  var rm = model.spliceChild( 'parent' ).bind(this);
+
+  // mandatory fields, eg: 'country', 'country_id'
+  rm( field, name );
+  rm( field + '_id', id );
+
+  // optional field, eg: 'country_abbr'
+  if( arguments.length > 3 ){
+    rm( field + '_abbr', abbr );
+  }
+
+  // chainable
+  return this;
+};
 
 // address
 Document.prototype.setAddress = function ( prop, val ){
@@ -261,7 +290,7 @@ Document.adminFields = ['admin0','admin1','admin1_abbr','admin2','local_admin','
 
 Document.addressFields = ['name', 'number', 'street', 'zip'];
 
-Document.parentFields = ['alpha3','country','country_abbr','country_id','region','region_abbr',
+Document.parentFields = ['country','country_abbr','country_id','region','region_abbr',
   'region_id','county','county_abbr','county_id','locality','locality_abbr','locality_id',
   'localadmin','localadmin_abbr','localadmin_id','neighbourhood','neighbourhood_abbr','neighbourhood_id'];
 

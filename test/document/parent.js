@@ -6,8 +6,17 @@ module.exports.tests = {};
 module.exports.tests.addParent = function(test) {
   test('addParent', function(t) {
     var doc = new Document('mysource','mylayer','myid');
-    t.equal(doc.addParent('country','liberland'), doc, 'chainable');
+    t.equal(doc.addParent('country','liberland', 'liber_id', 'liber_abbr'), doc, 'chainable');
     t.equal(doc.parent.country[0], 'liberland', 'adder works');
+    t.equal(doc.parent.country_id[0], 'liber_id', 'adder works');
+    t.equal(doc.parent.country_abbr[0], 'liber_abbr', 'adder works');
+    t.end();
+  });
+  test('addParent - omit abbr', function(t) {
+    var doc = new Document('mysource','mylayer','myid');
+    t.equal(doc.addParent('country','liberland', 'liber_id'), doc, 'chainable');
+    t.equal(doc.parent.country[0], 'liberland', 'adder works');
+    t.equal(doc.parent.country_id[0], 'liber_id', 'adder works');
     t.end();
   });
   test('addParent - validate', function(t) {
@@ -21,8 +30,8 @@ module.exports.tests.addParent = function(test) {
     t.throws( doc.addParent.bind(doc, 'country', null), null, 'invalid property' );
     t.throws( doc.addParent.bind(doc, 'country', '\n'), null, 'invalid property' );
     t.equal(doc.parent.street, undefined, 'property unchanged');
-    t.doesNotThrow( doc.addParent.bind(doc, 'country', 'foo'), null, 'invalid property' );
-    t.doesNotThrow( doc.addParent.bind(doc, 'country', '1'), null, 'invalid property' );
+    t.doesNotThrow( doc.addParent.bind(doc, 'country', 'foo', 'bar','baz'), null, 'valid property' );
+    t.doesNotThrow( doc.addParent.bind(doc, 'country', '1', '1', '1'), null, 'valid property' );
     t.end();
   });
 };
@@ -31,8 +40,23 @@ module.exports.tests.removeParent = function(test) {
   test('removeParent', function(t) {
     var doc = new Document('mysource','mylayer','myid');
     doc.parent.country[0] = 'liberland';
-    t.equal(doc.removeParent('country','liberland'), doc, 'chainable');
+    doc.parent.country_id[0] = 'liber_id';
+    doc.parent.country_abbr[0] = 'liber_abbr';
+    t.equal(doc.removeParent('country','liberland', 'liber_id', 'liber_abbr'), doc, 'chainable');
     t.equal(doc.parent.country.length, 0, 'remover works');
+    t.equal(doc.parent.country_id.length, 0, 'remover works');
+    t.equal(doc.parent.country_abbr.length, 0, 'remover works');
+    t.end();
+  });
+  test('removeParent - omit abbr', function(t) {
+    var doc = new Document('mysource','mylayer','myid');
+    doc.parent.country[0] = 'liberland';
+    doc.parent.country_id[0] = 'liber_id';
+    doc.parent.country_abbr[0] = 'liber_abbr';
+    t.equal(doc.removeParent('country','liberland', 'liber_id'), doc, 'chainable');
+    t.equal(doc.parent.country.length, 0, 'remover works');
+    t.equal(doc.parent.country_id.length, 0, 'remover works');
+    t.equal(doc.parent.country_abbr.length, 1, 'abbr ignored');
     t.end();
   });
   test('removeParent - validate', function(t) {
