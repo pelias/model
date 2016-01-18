@@ -139,22 +139,6 @@ Document.prototype.addParent = function( field, name, id, abbr ){
   return this;
 };
 
-Document.prototype.removeParent = function( field, name, id, abbr ){
-  var rm = model.spliceChild( 'parent' ).bind(this);
-
-  // mandatory fields, eg: 'country', 'country_id'
-  rm( field, name );
-  rm( field + '_id', id );
-
-  // optional field, eg: 'country_abbr'
-  if( arguments.length > 3 ){
-    rm( field + '_abbr', abbr );
-  }
-
-  // chainable
-  return this;
-};
-
 // address
 Document.prototype.setAddress = function ( prop, val ){
   return model.setChild( 'address' )

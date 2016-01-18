@@ -36,39 +36,6 @@ module.exports.tests.addParent = function(test) {
   });
 };
 
-module.exports.tests.removeParent = function(test) {
-  test('removeParent', function(t) {
-    var doc = new Document('mysource','mylayer','myid');
-    doc.parent.country[0] = 'liberland';
-    doc.parent.country_id[0] = 'liber_id';
-    doc.parent.country_abbr[0] = 'liber_abbr';
-    t.equal(doc.removeParent('country','liberland', 'liber_id', 'liber_abbr'), doc, 'chainable');
-    t.equal(doc.parent.country.length, 0, 'remover works');
-    t.equal(doc.parent.country_id.length, 0, 'remover works');
-    t.equal(doc.parent.country_abbr.length, 0, 'remover works');
-    t.end();
-  });
-  test('removeParent - omit abbr', function(t) {
-    var doc = new Document('mysource','mylayer','myid');
-    doc.parent.country[0] = 'liberland';
-    doc.parent.country_id[0] = 'liber_id';
-    doc.parent.country_abbr[0] = 'liber_abbr';
-    t.equal(doc.removeParent('country','liberland', 'liber_id'), doc, 'chainable');
-    t.equal(doc.parent.country.length, 0, 'remover works');
-    t.equal(doc.parent.country_id.length, 0, 'remover works');
-    t.equal(doc.parent.country_abbr.length, 1, 'abbr ignored');
-    t.end();
-  });
-  test('removeParent - validate', function(t) {
-    var doc = new Document('mysource','mylayer','myid');
-    t.throws( doc.removeParent.bind(doc, 1), null, 'invalid type' );
-    t.throws( doc.removeParent.bind(doc, ''), null, 'invalid length' );
-    t.throws( doc.removeParent.bind(doc, 'foo', 1), null, 'invalid property' );
-    t.throws( doc.removeParent.bind(doc, '4', 2), null, 'invalid property' );
-    t.end();
-  });
-};
-
 module.exports.all = function (tape, common) {
 
   function test(name, testFunction) {
