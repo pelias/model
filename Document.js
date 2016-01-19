@@ -130,8 +130,12 @@ Document.prototype.addParent = function( field, name, id, abbr ){
   add( field, name );
   add( field + '_id', id );
 
-  // optional field, eg: 'country_abbr'
-  if( arguments.length > 3 ){
+  // optional field, eg: 'country_abbr', defaults to `null` for downstream ES
+  if (_.isUndefined(abbr)) {
+    var addNull = model.pushChild( 'parent' ).bind(this);
+    addNull( field + '_abbr', null );
+
+  } else {
     add( field + '_abbr', abbr );
   }
 

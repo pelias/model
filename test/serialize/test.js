@@ -134,7 +134,7 @@ module.exports.tests.complete = function(test) {
         'locality_abbr': [],
         'locality_id': [],
         'neighbourhood': ['Shoreditch'],
-        'neighbourhood_abbr': [],
+        'neighbourhood_abbr': [null],
         'neighbourhood_id': ['2002'],
         'region': [],
         'region_abbr': [],

@@ -17,6 +17,7 @@ module.exports.tests.addParent = function(test) {
     t.equal(doc.addParent('country','liberland', 'liber_id'), doc, 'chainable');
     t.equal(doc.parent.country[0], 'liberland', 'adder works');
     t.equal(doc.parent.country_id[0], 'liber_id', 'adder works');
+    t.equal(doc.parent.country_abbr[0], null, 'adder works');
     t.end();
   });
   test('addParent - validate', function(t) {
