@@ -23,6 +23,7 @@ var tests = [
   require('./document/source.js'),
   require('./document/layer.js'),
   require('./document/source_id.js'),
+  require('./document/toESDocument.js'),
   require('./util/transform.js'),
   require('./util/model.js'),
   require('./serialize/test.js'),
