@@ -39,6 +39,18 @@ Document.prototype.toJSON = function(){
   return this;
 };
 
+/*
+ * Returns an object in exactly the format that Elasticsearch wants for inserts
+ */
+Document.prototype.toESDocument = function() {
+  return {
+    _index: 'pelias', // TODO: make this configuration-driven
+    _type: this.getType(),
+    _id: this.getId(),
+    data: this
+  };
+};
+
 // id
 Document.prototype.setId = function( id ){
   return model.setChild( '_meta' )
