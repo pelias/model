@@ -35,10 +35,11 @@ module.exports.roundify = function(){
 
 module.exports.toULLR = function() {
   return function( val ){
-    return [
-      val.upperLeft.lat,
-      val.upperLeft.lon,
-      val.lowerRight.lat,
-      val.lowerRight.lon].join(',');
+    return JSON.stringify({
+      min_lat: val.lowerRight.lat,
+      max_lat: val.upperLeft.lat,
+      min_lon: val.upperLeft.lon,
+      max_lon: val.lowerRight.lon
+    });
   };
 };

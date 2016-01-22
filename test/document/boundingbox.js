@@ -557,7 +557,12 @@ module.exports.tests.setBoundingBox = function(test) {
 
     doc.setBoundingBox(validBoundingBox);
 
-    t.deepEquals(doc.getBoundingBox(), '2,-179,1,179');
+    t.deepEquals(JSON.parse(doc.getBoundingBox()), {
+      min_lat: 1,
+      max_lat: 2,
+      min_lon: -179,
+      max_lon: 179
+    });
     t.end();
 
   });
@@ -578,7 +583,12 @@ module.exports.tests.setBoundingBox = function(test) {
 
     doc.setBoundingBox(validBoundingBox);
 
-    t.deepEquals(doc.getBoundingBox(), '13.131313,21.212121,12.121212,31.313131');
+    t.deepEquals(JSON.parse(doc.getBoundingBox()), {
+      min_lat: 12.121212,
+      max_lat: 13.131313,
+      min_lon: 21.212121,
+      max_lon: 31.313131
+    });
     t.end();
 
   });
@@ -599,7 +609,12 @@ module.exports.tests.setBoundingBox = function(test) {
 
     doc.setBoundingBox(validBoundingBox);
 
-    t.deepEquals(doc.getBoundingBox(), '11.166667,-3.260676,4.735416889,1.19947914281');
+    t.deepEquals(JSON.parse(doc.getBoundingBox()), {
+      min_lat: 4.735416889,
+      max_lat: 11.166667,
+      min_lon: -3.260676,
+      max_lon: 1.19947914281
+    });
     t.end();
 
   });

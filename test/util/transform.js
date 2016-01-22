@@ -15,9 +15,14 @@ module.exports.tests.setBoundingBox = function(test) {
       }
     };
 
-    var expected = '13.131313,21.212121,12.121212,31.313131';
+    var expected = {
+      min_lat: 12.121212,
+      max_lat: 13.131313,
+      min_lon: 21.212121,
+      max_lon: 31.313131
+    };
 
-    t.deepEquals(toULLR(inputBoundingBox), expected);
+    t.deepEquals(JSON.parse(toULLR(inputBoundingBox)), expected);
     t.end();
 
   });

@@ -161,7 +161,7 @@ module.exports.tests.complete = function(test) {
       },
 
       // bbox
-      'bounding_box':'-33.9,163.82,-47.75,179.42',
+      'bounding_box': '{"min_lat":-47.75,"max_lat":-33.9,"min_lon":163.82,"max_lon":179.42}',
 
       // meta info
       'source_id': '1003',
