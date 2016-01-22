@@ -249,29 +249,10 @@ Document.prototype.getPolygon = model.get( 'shape' );
 Document.prototype.setBoundingBox = model.set( 'bounding_box' )
                                          .validate( valid.type('object') )
                                          .validate( valid.boundingBox() )
-                                         .postValidationTransform( transform.boundingBoxify() );
+                                         .postValidationTransform( transform.toULLR() );
 
 // marshal the internal bounding_box back into the representation the caller supplied
-Document.prototype.getBoundingBox = function() {
-  // if there is no bounding_box set, just return undefined
-  if (_.isUndefined(this.bounding_box)) {
-    return undefined;
-  }
-
-  var internalBoundingBox = this.bounding_box;
-
-  return {
-    upperLeft: {
-      lat: internalBoundingBox.coordinates[0][1],
-      lon: internalBoundingBox.coordinates[0][0]
-    },
-    lowerRight: {
-      lat: internalBoundingBox.coordinates[1][1],
-      lon: internalBoundingBox.coordinates[1][0]
-    }
-  };
-
-};
+Document.prototype.getBoundingBox = model.get('bounding_box');
 
 // admin fields whitelist
 Document.adminFields = ['admin0','admin1','admin1_abbr','admin2','local_admin','locality','neighborhood'];

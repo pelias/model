@@ -161,10 +161,7 @@ module.exports.tests.complete = function(test) {
       },
 
       // bbox
-      'bounding_box':{
-        'type':'envelope',
-        'coordinates': [[163.82,-33.9],[179.42,-47.75]]
-      },
+      'bounding_box':'-33.9,163.82,-47.75,179.42',
 
       // meta info
       'source_id': '1003',

@@ -33,15 +33,12 @@ module.exports.roundify = function(){
   };
 };
 
-module.exports.boundingBoxify = function() {
+module.exports.toULLR = function() {
   return function( val ){
-    return {
-      type: 'envelope',
-      coordinates: [
-        [val.upperLeft.lon, val.upperLeft.lat],
-        [val.lowerRight.lon, val.lowerRight.lat]
-      ]
-    };
-
+    return [
+      val.upperLeft.lat,
+      val.upperLeft.lon,
+      val.lowerRight.lat,
+      val.lowerRight.lon].join(',');
   };
 };

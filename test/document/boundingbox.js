@@ -542,7 +542,7 @@ module.exports.tests.setBoundingBox = function(test) {
   });
 
   test('lon values should wrap', function(t) {
-    var doc = new Document('mysource','mylayer','myid');
+    var doc = new Document('source', 'layer', 'id');
 
     var validBoundingBox = {
       upperLeft: {
@@ -557,13 +557,13 @@ module.exports.tests.setBoundingBox = function(test) {
 
     doc.setBoundingBox(validBoundingBox);
 
-    t.deepEquals(doc.getBoundingBox(), validBoundingBox);
+    t.deepEquals(doc.getBoundingBox(), '2,-179,1,179');
     t.end();
 
   });
 
   test('valid boundingBox parameter should be returned as input from getBoundingBox', function(t) {
-    var doc = new Document('mysource','mylayer','myid');
+    var doc = new Document('source', 'layer', 'id');
 
     var validBoundingBox = {
       upperLeft: {
@@ -578,13 +578,13 @@ module.exports.tests.setBoundingBox = function(test) {
 
     doc.setBoundingBox(validBoundingBox);
 
-    t.deepEquals(doc.getBoundingBox(), validBoundingBox);
+    t.deepEquals(doc.getBoundingBox(), '13.131313,21.212121,12.121212,31.313131');
     t.end();
 
   });
 
   test('valid boundingBox parameter should be returned as input from getBoundingBox', function(t) {
-    var doc = new Document('mysource','mylayer','myid');
+    var doc = new Document('source', 'layer', 'id');
 
     var validBoundingBox = {
       upperLeft:{
@@ -599,7 +599,7 @@ module.exports.tests.setBoundingBox = function(test) {
 
     doc.setBoundingBox(validBoundingBox);
 
-    t.deepEquals(doc.getBoundingBox(), validBoundingBox);
+    t.deepEquals(doc.getBoundingBox(), '11.166667,-3.260676,4.735416889,1.19947914281');
     t.end();
 
   });

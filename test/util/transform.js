@@ -1,4 +1,4 @@
-var boundingBoxify = require('../../util/transform.js').boundingBoxify();
+var toULLR = require('../../util/transform.js').toULLR();
 
 module.exports.tests = {};
 
@@ -15,15 +15,9 @@ module.exports.tests.setBoundingBox = function(test) {
       }
     };
 
-    var expectedBoundingBox = {
-      type: 'envelope',
-      coordinates: [
-        [21.212121, 13.131313],
-        [31.313131, 12.121212]
-      ]
-    };
+    var expected = '13.131313,21.212121,12.121212,31.313131';
 
-    t.deepEquals(boundingBoxify(inputBoundingBox), expectedBoundingBox);
+    t.deepEquals(toULLR(inputBoundingBox), expected);
     t.end();
 
   });
