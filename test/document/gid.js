@@ -5,8 +5,8 @@ module.exports.tests = {};
 
 module.exports.tests.getGid = function(test) {
   test('getGid', function(t) {
-    var doc = new Document('mytype','myid');
-    t.equal(doc.getGid(), 'myid:mytype', 'getter works');
+    var doc = new Document('mysource','mylayer','myid');
+    t.equal(doc.getGid(), 'mysource:mylayer:myid', 'getter works');
     t.end();
   });
 };

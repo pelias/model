@@ -5,7 +5,7 @@ module.exports.tests = {};
 
 module.exports.tests.getName = function(test) {
   test('getName', function(t) {
-    var doc = new Document('mytype','myid');
+    var doc = new Document('mysource','mylayer','myid');
     t.equal(doc.getName('foo'), undefined, 'getter works');
     doc.name = { 'foo': 'bar' };
     t.equal(doc.getName('foo'), 'bar', 'getter works');
@@ -15,13 +15,13 @@ module.exports.tests.getName = function(test) {
 
 module.exports.tests.setName = function(test) {
   test('setName', function(t) {
-    var doc = new Document('mytype','myid');
+    var doc = new Document('mysource','mylayer','myid');
     t.equal(doc.setName('foo','bar'), doc, 'chainable');
     t.equal(doc.name.foo, 'bar', 'setter works');
     t.end();
   });
   test('setName - validate key', function(t) {
-    var doc = new Document('mytype','myid');
+    var doc = new Document('mysource','mylayer','myid');
     t.throws( doc.setName.bind(doc,1), null, 'invalid type' );
     t.throws( doc.setName.bind(doc,''), null, 'invalid length' );
     t.throws( doc.setName.bind(doc,' '), null, 'invalid length' );
@@ -29,7 +29,7 @@ module.exports.tests.setName = function(test) {
     t.end();
   });
   test('setName - validate val', function(t) {
-    var doc = new Document('mytype','myid');
+    var doc = new Document('mysource','mylayer','myid');
     t.throws( doc.setName.bind(doc,'test',1), null, 'invalid value' );
     t.throws( doc.setName.bind(doc,'test',''), null, 'invalid value' );
     t.throws( doc.setName.bind(doc,'test',' '), null, 'invalid value' );
@@ -42,7 +42,7 @@ module.exports.tests.setName = function(test) {
 
 module.exports.tests.hasName = function(test) {
   test('hasName', function(t) {
-    var doc = new Document('mytype','myid');
+    var doc = new Document('mysource','mylayer','myid');
     t.equal(doc.hasName('foo'), false, 'hasser works');
     doc.name.foo = 'bar';
     t.equal(doc.hasName('foo'), true, 'hasser works');
@@ -52,7 +52,7 @@ module.exports.tests.hasName = function(test) {
 
 module.exports.tests.delName = function(test) {
   test('delName', function(t) {
-    var doc = new Document('mytype','myid');
+    var doc = new Document('mysource','mylayer','myid');
     t.equal(doc.delName('foo'), false, 'deller works');
     doc.name.foo = 'bar';
     t.equal(doc.delName('foo'), true, 'deller works');

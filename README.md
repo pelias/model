@@ -15,14 +15,15 @@ Using this model ensures that your import script will continue to work even when
 ```javascript
 var Document = require('pelias-model').Document;
 
-var poi = new Document( 'geoname', 1003 )
+var poi = new Document( 'geoname', 'venue', 1003 )
   .setAlpha3( 'GBR' )
   .setMeta( 'author', 'peter' )
-  .setMeta( 'date', new Date().getTime() )
   .setName( 'default', 'Hackney City Farm' )
   .setName( 'alt', 'Haggerston City Farm' )
   .setAdmin( 'admin0', 'Great Britain' )
   .setAdmin( 'neighborhood', 'Shoreditch' )
+  .addParent( 'country', 'Great Britain', '1001', 'GreatB' )
+  .addParent( 'neighbourhood', 'Shoreditch', '2002' )
   .setAddress( 'number', '10' )
   .setAddress( 'street', 'pelias place' )
   .addCategory( 'foo' )
@@ -30,7 +31,9 @@ var poi = new Document( 'geoname', 1003 )
   .removeCategory( 'foo' )
   .setPopulation(10)
   .setPopularity(3)
-  .setCentroid({ lon: 0.5, lat: 50.1 });
+  .setCentroid({ lon: 0.5, lat: 50.1 })
+  .setPolygon( geojsonObject /* any valid geojson object */ )
+  .setBoundingBox( bboxObject /* see tests for bbox syntax */ );
 
 console.log( poi );
 ```
@@ -38,8 +41,8 @@ console.log( poi );
 **Note** the `_meta` property is unenumerable, so you won't see it when you `console.log` or `JSON.stringify` the object, don't worry it's still there:
 
 ```javascript
-var poi = new Document( 'geoname', 1003 );
-poi.setMeta( 'author', 'peter' );
+var poi = new Document( 'geoname', 'venue', 1003 );
+poi.setMeta( 'author', 'mapzen' );
 
 console.log( poi, poi.getMeta( 'author' ), poi._meta );
 ```
