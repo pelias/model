@@ -7,6 +7,7 @@ var pkg = require('./package'),
 
 function Document( source, layer, source_id ){
   this.name = {};
+  this.phrase = {};
   this.parent = {};
   this.address = {};
   this.center_point = {};
@@ -35,7 +36,6 @@ function Document( source, layer, source_id ){
 }
 
 Document.prototype.toJSON = function(){
-  this.phrase = this.name;
   return this;
 };
 
@@ -111,9 +111,17 @@ Document.prototype.hasMeta = model.hasChild( '_meta' );
 Document.prototype.delMeta = model.delChild( '_meta' );
 
 // names
-Document.prototype.setName = model.setChild( 'name' )
-                                  .validate( valid.type('string') )
-                                  .validate( valid.truthy() );
+Document.prototype.setName = function(prop, value) {
+  var setterFn = model.setChild( 'name' )
+  .validate( valid.type('string') )
+  .validate( valid.truthy() );
+
+  setterFn.call(this, prop, value);
+
+  this.phrase = this.name;
+
+  return this;
+};
 
 Document.prototype.getName = model.getChild( 'name' );
 Document.prototype.hasName = model.hasChild( 'name' );
