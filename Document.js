@@ -267,9 +267,16 @@ Document.adminFields = ['admin0','admin1','admin1_abbr','admin2','local_admin','
 
 Document.addressFields = ['name', 'number', 'street', 'zip'];
 
-Document.parentFields = ['country','country_abbr','country_id','region','region_abbr',
-  'region_id','county','county_abbr','county_id','locality','locality_abbr','locality_id',
-  'localadmin','localadmin_abbr','localadmin_id','neighbourhood','neighbourhood_abbr','neighbourhood_id'];
+Document.parentFields = [
+  'country',       'country_abbr',       'country_id',
+  'macroregion',   'macroregion_abbr',   'macroregion_id',
+  'region',        'region_abbr',        'region_id',
+  'macrocounty',   'macrocounty_abbr',   'macrocounty_id',
+  'county',        'county_abbr',        'county_id',
+  'locality',      'locality_abbr',      'locality_id',
+  'localadmin',    'localadmin_abbr',    'localadmin_id',
+  'neighbourhood', 'neighbourhood_abbr', 'neighbourhood_id'
+];
 
 // export
 module.exports = Document;
