@@ -7,7 +7,9 @@
   "license": "MIT",
   "main": "index.js",
   "scripts": {
-    "test": "node test/run.js | tap-spec"
+    "test": "node test/run.js | tap-spec",
+    "lint": "jshint .",
+    "validate": "npm ls"
   },
   "repository": {
     "type": "git",
@@ -30,8 +32,13 @@
   },
   "devDependencies": {
     "event-stream": "^3.3.2",
-    "precommit-hook": "1.0.7",
+    "precommit-hook": "^3.0.0",
     "tap-spec": "^0.2.0",
     "tape": "^2.13.4"
-  }
+  },
+  "pre-commit": [
+    "lint",
+    "validate",
+    "test"
+  ]
 }
