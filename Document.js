@@ -150,13 +150,13 @@ Document.prototype.addParent = function( field, name, id, abbr ){
   add( field, name );
   add( field + '_id', id );
 
-  // optional field, eg: 'country_abbr', defaults to `null` for downstream ES
+  // optional field, eg: 'country_a', defaults to `null` for downstream ES
   if (_.isUndefined(abbr)) {
     var addNull = model.pushChild( 'parent' ).bind(this);
-    addNull( field + '_abbr', null );
+    addNull( field + '_a', null );
 
   } else {
-    add( field + '_abbr', abbr );
+    add( field + '_a', abbr );
   }
 
   // chainable
@@ -280,14 +280,14 @@ Document.adminFields = ['admin0','admin1','admin1_abbr','admin2','local_admin','
 Document.addressFields = ['name', 'number', 'street', 'zip'];
 
 Document.parentFields = [
-  'country',       'country_abbr',       'country_id',
-  'macroregion',   'macroregion_abbr',   'macroregion_id',
-  'region',        'region_abbr',        'region_id',
-  'macrocounty',   'macrocounty_abbr',   'macrocounty_id',
-  'county',        'county_abbr',        'county_id',
-  'locality',      'locality_abbr',      'locality_id',
-  'localadmin',    'localadmin_abbr',    'localadmin_id',
-  'neighbourhood', 'neighbourhood_abbr', 'neighbourhood_id'
+  'country',       'country_a',       'country_id',
+  'macroregion',   'macroregion_a',   'macroregion_id',
+  'region',        'region_a',        'region_id',
+  'macrocounty',   'macrocounty_a',   'macrocounty_id',
+  'county',        'county_a',        'county_id',
+  'locality',      'locality_a',      'locality_id',
+  'localadmin',    'localadmin_a',    'localadmin_id',
+  'neighbourhood', 'neighbourhood_a', 'neighbourhood_id'
 ];
 
 // export
