@@ -28,14 +28,14 @@
     "npm": ">=1.4.3"
   },
   "dependencies": {
-    "lodash": "^3.10.1",
+    "lodash": "^4.6.1",
     "through2": "^2.0.0"
   },
   "devDependencies": {
     "event-stream": "^3.3.2",
     "precommit-hook": "^3.0.0",
-    "tap-spec": "^0.2.0",
-    "tape": "^2.13.4"
+    "tap-spec": "^4.1.1",
+    "tape": "^4.4.0"
   },
   "pre-commit": [
     "lint",
