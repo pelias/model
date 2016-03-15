@@ -55,7 +55,7 @@ module.exports.tests.minimal = function(test) {
         'region_a': [],
         'region_id': []
       },
-      'address': {},
+      'address_parts': {},
       'category': [],
       'center_point': {}
     }, 'valid document body');
@@ -116,7 +116,7 @@ module.exports.tests.complete = function(test) {
       },
 
       // address data
-      'address':{
+      'address_parts':{
         'number': '10',
         'street': 'pelias place'
       },

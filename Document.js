@@ -9,7 +9,7 @@ function Document( source, layer, source_id ){
   this.name = {};
   this.phrase = {};
   this.parent = {};
-  this.address = {};
+  this.address_parts = {};
   this.center_point = {};
   this.category = [];
 
@@ -165,7 +165,7 @@ Document.prototype.addParent = function( field, name, id, abbr ){
 
 // address
 Document.prototype.setAddress = function ( prop, val ){
-  return model.setChild( 'address' )
+  return model.setChild( 'address_parts' )
     .validate( valid.property( Document.addressFields ) )
     .validate( valid.type('string') )
     .validate( valid.truthy() )
@@ -173,14 +173,14 @@ Document.prototype.setAddress = function ( prop, val ){
 };
 
 Document.prototype.getAddress = function ( prop ){
-  return this.address[ prop ];
+  return this.address_parts[ prop ];
 };
 
 Document.prototype.delAddress = function ( prop ){
-  delete this.address[ prop ];
+  delete this.address_parts[ prop ];
 };
 
-Document.prototype.hasAddress = model.hasChild( 'address' );
+Document.prototype.hasAddress = model.hasChild( 'address_parts' );
 
 // population
 Document.prototype.setPopulation = model.set( 'population', null, null )

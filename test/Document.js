@@ -30,7 +30,7 @@ module.exports.tests.constructor = function(test) {
 
     // initial values
     t.deepEqual(doc.name, {}, 'initial value');
-    t.deepEqual(doc.address, {}, 'initial value');
+    t.deepEqual(doc.address_parts, {}, 'initial value');
     t.deepEqual(doc.center_point, {}, 'initial value');
     t.true(Array.isArray(doc.category), 'initial value');
     t.true(doc.hasOwnProperty('_meta'), 'initial value');
