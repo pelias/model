@@ -30,6 +30,9 @@ module.exports.tests.minimal = function(test) {
       'name': {},
       'phrase': {},
       'parent': {
+        'borough': [],
+        'borough_a': [],
+        'borough_id': [],
         'country': [],
         'country_a': [],
         'country_id': [],
@@ -127,6 +130,9 @@ module.exports.tests.complete = function(test) {
 
       // WOF fields
       'parent': {
+        'borough': [],
+        'borough_a': [],
+        'borough_id': [],
         'country': ['Great Britain'],
         'country_a': ['GreatB'],
         'country_id': ['1001'],
