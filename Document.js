@@ -285,6 +285,7 @@ Document.parentFields = [
   'region',        'region_a',        'region_id',
   'macrocounty',   'macrocounty_a',   'macrocounty_id',
   'county',        'county_a',        'county_id',
+  'borough',       'borough_a',       'borough_id',
   'locality',      'locality_a',      'locality_id',
   'localadmin',    'localadmin_a',    'localadmin_id',
   'neighbourhood', 'neighbourhood_a', 'neighbourhood_id'
