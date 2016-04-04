@@ -4,7 +4,6 @@ var common = {};
 var tests = [
   require('./Document.js'),
   require('./errors.js'),
-  require('./document/admin.js'),
   require('./document/alpha3.js'),
   require('./document/centroid.js'),
   require('./document/gid.js'),

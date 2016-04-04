@@ -197,23 +197,6 @@ Document.prototype.setPopularity = model.set( 'popularity', null, null )
 
 Document.prototype.getPopularity = model.get( 'popularity' );
 
-// admin
-Document.prototype.setAdmin = function( prop, val ){
-  return model.set( prop )
-              .validate( valid.property( Document.adminFields ) )
-              .validate( valid.type('string') )
-              .validate( valid.truthy() )
-              .call( this, val );
-};
-
-Document.prototype.delAdmin = function ( prop ){
-  delete this[ prop ];
-};
-
-Document.prototype.getAdmin = function( prop ){
-  return model.get( prop ).call( this );
-};
-
 // latitude
 Document.prototype.setLon = function( lon ){
   return model.setChild( 'center_point' )
@@ -273,9 +256,6 @@ Document.prototype.setBoundingBox = model.set( 'bounding_box' )
 
 // marshal the internal bounding_box back into the representation the caller supplied
 Document.prototype.getBoundingBox = model.get('bounding_box');
-
-// admin fields whitelist
-Document.adminFields = ['admin0','admin1','admin1_abbr','admin2','local_admin','locality','neighborhood'];
 
 Document.addressFields = ['name', 'number', 'street', 'zip'];
 
