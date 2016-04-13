@@ -77,8 +77,6 @@ module.exports.tests.complete = function(test) {
       .setMeta( 'author', 'peter' )
       .setName( 'default', 'Hackney City Farm' )
       .setName( 'alt', 'Haggerston City Farm' )
-      .setAdmin( 'admin0', 'Great Britain' )
-      .setAdmin( 'neighborhood', 'Shoreditch' )
       .addParent( 'country', 'Great Britain', '1001', 'GreatB' )
       .addParent( 'neighbourhood', 'Shoreditch', '2002' )
       .setAddress( 'number', '10' )
@@ -123,10 +121,6 @@ module.exports.tests.complete = function(test) {
         'number': '10',
         'street': 'pelias place'
       },
-
-      // Quattroshapes fields
-      'admin0': 'Great Britain',
-      'neighborhood': 'Shoreditch',
 
       // WOF fields
       'parent': {
