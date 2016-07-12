@@ -48,7 +48,7 @@ Document.prototype.toESDocument = function() {
     _type: this.getType(),
     _id: this.getId(),
     data: JSON.parse( JSON.stringify( this, function( k, v ){
-      if( _.isEmpty(v) ){
+      if((_.isArray(v) || _.isPlainObject(v)) && _.isEmpty(v) ){
         return undefined;
       }
       return v;
