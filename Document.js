@@ -156,6 +156,30 @@ Document.prototype.addParent = function( field, name, id, abbr ){
   add( field + '_id', id );
 
   // optional field, eg: 'country_a', defaults to `null` for downstream ES
+  /**
+    note: the rationale for setting this field as 'null' instead of 'undefined'
+    is so that each of the fields 'line-up'.
+
+    == if you add a parent property with no abbreviation, as such:
+
+    setParent( 'region', 'foobar', '1' )
+
+    doc:
+      parent.region       = [ 'foobar' ]
+      parent.region_id    = [ '1' ]
+      parent.region_a     = [ null ]
+
+    == and then you add another parent property such as:
+
+    setParent( 'region', 'bingobango', '2', 'bingo' )
+
+    doc:
+      parent.region       = [ 'foobar', 'bingobango' ]
+      parent.region_id    = [ '1',      '2' ]
+      parent.region_a     = [ null,     'bingo' ]
+
+    == you can now be sure that the abbreviation 'bingo' belongs to '2' and not '1'.
+  **/
   if (_.isUndefined(abbr)) {
     var addNull = model.pushChild( 'parent' ).bind(this);
     addNull( field + '_a', null );
