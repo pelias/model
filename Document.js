@@ -47,7 +47,12 @@ Document.prototype.toESDocument = function() {
     _index: 'pelias', // TODO: make this configuration-driven
     _type: this.getType(),
     _id: this.getId(),
-    data: this
+    data: JSON.parse( JSON.stringify( this, function( k, v ){
+      if( _.isEmpty(v) ){
+        return undefined;
+      }
+      return v;
+    }))
   };
 };
 
