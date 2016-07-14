@@ -1,3 +1,5 @@
+var config = require('pelias-config').generate();
+
 var pkg = require('./package');
 var model = require('./util/model');
 var valid = require('./util/valid');
@@ -43,7 +45,7 @@ Document.prototype.toJSON = function(){
  */
 Document.prototype.toESDocument = function() {
   return {
-    _index: 'pelias', // TODO: make this configuration-driven
+    _index: config.schema.indexName,
     _type: this.getType(),
     _id: this.getId(),
     data: JSON.parse( JSON.stringify( this, function( k, v ){
