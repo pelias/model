@@ -53,6 +53,27 @@ module.exports.tests.constructor = function(test) {
   });
 };
 
+module.exports.tests.clearParent = function(test) {
+  test('clearParent should remove all effects of addParent calls', function(t) {
+    var doc = new Document('mysource','mylayer','myid');
+    doc.addParent('locality', 'name 1', 'id 1', 'abbr 1');
+    doc.addParent('locality', 'name 2', 'id 2', 'abbr 2');
+
+    t.deepEqual(doc.parent.locality, ['name 1', 'name 2'], 'should be empty');
+    t.deepEqual(doc.parent.locality_id, ['id 1', 'id 2'], 'should be empty');
+    t.deepEqual(doc.parent.locality_a, ['abbr 1', 'abbr 2'], 'should be empty');
+
+    doc.clearParent('locality');
+
+    t.deepEqual(doc.parent.locality, [], 'should be empty');
+    t.deepEqual(doc.parent.locality_id, [], 'should be empty');
+    t.deepEqual(doc.parent.locality_a, [], 'should be empty');
+
+    t.end();
+
+  });
+};
+
 module.exports.all = function (tape, common) {
 
   function test(name, testFunction) {

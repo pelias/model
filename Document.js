@@ -192,6 +192,17 @@ Document.prototype.addParent = function( field, name, id, abbr ){
   return this;
 };
 
+// clear all all added values
+Document.prototype.clearParent = function(field) {
+  var clear = model.clearChild( 'parent' ).bind(this);
+
+  clear( field );
+  clear( field + '_id' );
+  clear( field + '_a' );
+
+  return this;
+};
+
 // address
 Document.prototype.setAddress = function ( prop, val ){
   return model.setChild( 'address_parts' )
