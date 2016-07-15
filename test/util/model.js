@@ -297,6 +297,28 @@ module.exports.tests.pushChild = function(test) {
   });
 };
 
+module.exports.tests.clearChild = function(test) {
+  test('clearChild()', function(t) {
+    // invalid prop
+    t.throws( model.clearChild.bind(null, null), /invalid child/ );
+
+    // clearer
+    var clear = model.clearChild('myKey');
+    t.equal( typeof clear, 'function', 'returns function' );
+    t.equal( clear.length, 1, 'returns function' );
+
+    // inheritance
+    var obj = { foo: { baz: [1, 2] } };
+    obj.clearChildFoo = model.clearChild('foo');
+    var chain = obj.clearChildFoo('baz');
+    t.deepEqual( obj.foo.baz, [], 'empty array' );
+    t.equal( chain, obj, 'methods chainable' );
+
+    t.end();
+
+  });
+};
+
 module.exports.tests.spliceChild = function(test) {
   test('spliceChild()', function(t) {
 

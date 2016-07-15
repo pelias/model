@@ -265,6 +265,34 @@ module.exports.pushChild = function( child, validators, transformers ){
 };
 
 /**
+  Clear a value from the Array stored at a root property of the model.
+
+  // example:
+  model.items = [];
+  var push = model.push('items')
+  push('item1') // returns: model
+  push('item2') // returns: model
+  model.clear('items')
+  // effect: model.items = []
+
+**/
+module.exports.clearChild = function(child) {
+  if( !child ){ throw new PeliasModelError( 'invalid child' ); }
+  var clearer = function(prop) {
+    if( !prop ){ throw new PeliasModelError( 'invalid property' ); }
+    if( !this.hasOwnProperty(child) ){ throw new PeliasModelError( 'invalid child' ); }
+    if( 'object' !== typeof this[child] ){ throw new PeliasModelError( 'invalid child' ); }
+    if( null === this[child] ){ throw new PeliasModelError( 'invalid child' ); }
+    if( !this[child].hasOwnProperty(prop) ){ throw new PeliasModelError( 'invalid child' ); }
+    if( !Array.isArray(this[child][prop]) ){ throw new PeliasModelError( 'invalid child' ); }
+
+    this[child][prop] = [];
+    return this;
+  };
+  return clearer;
+};
+
+/**
   Remove a value from the Array stored at a root property of the model.
 
   // example:
