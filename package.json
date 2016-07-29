@@ -1,5 +1,6 @@
 {
   "name": "pelias-model",
+  "version": "0.0.0-semantic-release",
   "author": "mapzen",
   "description": "Pelias data models",
   "homepage": "https://github.com/pelias/model",
