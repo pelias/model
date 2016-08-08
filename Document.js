@@ -302,6 +302,7 @@ Document.addressFields = ['name', 'number', 'street', 'zip'];
 
 Document.parentFields = [
   'country',       'country_a',       'country_id',
+  'dependency',    'dependency_a',    'dependency_id',
   'macroregion',   'macroregion_a',   'macroregion_id',
   'region',        'region_a',        'region_id',
   'macrocounty',   'macrocounty_a',   'macrocounty_id',
