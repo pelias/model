@@ -301,6 +301,7 @@ Document.prototype.getBoundingBox = model.get('bounding_box');
 Document.addressFields = ['name', 'number', 'street', 'zip'];
 
 Document.parentFields = [
+  'continent',     'continent_a',     'continent_id',
   'country',       'country_a',       'country_id',
   'dependency',    'dependency_a',    'dependency_id',
   'macroregion',   'macroregion_a',   'macroregion_id',
