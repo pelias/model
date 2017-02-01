@@ -311,7 +311,8 @@ Document.parentFields = [
   'borough',       'borough_a',       'borough_id',
   'locality',      'locality_a',      'locality_id',
   'localadmin',    'localadmin_a',    'localadmin_id',
-  'neighbourhood', 'neighbourhood_a', 'neighbourhood_id'
+  'neighbourhood', 'neighbourhood_a', 'neighbourhood_id',
+  'postalcode',    'postalcode_a',    'postalcode_id'
 ];
 
 // export

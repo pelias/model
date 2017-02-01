@@ -62,7 +62,10 @@ module.exports.tests.minimal = function(test) {
         'neighbourhood_id': [],
         'region': [],
         'region_a': [],
-        'region_id': []
+        'region_id': [],
+        'postalcode': [],
+        'postalcode_a': [],
+        'postalcode_id': []
       },
       'address_parts': {},
       'category': [],
@@ -162,7 +165,10 @@ module.exports.tests.complete = function(test) {
         'neighbourhood_id': ['2002'],
         'region': [],
         'region_a': [],
-        'region_id': []
+        'region_id': [],
+        'postalcode': [],
+        'postalcode_a': [],
+        'postalcode_id': []
       },
 
       // geography
