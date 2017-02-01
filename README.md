@@ -70,5 +70,9 @@ Travis tests every release against Node.js versions `4` and `6`.
 [![Build Status](https://travis-ci.org/pelias/model.png?branch=master)](https://travis-ci.org/pelias/model)
 
 
+### Versioning
+
+We rely on semantic-release and Greenkeeper to maintain our module and dependency versions.
+
 [![Greenkeeper badge](https://badges.greenkeeper.io/pelias/model.svg)](https://greenkeeper.io/)
 
