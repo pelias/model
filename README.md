@@ -1,7 +1,5 @@
 ## Installation
 
-[![Greenkeeper badge](https://badges.greenkeeper.io/pelias/model.svg)](https://greenkeeper.io/)
-
 ```bash
 $ npm install pelias-model
 ```
@@ -70,3 +68,7 @@ $ npm test
 Travis tests every release against Node.js versions `4` and `6`.
 
 [![Build Status](https://travis-ci.org/pelias/model.png?branch=master)](https://travis-ci.org/pelias/model)
+
+
+[![Greenkeeper badge](https://badges.greenkeeper.io/pelias/model.svg)](https://greenkeeper.io/)
+
