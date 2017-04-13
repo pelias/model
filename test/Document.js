@@ -1,3 +1,4 @@
+const _ = require('lodash');
 
 var Document = require('../Document');
 
@@ -72,6 +73,45 @@ module.exports.tests.clearParent = function(test) {
     t.end();
 
   });
+};
+
+module.exports.tests.isSupportedParent = (test) => {
+  const isBaseType = (type) => {
+    return type.indexOf('_') === -1;
+  };
+
+  test('supported WOF placetypes should return true', (t) => {
+    const doc = new Document('mysource', 'mylayer', 'myid');
+
+    // this finds non-_a and non-_id placetypes
+    Document.parentFields.filter(isBaseType).forEach((type) => {
+      t.ok(doc.isSupportedParent(type), `${type} should be supported`);
+    });
+
+    t.end();
+
+  });
+
+  test('abbreviation and id names for WOF placetypes should return false', (t) => {
+    const doc = new Document('mysource', 'mylayer', 'myid');
+
+    // this finds _a and _id placetypes
+    Document.parentFields.filter(_.negate(isBaseType)).forEach((type) => {
+      t.notOk(doc.isSupportedParent(type), `${type} should not be supported`);
+    });
+
+    t.end();
+
+  });
+
+  test('non-WOF placetype arguments should return false', (t) => {
+    const doc = new Document('mysource', 'mylayer', 'myid');
+
+    t.notOk(doc.isSupportedParent('this is not a WOF placetype'), 'should be false');
+    t.end();
+
+  });
+
 };
 
 module.exports.all = function (tape, common) {

@@ -311,9 +311,14 @@ Document.parentFields = [
   'borough',       'borough_a',       'borough_id',
   'locality',      'locality_a',      'locality_id',
   'localadmin',    'localadmin_a',    'localadmin_id',
+  'macrohood',     'macrohood_a',     'macrohood_id',
   'neighbourhood', 'neighbourhood_a', 'neighbourhood_id',
   'postalcode',    'postalcode_a',    'postalcode_id'
 ];
+
+Document.prototype.isSupportedParent = (placetype) => {
+  return Document.parentFields.indexOf(placetype) % 3 === 0;
+};
 
 // export
 module.exports = Document;
