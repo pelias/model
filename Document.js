@@ -6,6 +6,24 @@ var valid = require('./util/valid');
 var transform = require('./util/transform');
 var _ = require('lodash');
 
+const addressFields = ['name', 'number', 'street', 'zip'];
+
+const parentFields = [
+  'continent',
+  'country',
+  'dependency',
+  'macroregion',
+  'region',
+  'macrocounty',
+  'county',
+  'borough',
+  'locality',
+  'localadmin',
+  'macrohood',
+  'neighbourhood',
+  'postalcode'
+];
+
 function Document( source, layer, source_id ){
   this.name = {};
   this.phrase = {};
@@ -15,8 +33,10 @@ function Document( source, layer, source_id ){
   this.category = [];
 
   // initialize 'parent' fields to empty arrays
-  Document.parentFields.forEach( function(field){
+  parentFields.forEach( (field) => {
     this.parent[field] = [];
+    this.parent[`${field}_a`] = [];
+    this.parent[`${field}_id`] = [];
   }, this);
 
   // create a non-enumerable property for metadata
@@ -207,7 +227,7 @@ Document.prototype.clearParent = function(field) {
 // address
 Document.prototype.setAddress = function ( prop, val ){
   return model.setChild( 'address_parts' )
-    .validate( valid.property( Document.addressFields ) )
+    .validate( valid.property( addressFields ) )
     .validate( valid.type('string') )
     .validate( valid.truthy() )
     .call( this, prop, val );
@@ -298,26 +318,13 @@ Document.prototype.setBoundingBox = model.set( 'bounding_box' )
 // marshal the internal bounding_box back into the representation the caller supplied
 Document.prototype.getBoundingBox = model.get('bounding_box');
 
-Document.addressFields = ['name', 'number', 'street', 'zip'];
-
-Document.parentFields = [
-  'continent',     'continent_a',     'continent_id',
-  'country',       'country_a',       'country_id',
-  'dependency',    'dependency_a',    'dependency_id',
-  'macroregion',   'macroregion_a',   'macroregion_id',
-  'region',        'region_a',        'region_id',
-  'macrocounty',   'macrocounty_a',   'macrocounty_id',
-  'county',        'county_a',        'county_id',
-  'borough',       'borough_a',       'borough_id',
-  'locality',      'locality_a',      'locality_id',
-  'localadmin',    'localadmin_a',    'localadmin_id',
-  'macrohood',     'macrohood_a',     'macrohood_id',
-  'neighbourhood', 'neighbourhood_a', 'neighbourhood_id',
-  'postalcode',    'postalcode_a',    'postalcode_id'
-];
-
 Document.prototype.isSupportedParent = (placetype) => {
-  return Document.parentFields.indexOf(placetype) % 3 === 0;
+  return parentFields.indexOf(placetype) !== -1;
+};
+
+// return a clone so it's immutable
+Document.prototype.getParentFields = () => {
+  return _.cloneDeep(parentFields);
 };
 
 // export
