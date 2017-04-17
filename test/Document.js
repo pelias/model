@@ -1,4 +1,3 @@
-
 var Document = require('../Document');
 
 module.exports.tests = {};
@@ -38,7 +37,7 @@ module.exports.tests.constructor = function(test) {
 
     // initialize 'parent' fields to empty arrays
     t.equal(typeof doc.parent, 'object', 'initial value');
-    Document.parentFields.forEach( function(field){
+    doc.getParentFields().forEach( function(field){
       t.true(Array.isArray(doc.parent[field]), 'initial value');
     });
 
@@ -72,6 +71,69 @@ module.exports.tests.clearParent = function(test) {
     t.end();
 
   });
+};
+
+module.exports.tests.parent_types = (test) => {
+  test('supported WOF placetypes should return true', (t) => {
+    const doc = new Document('mysource', 'mylayer', 'myid');
+
+    t.deepEquals(doc.getParentFields(), [
+      'continent',
+      'country',
+      'dependency',
+      'macroregion',
+      'region',
+      'macrocounty',
+      'county',
+      'borough',
+      'locality',
+      'localadmin',
+      'macrohood',
+      'neighbourhood',
+      'postalcode'
+    ]);
+
+    t.end();
+
+  });
+
+  test('supported WOF placetypes should return true', (t) => {
+    const doc = new Document('mysource', 'mylayer', 'myid');
+
+    doc.getParentFields().forEach((type) => {
+      t.ok(doc.isSupportedParent(type), `${type} should be supported`);
+    });
+
+    t.end();
+
+  });
+
+  test('abbreviation and id names for WOF placetypes should return false', (t) => {
+    const doc = new Document('mysource', 'mylayer', 'myid');
+
+    // this verifies that _a and _id parents aren't supported
+    doc.getParentFields().forEach((type) => {
+      t.notOk(doc.isSupportedParent(`${type}_a`), `${type}_a should not be supported`);
+      t.notOk(doc.isSupportedParent(`${type}_id`), `${type}_id should not be supported`);
+    });
+
+    t.end();
+
+  });
+
+  test('non-WOF placetype arguments should return false', (t) => {
+    const doc = new Document('mysource', 'mylayer', 'myid');
+
+    const placetype = 'unsupported placetype';
+
+    // push a new placetype to show that it's a clone of the internal list
+    doc.getParentFields().push(placetype);
+
+    t.notOk(doc.isSupportedParent(placetype), 'should be false');
+    t.end();
+
+  });
+
 };
 
 module.exports.all = function (tape, common) {
