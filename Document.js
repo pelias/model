@@ -226,6 +226,14 @@ Document.prototype.clearParent = function(field) {
   return this;
 };
 
+// convenience method for clearing all parents
+Document.prototype.clearAllParents = function() {
+  parentFields.forEach((parentField) => {
+    this.clearParent.call( this, parentField );
+  });
+  return this;
+};
+
 // address
 Document.prototype.setAddress = function ( prop, val ){
   return model.setChild( 'address_parts' )

@@ -73,6 +73,30 @@ module.exports.tests.clearParent = function(test) {
   });
 };
 
+module.exports.tests.clearAllParents = (test) => {
+  test('clearParents should remove all effects of all addParent calls', (t) => {
+    const doc = new Document('mysource','mylayer','myid');
+    doc.getParentFields().forEach((type) => {
+      doc.addParent(type, 'name 1', 'id 1', 'abbr 1');
+      doc.addParent(type, 'name 2', 'id 2', 'abbr 2');
+    });
+
+    doc.getParentFields().forEach((type) => {
+      t.equals(doc.parent[type].length, 2, `there should be 2 of type ${type}`);
+    });
+
+    t.equals(doc.clearAllParents(), doc, 'is chainable');
+
+    doc.getParentFields().forEach((type) => {
+      t.equals(doc.parent[type].length, 0, `there should be 0 of type ${type}`);
+    });
+
+    t.end();
+
+  });
+
+};
+
 module.exports.tests.parent_types = (test) => {
   test('supported WOF placetypes should return true', (t) => {
     const doc = new Document('mysource', 'mylayer', 'myid');
