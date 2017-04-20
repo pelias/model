@@ -246,7 +246,7 @@ Document.prototype.hasAddress = model.hasChild( 'address_parts' );
 // population
 Document.prototype.setPopulation = model.set( 'population', null, null )
                                         .validate( valid.type('number') )
-                                        .validate( valid.positive() );
+                                        .validate( valid.nonnegative() );
 
 Document.prototype.getPopulation = model.get( 'population' );
 
@@ -254,7 +254,7 @@ Document.prototype.getPopulation = model.get( 'population' );
 Document.prototype.setPopularity = model.set( 'popularity', null, null )
                                         .transform( transform.roundify() )
                                         .validate( valid.type('number') )
-                                        .validate( valid.positive() );
+                                        .validate( valid.nonnegative() );
 
 Document.prototype.getPopularity = model.get( 'popularity' );
 
