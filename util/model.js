@@ -70,6 +70,18 @@ module.exports.set = function( prop, validators, transformers, postValidationTra
   return setter;
 };
 
+// clears the value of a property
+module.exports.clear = (prop) => {
+  if( !prop ) {
+    throw new PeliasModelError( 'invalid property' );
+  }
+  return function() {
+    delete this[prop];
+    // make chainable
+    return this;
+  };
+};
+
 /**
   Get the value of a property from a *second level* property of the model.
 

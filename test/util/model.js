@@ -81,6 +81,29 @@ module.exports.tests.set = function(test) {
   });
 };
 
+module.exports.tests.clear = (test) => {
+  test('clear()', (t) => {
+
+    // invalid prop
+    t.throws( model.clear.bind(null, null), /invalid property/ );
+
+    // clear-er
+    const clear = model.clear('myKey');
+    t.equal( typeof clear, 'function', 'returns function' );
+    t.equal( clear.length, 0, 'returns function' );
+
+    // inheritance
+    const obj = { key1: 'value1', key2: 'value2' };
+    obj.clearKey1 = model.clear('key1');
+    const chain = obj.clearKey1();
+    t.notOk(obj.hasOwnProperty('key1'), 'key1 should be gone');
+    t.deepEquals(obj.key2, 'value2', 'key2 should remain' );
+    t.equal( chain, obj, 'methods chainable' );
+
+    t.end();
+  });
+};
+
 module.exports.tests.getChild = function(test) {
   test('getChild()', function(t) {
 

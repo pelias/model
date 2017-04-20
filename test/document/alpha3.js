@@ -36,6 +36,22 @@ module.exports.tests.setAlpha3 = function(test) {
   });
 };
 
+module.exports.tests.clearAlpha3 = (test) => {
+  test('clearAlpha3', (t) => {
+    var doc = new Document('mysource','mylayer','myid');
+    doc.setAlpha3('FOO');
+
+    t.equal(doc.getAlpha3(), 'FOO', 'alpha3 set');
+
+    doc.clearAlpha3();
+
+    t.equal(doc.getAlpha3(), undefined, 'alpha3 cleared');
+    t.end();
+
+  });
+
+};
+
 module.exports.all = function (tape, common) {
 
   function test(name, testFunction) {

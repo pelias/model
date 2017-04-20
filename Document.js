@@ -137,6 +137,8 @@ Document.prototype.setAlpha3 = model.set( 'alpha3' )
 
 Document.prototype.getAlpha3 = model.get( 'alpha3' );
 
+Document.prototype.clearAlpha3 = model.clear( 'alpha3' );
+
 // globally unique id
 Document.prototype.getGid = function(){
   return [ this.getSource(), this.getLayer(), this.getId() ].join(':');
