@@ -137,6 +137,8 @@ Document.prototype.setAlpha3 = model.set( 'alpha3' )
 
 Document.prototype.getAlpha3 = model.get( 'alpha3' );
 
+Document.prototype.clearAlpha3 = model.clear( 'alpha3' );
+
 // globally unique id
 Document.prototype.getGid = function(){
   return [ this.getSource(), this.getLayer(), this.getId() ].join(':');
@@ -221,6 +223,14 @@ Document.prototype.clearParent = function(field) {
   clear( field + '_id' );
   clear( field + '_a' );
 
+  return this;
+};
+
+// convenience method for clearing all parents
+Document.prototype.clearAllParents = function() {
+  parentFields.forEach((parentField) => {
+    this.clearParent.call( this, parentField );
+  });
   return this;
 };
 
