@@ -33,7 +33,7 @@ module.exports.truthy = function(){
   };
 };
 
-module.exports.positive = function(){
+module.exports.nonnegative = function(){
   return function( val ){
     if( val < 0 ){
       throw new PeliasModelError( 'invalid document type, expecting: 0 or a positive number, got: ' + val );
