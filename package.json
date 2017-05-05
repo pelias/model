@@ -32,7 +32,7 @@
   },
   "dependencies": {
     "lodash": "^4.6.1",
-    "pelias-config": "2.9.0",
+    "pelias-config": "2.10.0",
     "through2": "^2.0.0"
   },
   "devDependencies": {
