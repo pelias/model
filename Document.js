@@ -1,7 +1,7 @@
 var config = require('pelias-config').generate();
 
 var pkg = require('./package');
-var valid = require('./util/valid');
+var validate = require('./util/valid');
 var transform = require('./util/transform');
 var _ = require('lodash');
 
@@ -91,8 +91,8 @@ Document.prototype.toESDocument = function() {
 Document.prototype.setId = function( id ){
 
   id = transform.stringify()(id);
-  valid.type('string')(id);
-  valid.truthy()(id);
+  validate.type('string', id);
+  validate.truthy(id);
 
   this._meta.id = id;
   return this;
@@ -105,8 +105,8 @@ Document.prototype.getId = function(){
 // type
 Document.prototype.setType = function( type ){
 
-  valid.type('string')(type);
-  valid.truthy()(type);
+  validate.type('string', type);
+  validate.truthy(type);
 
   this._meta.type = type;
   return this;
@@ -120,8 +120,8 @@ Document.prototype.getType = function(){
 Document.prototype.setSource = function( source ){
 
   source = transform.lowercase()(source);
-  valid.type('string')(source);
-  valid.truthy()(source);
+  validate.type('string', source);
+  validate.truthy(source);
 
   this.source = source;
   return this;
@@ -135,8 +135,8 @@ Document.prototype.getSource = function(){
 Document.prototype.setLayer = function( layer ){
 
   layer = transform.lowercase()(layer);
-  valid.type('string')(layer);
-  valid.truthy()(layer);
+  validate.type('string', layer);
+  validate.truthy(layer);
 
   this.layer = layer;
   return this;
@@ -151,8 +151,8 @@ Document.prototype.setSourceId = function( source_id ){
 
   source_id = transform.stringify()(source_id);
   source_id = transform.lowercase()(source_id);
-  valid.type('string')(source_id);
-  valid.truthy()(source_id);
+  validate.type('string', source_id);
+  validate.truthy(source_id);
 
   this.source_id = source_id;
   return this;
@@ -166,9 +166,9 @@ Document.prototype.getSourceId = function(){
 Document.prototype.setAlpha3 = function( alpha3 ){
 
   alpha3 = transform.uppercase()(alpha3);
-  valid.type('string')(alpha3);
-  valid.truthy()(alpha3);
-  valid.length(3)(alpha3);
+  validate.type('string', alpha3);
+  validate.truthy(alpha3);
+  validate.length(3, alpha3);
 
   this.alpha3 = alpha3;
   return this;
@@ -213,8 +213,8 @@ Document.prototype.delMeta = function( prop ){
 // names
 Document.prototype.setName = function( prop, value ){
 
-  valid.type('string')(value);
-  valid.truthy()(value);
+  validate.type('string', value);
+  validate.truthy(value);
 
   this.name[ prop ] = value;
   this.phrase[ prop ] = value; // must copy name to 'phrase' index
@@ -248,8 +248,8 @@ Document.prototype.addParent = function( field, name, id, abbr ){
   }.bind(this);
 
   var addValidate = function( prop, value ){
-    valid.type('string')(value);
-    valid.truthy()(value);
+    validate.type('string', value);
+    validate.truthy(value);
     add( prop, value );
   }.bind(this);
 
@@ -313,9 +313,9 @@ Document.prototype.clearAllParents = function() {
 // address
 Document.prototype.setAddress = function( prop, value ){
 
-  valid.property(addressFields)(value, prop);
-  valid.type('string')(value);
-  valid.truthy()(value);
+  validate.property(addressFields, prop);
+  validate.type('string', value);
+  validate.truthy(value);
 
   this.address_parts[ prop ] = value;
   return this;
@@ -340,8 +340,8 @@ Document.prototype.delAddress = function( prop ){
 // population
 Document.prototype.setPopulation = function( population ){
 
-  valid.type('number')(population);
-  valid.nonnegative()(population);
+  validate.type('number', population);
+  validate.nonnegative(population);
 
   this.population = population;
   return this;
@@ -355,8 +355,8 @@ Document.prototype.getPopulation = function(){
 Document.prototype.setPopularity = function( popularity ){
 
   popularity = transform.roundify()(popularity);
-  valid.type('number')(popularity);
-  valid.nonnegative()(popularity);
+  validate.type('number', popularity);
+  validate.nonnegative(popularity);
 
   this.popularity = popularity;
   return this;
@@ -370,8 +370,8 @@ Document.prototype.getPopularity = function(){
 Document.prototype.setLon = function( value ){
 
   value = transform.floatify(6)(value);
-  valid.type('number')(value);
-  valid.geo('longitude')(value);
+  validate.type('number', value);
+  validate.geo('longitude', value);
 
   this.center_point.lon = value;
   return this;
@@ -385,8 +385,8 @@ Document.prototype.getLon = function(){
 Document.prototype.setLat = function( value ){
 
   value = transform.floatify(6)(value);
-  valid.type('number')(value);
-  valid.geo('latitude')(value);
+  validate.type('number', value);
+  validate.geo('latitude', value);
 
   this.center_point.lat = value;
   return this;
@@ -400,8 +400,8 @@ Document.prototype.getLat = function(){
 Document.prototype.addCategory = function( value ){
 
   value = transform.lowercase()(value);
-  valid.type('string')(value);
-  valid.truthy()(value);
+  validate.type('string', value);
+  validate.truthy(value);
 
   if( -1 === this.category.indexOf(value) ){
     this.category.push(value);
@@ -436,8 +436,8 @@ Document.prototype.getCentroid = function(){
 // shape
 Document.prototype.setPolygon = function( value ){
 
- valid.type('object')(value);
- valid.truthy()(value);
+ validate.type('object', value);
+ validate.truthy(value);
 
  this.shape = value;
  return this;
@@ -452,8 +452,8 @@ Document.prototype.getPolygon = function(){
 // marshaling into a ES-specific format
 Document.prototype.setBoundingBox = function( value ){
 
- valid.type('object')(value);
- valid.boundingBox()(value);
+ validate.type('object', value);
+ validate.boundingBox(value);
  value = transform.toULLR()(value);
 
  this.bounding_box = value;
