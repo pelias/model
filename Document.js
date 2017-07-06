@@ -1,8 +1,6 @@
 var config = require('pelias-config').generate();
 
-var pkg = require('./package');
-var model = require('./util/model');
-var valid = require('./util/valid');
+var validate = require('./util/valid');
 var transform = require('./util/transform');
 var _ = require('lodash');
 
@@ -32,16 +30,8 @@ function Document( source, layer, source_id ){
   this.center_point = {};
   this.category = [];
 
-  // initialize 'parent' fields to empty arrays
-  parentFields.forEach( (field) => {
-    this.parent[field] = [];
-    this.parent[`${field}_a`] = [];
-    this.parent[`${field}_id`] = [];
-  }, this);
-
   // create a non-enumerable property for metadata
   Object.defineProperty( this, '_meta', { writable: true, value: {} });
-  this._meta.version = pkg.version;
 
   // mandatory properties
   this.setSource( source );
@@ -79,65 +69,98 @@ Document.prototype.toESDocument = function() {
 
 // id
 Document.prototype.setId = function( id ){
-  return model.setChild( '_meta' )
-              .transform( transform.stringify() )
-              .validate( valid.type('string') )
-              .validate( valid.truthy() )
-              .call( this, 'id', id );
+
+  id = transform.stringify(id);
+  validate.type('string', id);
+  validate.truthy(id);
+
+  this._meta.id = id;
+  return this;
 };
+
 Document.prototype.getId = function(){
-  return model.getChild( '_meta' )
-              .call( this, 'id' );
+  return this._meta.id;
 };
 
 // type
 Document.prototype.setType = function( type ){
-  return model.setChild( '_meta' )
-              .validate( valid.type('string') )
-              .validate( valid.truthy() )
-              .call( this, 'type', type );
+
+  validate.type('string', type);
+  validate.truthy(type);
+
+  this._meta.type = type;
+  return this;
 };
+
 Document.prototype.getType = function(){
-  return model.getChild( '_meta' )
-              .call( this, 'type' );
+  return this._meta.type;
 };
 
 // source
-Document.prototype.setSource = model.set( 'source' )
-                                    .transform( transform.lowercase() )
-                                    .validate( valid.type('string') )
-                                    .validate( valid.truthy() );
+Document.prototype.setSource = function( source ){
 
-Document.prototype.getSource = model.get( 'source' );
+  source = transform.lowercase(source);
+  validate.type('string', source);
+  validate.truthy(source);
+
+  this.source = source;
+  return this;
+};
+
+Document.prototype.getSource = function(){
+  return this.source;
+};
 
 // layer
-Document.prototype.setLayer = model.set( 'layer' )
-                                    .transform( transform.lowercase() )
-                                    .validate( valid.type('string') )
-                                    .validate( valid.truthy() );
+Document.prototype.setLayer = function( layer ){
 
-Document.prototype.getLayer = model.get( 'layer' );
+  layer = transform.lowercase(layer);
+  validate.type('string', layer);
+  validate.truthy(layer);
 
-// source
-Document.prototype.setSourceId = model.set( 'source_id' )
-                                    .transform( transform.stringify() )
-                                    .transform( transform.lowercase() )
-                                    .validate( valid.type('string') )
-                                    .validate( valid.truthy() );
+  this.layer = layer;
+  return this;
+};
 
-Document.prototype.getSourceId = model.get( 'source_id' );
+Document.prototype.getLayer = function(){
+  return this.layer;
+};
+
+// source id
+Document.prototype.setSourceId = function( source_id ){
+
+  source_id = transform.stringify(source_id);
+  source_id = transform.lowercase(source_id);
+  validate.type('string', source_id);
+  validate.truthy(source_id);
+
+  this.source_id = source_id;
+  return this;
+};
+
+Document.prototype.getSourceId = function(){
+  return this.source_id;
+};
 
 // alpha3
-Document.prototype.setAlpha3 = model.set( 'alpha3' )
-                                    .transform( transform.uppercase() )
-                                    .validate( valid.type('string') )
-                                    .validate( valid.truthy() )
-                                    .validate( valid.length(3) );
+Document.prototype.setAlpha3 = function( alpha3 ){
 
+  alpha3 = transform.uppercase(alpha3);
+  validate.type('string', alpha3);
+  validate.truthy(alpha3);
+  validate.length(3, alpha3);
 
-Document.prototype.getAlpha3 = model.get( 'alpha3' );
+  this.alpha3 = alpha3;
+  return this;
+};
 
-Document.prototype.clearAlpha3 = model.clear( 'alpha3' );
+Document.prototype.getAlpha3 = function(){
+  return this.alpha3;
+};
+
+Document.prototype.clearAlpha3 = function(){
+  delete this.alpha3;
+};
 
 // globally unique id
 Document.prototype.getGid = function(){
@@ -145,38 +168,80 @@ Document.prototype.getGid = function(){
 };
 
 // meta
-Document.prototype.setMeta = model.setChild( '_meta' );
-Document.prototype.getMeta = model.getChild( '_meta' );
-Document.prototype.hasMeta = model.hasChild( '_meta' );
-Document.prototype.delMeta = model.delChild( '_meta' );
 
-// names
-Document.prototype.setName = function(prop, value) {
-  var setterFn = model.setChild( 'name' )
-  .validate( valid.type('string') )
-  .validate( valid.truthy() );
-
-  setterFn.call(this, prop, value);
-
-  this.phrase = this.name;
-
+Document.prototype.setMeta = function( prop, val ){
+  this._meta[prop] = val;
   return this;
 };
 
-Document.prototype.getName = model.getChild( 'name' );
-Document.prototype.hasName = model.hasChild( 'name' );
-Document.prototype.delName = model.delChild( 'name' );
+Document.prototype.getMeta = function( prop ){
+  return this._meta[prop];
+};
+
+Document.prototype.hasMeta = function( prop ){
+  return this._meta.hasOwnProperty( prop );
+};
+
+Document.prototype.delMeta = function( prop ){
+  if( this.hasMeta( prop ) ){
+    delete this._meta[ prop ];
+    return true;
+  }
+  return false;
+};
+
+// names
+Document.prototype.setName = function( prop, value ){
+
+  validate.type('string', value);
+  validate.truthy(value);
+
+  this.name[ prop ] = value;
+  this.phrase[ prop ] = value; // must copy name to 'phrase' index
+  return this;
+};
+
+Document.prototype.getName = function( prop ){
+  return this.name[ prop ];
+};
+
+Document.prototype.hasName = function( prop ){
+  return this.name.hasOwnProperty( prop );
+};
+
+Document.prototype.delName = function( prop ){
+  if( this.hasName( prop ) ){
+    delete this.name[ prop ];
+    return true;
+  }
+  return false;
+};
 
 // parent
 Document.prototype.addParent = function( field, name, id, abbr ){
-  var add = model.pushChild( 'parent' )
-    .validate( valid.type('string') )
-    .validate( valid.truthy() )
-    .bind(this);
+
+  var add = function( prop, value ){
+
+    // create new parent array if required
+    if( !this.parent.hasOwnProperty( prop ) ){
+      this.parent[ prop ] = [];
+    }
+
+    // add value to array if not already present
+    if( -1 === this.parent[prop].indexOf(value) ){
+      this.parent[prop].push(value);
+    }
+  }.bind(this);
+
+  var addValidate = function( prop, value ){
+    validate.type('string', value);
+    validate.truthy(value);
+    add( prop, value );
+  }.bind(this);
 
   // mandatory fields, eg: 'country', 'country_id'
-  add( field, name );
-  add( field + '_id', id );
+  addValidate( field, name );
+  addValidate( field + '_id', id );
 
   // optional field, eg: 'country_a', defaults to `null` for downstream ES
   /**
@@ -204,11 +269,9 @@ Document.prototype.addParent = function( field, name, id, abbr ){
     == you can now be sure that the abbreviation 'bingo' belongs to '2' and not '1'.
   **/
   if (_.isUndefined(abbr)) {
-    var addNull = model.pushChild( 'parent' ).bind(this);
-    addNull( field + '_a', null );
-
+    add( field + '_a', null );
   } else {
-    add( field + '_a', abbr );
+    addValidate( field + '_a', abbr );
   }
 
   // chainable
@@ -217,11 +280,15 @@ Document.prototype.addParent = function( field, name, id, abbr ){
 
 // clear all all added values
 Document.prototype.clearParent = function(field) {
-  var clear = model.clearChild( 'parent' ).bind(this);
 
-  clear( field );
-  clear( field + '_id' );
-  clear( field + '_a' );
+  // field has never been set
+  if( !this.parent.hasOwnProperty( field ) ){
+    return this;
+  }
+
+  this.parent[ field ] = [];
+  this.parent[ field + '_id' ] = [];
+  this.parent[ field + '_a' ] = [];
 
   return this;
 };
@@ -235,71 +302,115 @@ Document.prototype.clearAllParents = function() {
 };
 
 // address
-Document.prototype.setAddress = function ( prop, val ){
-  return model.setChild( 'address_parts' )
-    .validate( valid.property( addressFields ) )
-    .validate( valid.type('string') )
-    .validate( valid.truthy() )
-    .call( this, prop, val );
+Document.prototype.setAddress = function( prop, value ){
+
+  validate.property(addressFields, prop);
+  validate.type('string', value);
+  validate.truthy(value);
+
+  this.address_parts[ prop ] = value;
+  return this;
 };
 
-Document.prototype.getAddress = function ( prop ){
+Document.prototype.getAddress = function( prop ){
   return this.address_parts[ prop ];
 };
 
-Document.prototype.delAddress = function ( prop ){
-  delete this.address_parts[ prop ];
+Document.prototype.hasAddress = function( prop ){
+  return this.address_parts.hasOwnProperty( prop );
 };
 
-Document.prototype.hasAddress = model.hasChild( 'address_parts' );
+Document.prototype.delAddress = function( prop ){
+  if( this.hasName( prop ) ){
+    delete this.address_parts[ prop ];
+    return true;
+  }
+  return false;
+};
 
 // population
-Document.prototype.setPopulation = model.set( 'population', null, null )
-                                        .validate( valid.type('number') )
-                                        .validate( valid.nonnegative() );
+Document.prototype.setPopulation = function( population ){
 
-Document.prototype.getPopulation = model.get( 'population' );
+  validate.type('number', population);
+  validate.nonnegative(population);
+
+  this.population = population;
+  return this;
+};
+
+Document.prototype.getPopulation = function(){
+  return this.population;
+};
 
 // popularity
-Document.prototype.setPopularity = model.set( 'popularity', null, null )
-                                        .transform( transform.roundify() )
-                                        .validate( valid.type('number') )
-                                        .validate( valid.nonnegative() );
+Document.prototype.setPopularity = function( popularity ){
 
-Document.prototype.getPopularity = model.get( 'popularity' );
+  popularity = transform.roundify(popularity);
+  validate.type('number', popularity);
+  validate.nonnegative(popularity);
 
-// latitude
-Document.prototype.setLon = function( lon ){
-  return model.setChild( 'center_point' )
-              .transform( transform.floatify(6) )
-              .validate( valid.type('number') )
-              .validate( valid.geo('longitude') )
-              .call( this, 'lon', lon );
+  this.popularity = popularity;
+  return this;
 };
-Document.prototype.getLon = function(){
-  return model.getChild( 'center_point' ).call( this, 'lon' );
+
+Document.prototype.getPopularity = function(){
+  return this.popularity;
 };
 
 // longitude
-Document.prototype.setLat = function( lat ){
-  return model.setChild( 'center_point' )
-              .transform( transform.floatify(6) )
-              .validate( valid.type('number') )
-              .validate( valid.geo('latitude') )
-              .call( this, 'lat', lat );
+Document.prototype.setLon = function( value ){
+
+  value = transform.floatify(6, value);
+  validate.type('number', value);
+  validate.geo('longitude', value);
+
+  this.center_point.lon = value;
+  return this;
 };
+
+Document.prototype.getLon = function(){
+  return this.center_point.lon;
+};
+
+// latitude
+Document.prototype.setLat = function( value ){
+
+  value = transform.floatify(6, value);
+  validate.type('number', value);
+  validate.geo('latitude', value);
+
+  this.center_point.lat = value;
+  return this;
+};
+
 Document.prototype.getLat = function(){
-  return model.getChild( 'center_point' ).call( this, 'lat' );
+  return this.center_point.lat;
 };
 
 // categories
-Document.prototype.addCategory = model.push( 'category' )
-                                  .transform( transform.lowercase() )
-                                  .validate( valid.type('string') )
-                                  .validate( valid.truthy() );
+Document.prototype.addCategory = function( value ){
 
+  value = transform.lowercase(value);
+  validate.type('string', value);
+  validate.truthy(value);
 
-Document.prototype.removeCategory = model.splice( 'category' );
+  if( -1 === this.category.indexOf(value) ){
+    this.category.push(value);
+  }
+
+  return this;
+};
+
+Document.prototype.removeCategory = function( value ){
+
+  for(var i = this.category.length - 1; i >= 0; i--) {
+    if(this.category[i] === value) {
+      this.category.splice(i, 1);
+    }
+  }
+
+  return this;
+};
 
 // centroid
 Document.prototype.setCentroid = function( centroid ){
@@ -308,25 +419,42 @@ Document.prototype.setCentroid = function( centroid ){
   this.setLat.call( this, centroid.lat );
   return this;
 };
-Document.prototype.getCentroid = model.get( 'center_point' );
+
+Document.prototype.getCentroid = function(){
+  return this.center_point;
+};
 
 // shape
-Document.prototype.setPolygon = model.set( 'shape' )
-                                     .validate( valid.type('object') )
-                                     .validate( valid.truthy() );
+Document.prototype.setPolygon = function( value ){
 
-Document.prototype.getPolygon = model.get( 'shape' );
+ validate.type('object', value);
+ validate.truthy(value);
+
+ this.shape = value;
+ return this;
+};
+
+Document.prototype.getPolygon = function(){
+  return this.shape;
+};
 
 // bounding box
 // verify that the supplied bounding_box is a well-formed object, finally
 // marshaling into a ES-specific format
-Document.prototype.setBoundingBox = model.set( 'bounding_box' )
-                                         .validate( valid.type('object') )
-                                         .validate( valid.boundingBox() )
-                                         .postValidationTransform( transform.toULLR() );
+Document.prototype.setBoundingBox = function( value ){
 
-// marshal the internal bounding_box back into the representation the caller supplied
-Document.prototype.getBoundingBox = model.get('bounding_box');
+ validate.type('object', value);
+ validate.boundingBox(value);
+ value = transform.toULLR(value);
+
+ this.bounding_box = value;
+ return this;
+};
+
+Document.prototype.getBoundingBox = function(){
+  return this.bounding_box;
+};
+
 
 Document.prototype.isSupportedParent = (placetype) => {
   return parentFields.indexOf(placetype) !== -1;

@@ -28,7 +28,6 @@ module.exports.tests.toESDocument = function(test) {
       _id: 'myid',
       data: {
         layer: 'mylayer',
-        parent: {},
         source: 'mysource',
         source_id: 'myid'
       }
@@ -40,7 +39,7 @@ module.exports.tests.toESDocument = function(test) {
     // downstream to elasticsearch.
     t.false(esDoc.data.hasOwnProperty('address_parts'), 'does not include empty top-level maps');
     t.false(esDoc.data.hasOwnProperty('category'), 'does not include empty top-level arrays');
-    t.false(esDoc.data.parent.hasOwnProperty('country'), 'does not include empty parent arrays');
+    t.false(esDoc.data.hasOwnProperty('parent'), 'does not include empty parent arrays');
     t.end();
   });
 };
