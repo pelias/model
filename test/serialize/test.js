@@ -45,7 +45,6 @@ module.exports.tests.complete = function(test) {
 
     // create a new doc and serialize it
     var doc = new Document( 'geoname', 'venue', 1003 )
-      .setAlpha3( 'GBR' )
       .setMeta( 'author', 'peter' )
       .setName( 'default', 'Hackney City Farm' )
       .setName( 'alt', 'Haggerston City Farm' )
@@ -74,7 +73,6 @@ module.exports.tests.complete = function(test) {
       // data partitioning
       'source': 'geoname',
       'layer': 'venue',
-      'alpha3': 'GBR',
 
       // place name (ngram analysis)
       'name':{
