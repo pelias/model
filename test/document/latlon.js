@@ -36,7 +36,7 @@ module.exports.tests.setLat = function(test) {
     doc.setLat('1.4');
     t.equal(doc.center_point.lat, 1.4, 'accepts strings');
     doc.setLat('1.476876786');
-    t.equal(doc.center_point.lat, 1.476877, 'fixed precision');
+    t.equal(doc.center_point.lat, 1.476876, 'fixed precision');
     t.end();
   });
   test('setLat - extremes', function(t) {
@@ -84,7 +84,7 @@ module.exports.tests.setLon = function(test) {
     doc.setLon('1.4');
     t.equal(doc.center_point.lon, 1.4, 'accepts strings');
     doc.setLon('1.476876786');
-    t.equal(doc.center_point.lon, 1.476877, 'fixed precision');
+    t.equal(doc.center_point.lon, 1.476876, 'fixed precision');
     t.end();
   });
   test('setLon - extremes', function(t) {

@@ -9,14 +9,14 @@ module.exports.lowercase = function( val ){
 
 module.exports.stringify = function( val ){
   // because javascript: (''+undefined) === 'undefined'
-  if( 'undefined' === typeof val ){
-    return '';
+  if( 'string' === typeof val || 'number' === typeof val ){
+    return '' + val;
   }
-  return '' + val;
+  return '';
 };
 
 module.exports.floatify = function( precision, val ){
-  return parseFloat( val ).toFixed( precision || 10 )/1;
+  return ( Math.floor( parseFloat( val ) * Math.pow( 10, precision || 0 ) ) / Math.pow( 10, precision || 0 ) );
 };
 
 module.exports.roundify = function( val ){

@@ -14,6 +14,9 @@ module.exports.type = function( type, val ){
     if( type === 'number' && isNaN( val ) ){
       throw new PeliasModelError( 'invalid document type, expecting: number, got NaN: ' + val );
     }
+    if( type === 'number' && Infinity === val ){
+      throw new PeliasModelError( 'invalid document type, expecting: number, got Infinity: ' + val );
+    }
     if( type === 'object' && Array.isArray( val ) ){
       throw new PeliasModelError( 'invalid document type, expecting: object, got array: ' + val );
     }
@@ -107,6 +110,6 @@ module.exports.boundingBox = function( val ) {
   if (val.upperLeft.lon+360 > val.lowerRight.lon+360) {
     throw new PeliasModelError('invalid boundingBox, upperLeft.lon must be <= lowerRight.lon');
   }
-  
+
   return this;
 };
