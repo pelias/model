@@ -1,6 +1,5 @@
 var config = require('pelias-config').generate();
 
-var pkg = require('./package');
 var validate = require('./util/valid');
 var transform = require('./util/transform');
 var _ = require('lodash');
@@ -33,7 +32,6 @@ function Document( source, layer, source_id ){
 
   // create a non-enumerable property for metadata
   Object.defineProperty( this, '_meta', { writable: true, value: {} });
-  this._meta.version = pkg.version;
 
   // mandatory properties
   this.setSource( source );

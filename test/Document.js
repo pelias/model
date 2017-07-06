@@ -33,7 +33,6 @@ module.exports.tests.constructor = function(test) {
     t.deepEqual(doc.center_point, {}, 'initial value');
     t.true(Array.isArray(doc.category), 'initial value');
     t.true(doc.hasOwnProperty('_meta'), 'initial value');
-    t.true(doc._meta.hasOwnProperty('version'), 'initial value');
 
     // initialize 'parent' fields to empty arrays
     t.equal(typeof doc.parent, 'object', 'initial value');
