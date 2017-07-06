@@ -37,9 +37,6 @@ module.exports.tests.constructor = function(test) {
 
     // initialize 'parent' fields to empty arrays
     t.equal(typeof doc.parent, 'object', 'initial value');
-    doc.getParentFields().forEach( function(field){
-      t.true(Array.isArray(doc.parent[field]), 'initial value');
-    });
 
     // setters called
     t.equal(doc.source, 'mysource', 'setter called');

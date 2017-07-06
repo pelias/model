@@ -23,31 +23,13 @@ const parentFields = [
   'postalcode'
 ];
 
-// var parentInitJson = function(){
-//   var memo = {};
-//   parentFields.forEach( (field) => {
-//     memo[field] = [];
-//     memo[`${field}_a`] = [];
-//     memo[`${field}_id`] = [];
-//   });
-//   return JSON.stringify( memo );
-// }();
-
 function Document( source, layer, source_id ){
   this.name = {};
   this.phrase = {};
   this.parent = {};
-  // this.parent = JSON.parse( parentInitJson );
   this.address_parts = {};
   this.center_point = {};
   this.category = [];
-
-  // // initialize 'parent' fields to empty arrays
-  parentFields.forEach( (field) => {
-    this.parent[field] = [];
-    this.parent[`${field}_a`] = [];
-    this.parent[`${field}_id`] = [];
-  }, this);
 
   // create a non-enumerable property for metadata
   Object.defineProperty( this, '_meta', { writable: true, value: {} });
@@ -241,7 +223,13 @@ Document.prototype.delName = function( prop ){
 Document.prototype.addParent = function( field, name, id, abbr ){
 
   var add = function( prop, value ){
-    // here
+
+    // create new parent array if required
+    if( !this.parent.hasOwnProperty( prop ) ){
+      this.parent[ prop ] = [];
+    }
+
+    // add value to array if not already present
     if( -1 === this.parent[prop].indexOf(value) ){
       this.parent[prop].push(value);
     }
@@ -294,6 +282,11 @@ Document.prototype.addParent = function( field, name, id, abbr ){
 
 // clear all all added values
 Document.prototype.clearParent = function(field) {
+
+  // field has never been set
+  if( !this.parent.hasOwnProperty( field ) ){
+    return this;
+  }
 
   this.parent[ field ] = [];
   this.parent[ field + '_id' ] = [];
