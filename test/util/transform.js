@@ -1,4 +1,4 @@
-var toULLR = require('../../util/transform.js').toULLR();
+var toULLR = require('../../util/transform.js').toULLR;
 
 module.exports.tests = {};
 

@@ -90,7 +90,7 @@ Document.prototype.toESDocument = function() {
 // id
 Document.prototype.setId = function( id ){
 
-  id = transform.stringify()(id);
+  id = transform.stringify(id);
   validate.type('string', id);
   validate.truthy(id);
 
@@ -119,7 +119,7 @@ Document.prototype.getType = function(){
 // source
 Document.prototype.setSource = function( source ){
 
-  source = transform.lowercase()(source);
+  source = transform.lowercase(source);
   validate.type('string', source);
   validate.truthy(source);
 
@@ -134,7 +134,7 @@ Document.prototype.getSource = function(){
 // layer
 Document.prototype.setLayer = function( layer ){
 
-  layer = transform.lowercase()(layer);
+  layer = transform.lowercase(layer);
   validate.type('string', layer);
   validate.truthy(layer);
 
@@ -149,8 +149,8 @@ Document.prototype.getLayer = function(){
 // source id
 Document.prototype.setSourceId = function( source_id ){
 
-  source_id = transform.stringify()(source_id);
-  source_id = transform.lowercase()(source_id);
+  source_id = transform.stringify(source_id);
+  source_id = transform.lowercase(source_id);
   validate.type('string', source_id);
   validate.truthy(source_id);
 
@@ -165,7 +165,7 @@ Document.prototype.getSourceId = function(){
 // alpha3
 Document.prototype.setAlpha3 = function( alpha3 ){
 
-  alpha3 = transform.uppercase()(alpha3);
+  alpha3 = transform.uppercase(alpha3);
   validate.type('string', alpha3);
   validate.truthy(alpha3);
   validate.length(3, alpha3);
@@ -354,7 +354,7 @@ Document.prototype.getPopulation = function(){
 // popularity
 Document.prototype.setPopularity = function( popularity ){
 
-  popularity = transform.roundify()(popularity);
+  popularity = transform.roundify(popularity);
   validate.type('number', popularity);
   validate.nonnegative(popularity);
 
@@ -369,7 +369,7 @@ Document.prototype.getPopularity = function(){
 // longitude
 Document.prototype.setLon = function( value ){
 
-  value = transform.floatify(6)(value);
+  value = transform.floatify(6, value);
   validate.type('number', value);
   validate.geo('longitude', value);
 
@@ -384,7 +384,7 @@ Document.prototype.getLon = function(){
 // latitude
 Document.prototype.setLat = function( value ){
 
-  value = transform.floatify(6)(value);
+  value = transform.floatify(6, value);
   validate.type('number', value);
   validate.geo('latitude', value);
 
@@ -399,7 +399,7 @@ Document.prototype.getLat = function(){
 // categories
 Document.prototype.addCategory = function( value ){
 
-  value = transform.lowercase()(value);
+  value = transform.lowercase(value);
   validate.type('string', value);
   validate.truthy(value);
 
@@ -454,7 +454,7 @@ Document.prototype.setBoundingBox = function( value ){
 
  validate.type('object', value);
  validate.boundingBox(value);
- value = transform.toULLR()(value);
+ value = transform.toULLR(value);
 
  this.bounding_box = value;
  return this;
