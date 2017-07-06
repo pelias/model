@@ -25,7 +25,6 @@ var tests = [
   require('./document/toESDocument.js'),
   require('./DocumentMapperStream.js'),
   require('./util/transform.js'),
-  require('./util/model.js'),
   require('./util/valid.js'),
   require('./serialize/test.js'),
 ];
