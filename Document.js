@@ -77,6 +77,12 @@ Document.prototype.toESDocument = function() {
   if( !( this.category || [] ).length ){
     delete doc.category;
   }
+  if (!this.bounding_box) {
+    delete doc.bounding_box;
+  }
+  if( !Object.keys( doc.center_point || {} ).length ){
+    delete doc.center_point;
+  }
 
   return {
     _index: config.schema.indexName,

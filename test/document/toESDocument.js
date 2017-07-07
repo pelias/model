@@ -38,7 +38,6 @@ module.exports.tests.toESDocument = function(test) {
       _type: 'mylayer',
       _id: 'myid',
       data: {
-        center_point: {},
         layer: 'mylayer',
         name: {},
         phrase: {},
@@ -57,6 +56,31 @@ module.exports.tests.toESDocument = function(test) {
     t.false(esDoc.data.hasOwnProperty('parent'), 'does not include empty parent arrays');
     t.end();
   });
+
+  test('unset bounding_box should not output in toESDocument', (t) => {
+    var Document = proxyquire('../../Document', { 'pelias-config': fakeConfig });
+
+    var doc = new Document('mysource','mylayer','myid');
+
+    var esDoc = doc.toESDocument();
+
+    t.false(esDoc.data.hasOwnProperty('bounding_box'), 'should not include bounding_box');
+    t.end();
+
+  });
+
+  test('unset lat/lon should not output center in toESDocument', (t) => {
+    var Document = proxyquire('../../Document', { 'pelias-config': fakeConfig });
+
+    var doc = new Document('mysource','mylayer','myid');
+
+    var esDoc = doc.toESDocument();
+
+    t.false(esDoc.data.hasOwnProperty('center_point'), 'should not include center');
+    t.end();
+
+  });
+
 };
 
 module.exports.tests.toESDocumentWithCustomConfig = function(test) {
