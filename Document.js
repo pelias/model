@@ -67,11 +67,8 @@ Document.prototype.toESDocument = function() {
   };
 
   // remove empty properties
-  if( _.isEmpty( doc.name ) ){ delete doc.name; }
-  if( _.isEmpty( doc.phrase ) ){ delete doc.phrase; }
   if( _.isEmpty( doc.parent ) ){ delete doc.parent; }
   if( _.isEmpty( doc.address_parts ) ){ delete doc.address_parts; }
-  if( _.isEmpty( this.center_point ) ){ delete doc.center_point; }
   if( _.isEmpty( this.category ) ){ delete doc.category; }
 
   return {
