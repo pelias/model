@@ -67,9 +67,15 @@ Document.prototype.toESDocument = function() {
   };
 
   // remove empty properties
-  if( _.isEmpty( doc.parent ) ){ delete doc.parent; }
-  if( _.isEmpty( doc.address_parts ) ){ delete doc.address_parts; }
-  if( _.isEmpty( this.category ) ){ delete doc.category; }
+  if( !Object.keys( doc.parent || {} ).length ){
+    delete doc.parent;
+  }
+  if( !Object.keys( doc.address_parts || {} ).length ){
+    delete doc.address_parts;
+  }
+  if( !( this.category || [] ).length ){
+    delete doc.category;
+  }
 
   return {
     _index: config.schema.indexName,
