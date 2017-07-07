@@ -20,6 +20,7 @@ module.exports.tests.toESDocument = function(test) {
     var Document = proxyquire('../../Document', { 'pelias-config': fakeConfig });
 
     var doc = new Document('mysource','mylayer','myid');
+    doc.setName('myprop', 'myname');
     doc.setBoundingBox({
       upperLeft: {
         lat: 13.131313,
@@ -42,8 +43,12 @@ module.exports.tests.toESDocument = function(test) {
       _id: 'myid',
       data: {
         layer: 'mylayer',
-        name: {},
-        phrase: {},
+        name: {
+          myprop: 'myname'
+        },
+        phrase: {
+          myprop: 'myname'
+        },
         source: 'mysource',
         source_id: 'myid',
         bounding_box: '{"min_lat":12.121212,"max_lat":13.131313,"min_lon":21.212121,"max_lon":31.313131}',
@@ -57,19 +62,17 @@ module.exports.tests.toESDocument = function(test) {
 
     // test that empty arrays/object are stripped from the doc before sending it
     // downstream to elasticsearch.
-    t.false(esDoc.data.hasOwnProperty('address_parts'), 'does not include empty top-level maps');
-    t.false(esDoc.data.hasOwnProperty('category'), 'does not include empty top-level arrays');
-    t.false(esDoc.data.hasOwnProperty('parent'), 'does not include empty parent arrays');
     t.end();
   });
 
   test('unset properties should not output in toESDocument', (t) => {
-    var Document = proxyquire('../../Document', { 'pelias-config': fakeConfig });
+    const Document = proxyquire('../../Document', { 'pelias-config': fakeConfig });
 
-    var doc = new Document('mysource','mylayer','myid');
+    const esDoc = new Document('mysource','mylayer','myid').toESDocument();
 
-    var esDoc = doc.toESDocument();
-
+    t.false(esDoc.data.hasOwnProperty('address_parts'), 'does not include empty top-level maps');
+    t.false(esDoc.data.hasOwnProperty('category'), 'does not include empty top-level arrays');
+    t.false(esDoc.data.hasOwnProperty('parent'), 'does not include empty parent arrays');
     t.false(esDoc.data.hasOwnProperty('bounding_box'), 'should not include bounding_box');
     t.false(esDoc.data.hasOwnProperty('center_point'), 'should not include center');
     t.false(esDoc.data.hasOwnProperty('population'), ' should not include population');
