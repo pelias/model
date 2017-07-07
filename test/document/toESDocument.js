@@ -27,7 +27,10 @@ module.exports.tests.toESDocument = function(test) {
       _type: 'mylayer',
       _id: 'myid',
       data: {
+        center_point: {},
         layer: 'mylayer',
+        name: {},
+        phrase: {},
         source: 'mysource',
         source_id: 'myid'
       }
