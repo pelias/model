@@ -63,7 +63,11 @@ Document.prototype.toESDocument = function() {
     category: this.category,
     source: this.source,
     layer: this.layer,
-    source_id: this.source_id
+    source_id: this.source_id,
+    bounding_box: this.bounding_box,
+    popularity: this.popularity,
+    population: this.population,
+    polygon: this.shape
   };
 
   // remove empty properties
@@ -75,6 +79,21 @@ Document.prototype.toESDocument = function() {
   }
   if( !( this.category || [] ).length ){
     delete doc.category;
+  }
+  if (!this.bounding_box) {
+    delete doc.bounding_box;
+  }
+  if( !Object.keys( doc.center_point || {} ).length ){
+    delete doc.center_point;
+  }
+  if (!this.population) {
+    delete doc.population;
+  }
+  if (!this.popularity) {
+    delete doc.popularity;
+  }
+  if( !Object.keys( doc.polygon || {} ).length ){
+    delete doc.polygon;
   }
 
   return {
