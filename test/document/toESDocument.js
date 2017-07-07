@@ -30,6 +30,9 @@ module.exports.tests.toESDocument = function(test) {
         lon: 31.313131
       }
     });
+    doc.setPopulation(123);
+    doc.setPopularity(456);
+    doc.setPolygon({ key: 'value' });
 
     var esDoc = doc.toESDocument();
 
@@ -43,7 +46,10 @@ module.exports.tests.toESDocument = function(test) {
         phrase: {},
         source: 'mysource',
         source_id: 'myid',
-        bounding_box: '{"min_lat":12.121212,"max_lat":13.131313,"min_lon":21.212121,"max_lon":31.313131}'
+        bounding_box: '{"min_lat":12.121212,"max_lat":13.131313,"min_lon":21.212121,"max_lon":31.313131}',
+        population: 123,
+        popularity: 456,
+        polygon: { key: 'value' }
       }
     };
 
@@ -57,7 +63,7 @@ module.exports.tests.toESDocument = function(test) {
     t.end();
   });
 
-  test('unset bounding_box should not output in toESDocument', (t) => {
+  test('unset properties should not output in toESDocument', (t) => {
     var Document = proxyquire('../../Document', { 'pelias-config': fakeConfig });
 
     var doc = new Document('mysource','mylayer','myid');
@@ -65,18 +71,10 @@ module.exports.tests.toESDocument = function(test) {
     var esDoc = doc.toESDocument();
 
     t.false(esDoc.data.hasOwnProperty('bounding_box'), 'should not include bounding_box');
-    t.end();
-
-  });
-
-  test('unset lat/lon should not output center in toESDocument', (t) => {
-    var Document = proxyquire('../../Document', { 'pelias-config': fakeConfig });
-
-    var doc = new Document('mysource','mylayer','myid');
-
-    var esDoc = doc.toESDocument();
-
     t.false(esDoc.data.hasOwnProperty('center_point'), 'should not include center');
+    t.false(esDoc.data.hasOwnProperty('population'), ' should not include population');
+    t.false(esDoc.data.hasOwnProperty('popularity'), ' should not include popularity');
+    t.false(esDoc.data.hasOwnProperty('polygon'), ' should not include polygon');
     t.end();
 
   });
