@@ -54,16 +54,31 @@ Document.prototype.toJSON = function(){
  * Returns an object in exactly the format that Elasticsearch wants for inserts
  */
 Document.prototype.toESDocument = function() {
+  var doc = {
+    name: this.name,
+    phrase: this.phrase,
+    parent: this.parent,
+    address_parts: this.address_parts,
+    center_point: this.center_point,
+    category: this.category,
+    source: this.source,
+    layer: this.layer,
+    source_id: this.source_id
+  };
+
+  // remove empty properties
+  if( _.isEmpty( doc.name ) ){ delete doc.name; }
+  if( _.isEmpty( doc.phrase ) ){ delete doc.phrase; }
+  if( _.isEmpty( doc.parent ) ){ delete doc.parent; }
+  if( _.isEmpty( doc.address_parts ) ){ delete doc.address_parts; }
+  if( _.isEmpty( this.center_point ) ){ delete doc.center_point; }
+  if( _.isEmpty( this.category ) ){ delete doc.category; }
+
   return {
     _index: config.schema.indexName,
     _type: this.getType(),
     _id: this.getId(),
-    data: JSON.parse( JSON.stringify( this, function( k, v ){
-      if((_.isArray(v) || _.isPlainObject(v)) && _.isEmpty(v) ){
-        return undefined;
-      }
-      return v;
-    }))
+    data: doc
   };
 };
 
