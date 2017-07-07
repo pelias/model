@@ -20,6 +20,17 @@ module.exports.tests.toESDocument = function(test) {
     var Document = proxyquire('../../Document', { 'pelias-config': fakeConfig });
 
     var doc = new Document('mysource','mylayer','myid');
+    doc.setBoundingBox({
+      upperLeft: {
+        lat: 13.131313,
+        lon: 21.212121
+      },
+      lowerRight: {
+        lat: 12.121212,
+        lon: 31.313131
+      }
+    });
+
     var esDoc = doc.toESDocument();
 
     var expected = {
@@ -32,7 +43,8 @@ module.exports.tests.toESDocument = function(test) {
         name: {},
         phrase: {},
         source: 'mysource',
-        source_id: 'myid'
+        source_id: 'myid',
+        bounding_box: '{"min_lat":12.121212,"max_lat":13.131313,"min_lon":21.212121,"max_lon":31.313131}'
       }
     };
 

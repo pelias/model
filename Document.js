@@ -63,7 +63,8 @@ Document.prototype.toESDocument = function() {
     category: this.category,
     source: this.source,
     layer: this.layer,
-    source_id: this.source_id
+    source_id: this.source_id,
+    bounding_box: this.bounding_box
   };
 
   // remove empty properties
