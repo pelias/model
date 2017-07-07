@@ -21,6 +21,10 @@ module.exports.tests.toESDocument = function(test) {
 
     var doc = new Document('mysource','mylayer','myid');
     doc.setName('myprop', 'myname');
+    doc.setAddress('name', 'address name');
+    doc.setAddress('number', 'address number');
+    doc.setAddress('street', 'address street');
+    doc.setAddress('zip', 'address zip');
     doc.setBoundingBox({
       upperLeft: {
         lat: 13.131313,
@@ -34,6 +38,8 @@ module.exports.tests.toESDocument = function(test) {
     doc.setPopulation(123);
     doc.setPopularity(456);
     doc.setPolygon({ key: 'value' });
+    doc.addCategory('category 1');
+    doc.addCategory('category 2');
 
     var esDoc = doc.toESDocument();
 
@@ -49,12 +55,24 @@ module.exports.tests.toESDocument = function(test) {
         phrase: {
           myprop: 'myname'
         },
+        address_parts: {
+          name: 'address name',
+          number: 'address number',
+          street: 'address street',
+          zip: 'address zip'
+        },
         source: 'mysource',
         source_id: 'myid',
         bounding_box: '{"min_lat":12.121212,"max_lat":13.131313,"min_lon":21.212121,"max_lon":31.313131}',
         population: 123,
         popularity: 456,
-        polygon: { key: 'value' }
+        polygon: {
+          key: 'value'
+        },
+        category: [
+          'category 1',
+          'category 2'
+        ]
       }
     };
 
