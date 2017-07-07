@@ -77,10 +77,8 @@ module.exports.tests.toESDocument = function(test) {
     };
 
     t.deepEqual(esDoc, expected, 'creates correct elasticsearch document');
-
-    // test that empty arrays/object are stripped from the doc before sending it
-    // downstream to elasticsearch.
     t.end();
+    
   });
 
   test('unset properties should not output in toESDocument', (t) => {
@@ -88,6 +86,8 @@ module.exports.tests.toESDocument = function(test) {
 
     const esDoc = new Document('mysource','mylayer','myid').toESDocument();
 
+    // test that empty arrays/object are stripped from the doc before sending it
+    // downstream to elasticsearch.
     t.false(esDoc.data.hasOwnProperty('address_parts'), 'does not include empty top-level maps');
     t.false(esDoc.data.hasOwnProperty('category'), 'does not include empty top-level arrays');
     t.false(esDoc.data.hasOwnProperty('parent'), 'does not include empty parent arrays');
