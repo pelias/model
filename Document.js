@@ -179,26 +179,6 @@ Document.prototype.getSourceId = function(){
   return this.source_id;
 };
 
-// alpha3
-Document.prototype.setAlpha3 = function( alpha3 ){
-
-  alpha3 = transform.uppercase(alpha3);
-  validate.type('string', alpha3);
-  validate.truthy(alpha3);
-  validate.length(3, alpha3);
-
-  this.alpha3 = alpha3;
-  return this;
-};
-
-Document.prototype.getAlpha3 = function(){
-  return this.alpha3;
-};
-
-Document.prototype.clearAlpha3 = function(){
-  delete this.alpha3;
-};
-
 // globally unique id
 Document.prototype.getGid = function(){
   return [ this.getSource(), this.getLayer(), this.getId() ].join(':');
