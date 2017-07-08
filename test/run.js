@@ -8,7 +8,6 @@ var tests = [
   require('./document/centroid.js'),
   require('./document/gid.js'),
   require('./document/id.js'),
-  require('./document/latlon.js'),
   require('./document/meta.js'),
   require('./document/popularity.js'),
   require('./document/population.js'),
