@@ -2,7 +2,6 @@
 var Document = require('../index').Document;
 
 var poi = new Document( 'geoname', 1003 )
-  .setAlpha3( 'GBR' )
   .setMeta( 'author', 'peter' )
   .setMeta( 'date', new Date().getTime() )
   .setName( 'default', 'Hackney City Farm' )
