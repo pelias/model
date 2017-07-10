@@ -374,36 +374,6 @@ Document.prototype.getPopularity = function(){
   return this.popularity;
 };
 
-// longitude
-Document.prototype.setLon = function( value ){
-
-  value = transform.floatify(6, value);
-  validate.type('number', value);
-  validate.geo('longitude', value);
-
-  this.center_point.lon = value;
-  return this;
-};
-
-Document.prototype.getLon = function(){
-  return this.center_point.lon;
-};
-
-// latitude
-Document.prototype.setLat = function( value ){
-
-  value = transform.floatify(6, value);
-  validate.type('number', value);
-  validate.geo('latitude', value);
-
-  this.center_point.lat = value;
-  return this;
-};
-
-Document.prototype.getLat = function(){
-  return this.center_point.lat;
-};
-
 // categories
 Document.prototype.addCategory = function( value ){
 
@@ -432,8 +402,20 @@ Document.prototype.removeCategory = function( value ){
 // centroid
 Document.prototype.setCentroid = function( centroid ){
   centroid = centroid || {};
-  this.setLon.call( this, centroid.lon );
-  this.setLat.call( this, centroid.lat );
+
+  centroid.lon = transform.floatify(6, centroid.lon);
+  validate.type('number', centroid.lon);
+  validate.geo('longitude', centroid.lon);
+
+  centroid.lat = transform.floatify(6, centroid.lat);
+  validate.type('number', centroid.lat);
+  validate.geo('latitude', centroid.lat);
+
+  // copy the lat/lon values instead of assigning the object or the object
+  // could be changed outside
+  this.center_point.lon = centroid.lon;
+  this.center_point.lat = centroid.lat;
+
   return this;
 };
 
