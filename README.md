@@ -16,7 +16,6 @@ Using this model ensures that your import script will continue to work even when
 var Document = require('pelias-model').Document;
 
 var poi = new Document( 'geoname', 'venue', 1003 )
-  .setAlpha3( 'GBR' )
   .setMeta( 'author', 'peter' )
   .setName( 'default', 'Hackney City Farm' )
   .setName( 'alt', 'Haggerston City Farm' )
@@ -75,4 +74,3 @@ Travis tests every release against Node.js versions `4` and `6`.
 We rely on semantic-release and Greenkeeper to maintain our module and dependency versions.
 
 [![Greenkeeper badge](https://badges.greenkeeper.io/pelias/model.svg)](https://greenkeeper.io/)
-
