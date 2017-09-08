@@ -110,7 +110,9 @@ module.exports.tests.parent_types = (test) => {
       'localadmin',
       'macrohood',
       'neighbourhood',
-      'postalcode'
+      'postalcode',
+      'ocean',
+      'marinearea'
     ]);
 
     t.end();

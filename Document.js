@@ -19,7 +19,9 @@ const parentFields = [
   'localadmin',
   'macrohood',
   'neighbourhood',
-  'postalcode'
+  'postalcode',
+  'ocean',
+  'marinearea'
 ];
 
 function Document( source, layer, source_id ){
