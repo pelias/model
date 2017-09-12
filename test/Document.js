@@ -112,7 +112,8 @@ module.exports.tests.parent_types = (test) => {
       'neighbourhood',
       'postalcode',
       'ocean',
-      'marinearea'
+      'marinearea',
+      'empire'
     ]);
 
     t.end();

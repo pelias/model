@@ -21,7 +21,8 @@ const parentFields = [
   'neighbourhood',
   'postalcode',
   'ocean',
-  'marinearea'
+  'marinearea',
+  'empire'
 ];
 
 function Document( source, layer, source_id ){
