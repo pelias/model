@@ -8,8 +8,8 @@ node_js:
 matrix:
   fast_finish: true
 env:
-  - BUILD_LEADER_ID=2
   global:
+    - BUILD_LEADER_ID=2
     - CXX=g++-4.8
 script: npm run travis
 addons:
