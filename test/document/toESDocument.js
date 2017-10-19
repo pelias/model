@@ -25,6 +25,7 @@ module.exports.tests.toESDocument = function(test) {
     doc.setAddress('number', 'address number');
     doc.setAddress('street', 'address street');
     doc.setAddress('zip', 'address zip');
+    doc.setAddress('unit', 'address unit');
     doc.setBoundingBox({
       upperLeft: {
         lat: 13.131313,
@@ -59,7 +60,8 @@ module.exports.tests.toESDocument = function(test) {
           name: 'address name',
           number: 'address number',
           street: 'address street',
-          zip: 'address zip'
+          zip: 'address zip',
+          unit: 'address unit'
         },
         source: 'mysource',
         source_id: 'myid',
