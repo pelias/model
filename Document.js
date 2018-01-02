@@ -270,7 +270,7 @@ Document.prototype.addParent = function( field, name, id, abbr ){
 
     == if you add a parent property with no abbreviation, as such:
 
-    setParent( 'region', 'foobar', '1' )
+    addParent( 'region', 'foobar', '1' )
 
     doc:
       parent.region       = [ 'foobar' ]
@@ -279,7 +279,7 @@ Document.prototype.addParent = function( field, name, id, abbr ){
 
     == and then you add another parent property such as:
 
-    setParent( 'region', 'bingobango', '2', 'bingo' )
+    addParent( 'region', 'bingobango', '2', 'bingo' )
 
     doc:
       parent.region       = [ 'foobar', 'bingobango' ]
