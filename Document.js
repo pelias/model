@@ -216,13 +216,59 @@ Document.prototype.setName = function( prop, value ){
   validate.type('string', value);
   validate.truthy(value);
 
-  this.name[ prop ] = value;
-  this.phrase[ prop ] = value; // must copy name to 'phrase' index
+  // must copy name to 'phrase' index
+  if( Array.isArray( this.name[ prop ] ) ){
+    this.name[ prop ][ 0 ] = value;
+    this.phrase[ prop ][ 0 ] = value;
+  } else {
+    this.name[ prop ] = value;
+    this.phrase[ prop ] = value;
+  }
+
+  return this;
+};
+
+Document.prototype.setNameAlias = function( prop, value ){
+
+  validate.type('string', value);
+  validate.truthy(value);
+
+  // is this the first time setting this prop? ensure it's an array
+  if( !this.hasName( prop ) ){
+    this.name[ prop ] = [];
+    this.phrase[ prop ] = [];
+  }
+
+  // is casting required to convert a scalar field to an array?
+  else if( 'string' === typeof this.name[ prop ] ){
+    var stringValue = this.name[ prop ];
+    this.name[ prop ] = [ stringValue ];
+    this.phrase[ prop ] = [ stringValue ];
+  }
+
+  // is the array empty? ie. no prior call to setName()
+  // in this case we will also set element 0 (the element used for display)
+  if( !this.name[ prop ].length ){
+    this.setName( prop, value );
+  }
+
+  // set the alias as the second, third, fourth, etc value in the array
+  this.name[ prop ].push( value );
+  this.phrase[ prop ].push( value );
+
   return this;
 };
 
 Document.prototype.getName = function( prop ){
-  return this.name[ prop ];
+  return Array.isArray( this.name[ prop ] ) ?
+    this.name[ prop ][ 0 ] :
+    this.name[ prop ];
+};
+
+Document.prototype.getNameAliases = function( prop ){
+  return Array.isArray( this.name[ prop ] ) ?
+    this.name[ prop ].slice( 1 ) :
+    [];
 };
 
 Document.prototype.hasName = function( prop ){
