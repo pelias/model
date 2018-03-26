@@ -80,7 +80,37 @@ module.exports.tests.toESDocument = function(test) {
 
     t.deepEqual(esDoc, expected, 'creates correct elasticsearch document');
     t.end();
-    
+  });
+
+  test('toESDocumentWithNameAliases', function(t) {
+    var Document = proxyquire('../../Document', { 'pelias-config': fakeConfig });
+
+    var doc = new Document('mysource','mylayer','myid');
+    doc.setName('myprop', 'myname');
+    doc.setNameAlias('myprop', 'myname2');
+    doc.setNameAlias('myprop', 'myname3');
+
+    var esDoc = doc.toESDocument();
+
+    var expected = {
+      _index: 'pelias',
+      _type: 'mylayer',
+      _id: 'myid',
+      data: {
+        source: 'mysource',
+        layer: 'mylayer',
+        source_id: 'myid',
+        name: {
+          myprop: [ 'myname', 'myname2', 'myname3' ]
+        },
+        phrase: {
+          myprop: [ 'myname', 'myname2', 'myname3' ]
+        }
+      }
+    };
+
+    t.deepEqual(esDoc, expected, 'creates correct elasticsearch document');
+    t.end();
   });
 
   test('unset properties should not output in toESDocument', (t) => {
