@@ -1,0 +1,47 @@
+syntax = "proto3";
+
+message Identity {
+  string Source = 1;
+  string Layer = 2;
+  string SourceId = 3;
+}
+
+message Language {
+  string Code = 1;
+  string SubTag = 2;
+  string PrivateTag = 3;
+}
+
+message Name {
+  Language Language = 1;
+  repeated string Variants = 2;
+}
+
+message Level {
+  string Id = 1;
+  map<string, Name> Names = 2;
+}
+
+message Hierarchy {
+  map<string, Level> Levels = 1;
+}
+
+message Geometry {
+  map<string, bytes> Point = 1;
+  map<string, bytes> MultiPoint = 2;
+  map<string, bytes> Line = 3;
+  map<string, bytes> MultiLine = 4;
+  map<string, bytes> Polygon = 5;
+  map<string, bytes> MultiPolygon = 6;
+}
+
+message Location {
+  Identity Identity = 1;
+  map<string, string> Tags = 2;
+  map<string, Name> Names = 3;
+  map<string, Hierarchy> Hierarchies = 4;
+  map<string, string> Address = 5;
+  map<string, int64> Stats = 6;
+  repeated string Categories = 7;
+  Geometry Geometry = 8;
+}

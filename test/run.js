@@ -25,6 +25,7 @@ var tests = [
   require('./util/transform.js'),
   require('./util/valid.js'),
   require('./serialize/test.js'),
+  require('./codec/codec.js')
 ];
 
 tests.map(function(t) {
