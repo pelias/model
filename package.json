@@ -31,9 +31,12 @@
     "npm": ">=1.4.3"
   },
   "dependencies": {
+    "json-protobuf-encoding": "^1.0.1",
     "lodash": "^4.6.1",
     "pelias-config": "2.14.0",
-    "through2": "^2.0.0"
+    "protocol-buffers": "^4.0.4",
+    "through2": "^2.0.0",
+    "wkx": "^0.4.4"
   },
   "devDependencies": {
     "event-stream": "^3.3.2",
