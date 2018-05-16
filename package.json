@@ -48,5 +48,8 @@
     "validate",
     "test",
     "check-dependencies"
-  ]
+  ],
+  "release": {
+    "success": []
+  }
 }
