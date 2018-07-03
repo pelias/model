@@ -370,16 +370,58 @@ Document.prototype.clearAllParents = function() {
 // address
 Document.prototype.setAddress = function( prop, value ){
 
-  validate.property(addressFields, prop);
   validate.type('string', value);
   validate.truthy(value);
+  validate.property(addressFields, prop);
 
-  this.address_parts[ prop ] = value;
+  if( Array.isArray( this.address_parts[ prop ] ) ){
+    this.address_parts[ prop ][ 0 ] = value;
+  } else {
+    this.address_parts[ prop ] = value;
+  }
+
+  return this;
+};
+
+Document.prototype.setAddressAlias = function( prop, value ){
+
+  validate.type('string', value);
+  validate.truthy(value);
+  validate.property(addressFields, prop);
+
+  // is this the first time setting this prop? ensure it's an array
+  if( !this.hasAddress( prop ) ){
+    this.address_parts[ prop ] = [];
+  }
+
+  // is casting required to convert a scalar field to an array?
+  else if( 'string' === typeof this.address_parts[ prop ] ){
+    var stringValue = this.address_parts[ prop ];
+    this.address_parts[ prop ] = [ stringValue ];
+  }
+
+  // is the array empty? ie. no prior call to setAddress()
+  // in this case we will also set element 0 (the element used for display)
+  if( !this.address_parts[ prop ].length ){
+    this.setAddress( prop, value );
+  }
+
+  // set the alias as the second, third, fourth, etc value in the array
+  this.address_parts[ prop ].push( value );
+
   return this;
 };
 
 Document.prototype.getAddress = function( prop ){
-  return this.address_parts[ prop ];
+  return Array.isArray( this.address_parts[ prop ] ) ?
+    this.address_parts[ prop ][ 0 ] :
+    this.address_parts[ prop ];
+};
+
+Document.prototype.getAddressAliases = function( prop ){
+  return Array.isArray( this.address_parts[ prop ] ) ?
+    this.address_parts[ prop ].slice( 1 ) :
+    [];
 };
 
 Document.prototype.hasAddress = function( prop ){
@@ -387,7 +429,7 @@ Document.prototype.hasAddress = function( prop ){
 };
 
 Document.prototype.delAddress = function( prop ){
-  if( this.hasName( prop ) ){
+  if( this.hasAddress( prop ) ){
     delete this.address_parts[ prop ];
     return true;
   }
