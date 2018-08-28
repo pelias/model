@@ -23,7 +23,7 @@ module.exports.tests.setLayer = function(test) {
   test('setLayer - validate', function(t) {
     var doc = new Document('mysource','mylayer','myid');
     t.throws( doc.setLayer.bind(doc,1), null, 'invalid string' );
-    t.throws( doc.setLayer.bind(doc,''), null, 'invalid length' );
+    t.doesNotThrow( doc.setLayer.bind(doc,''), null, 'invalid length' );
     t.end();
   });
   test('setLayer - transform', function(t) {

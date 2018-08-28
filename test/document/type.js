@@ -23,7 +23,7 @@ module.exports.tests.setType = function(test) {
   test('setType - validate', function(t) {
     var doc = new Document('mysource','mylayer','myid');
     t.throws( doc.setType.bind(doc,undefined), null, 'invalid type' );
-    t.throws( doc.setType.bind(doc,''), null, 'invalid length' );
+    t.doesNotThrow( doc.setType.bind(doc,''), null, 'invalid length' );
     t.end();
   });
 };

@@ -39,7 +39,8 @@
     "proxyquire": "^2.0.0",
     "semantic-release": "^15.0.0",
     "tap-spec": "^5.0.0",
-    "tape": "^4.4.0"
+    "tape": "^4.4.0",
+    "pelias-logger": "0.3.1"
   },
   "pre-commit": [
     "lint",

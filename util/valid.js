@@ -2,6 +2,8 @@
 var _ = require('lodash'),
     PeliasModelError = require('../errors').PeliasModelError;
 
+const logger = require( 'pelias-logger' ).get( 'validate' );
+
 module.exports.type = function( type, val ){
   if( type.toLowerCase() === 'array' ){
     if( !Array.isArray( val ) ){
@@ -26,7 +28,7 @@ module.exports.type = function( type, val ){
 
 module.exports.truthy = function( val ){
   if( (typeof val === 'string' && !val.trim() ) || !val ){
-    throw new PeliasModelError( 'invalid document type, expecting: truthy, got: ' + val );
+    logger.warn(`invalid document type, expecting: truthy, got: ${val}`);
   }
   return this;
 };

@@ -30,8 +30,8 @@ module.exports.tests.setAddress = function(test) {
     t.throws( doc.setAddress.bind(doc, 'unit', 2), null, 'invalid property' );
     t.throws( doc.setAddress.bind(doc, 'street', true), null, 'invalid property' );
     t.throws( doc.setAddress.bind(doc, 'street', null), null, 'invalid property' );
-    t.throws( doc.setAddress.bind(doc, 'street', '\n'), null, 'invalid property' );
     t.equal(doc.address_parts.street, undefined, 'property unchanged');
+    t.doesNotThrow( doc.setAddress.bind(doc, 'street', '\n'), null, 'invalid property' );
     t.doesNotThrow( doc.setAddress.bind(doc, 'zip', 'foo'), null, 'invalid property' );
     t.doesNotThrow( doc.setAddress.bind(doc, 'unit', 'foo'), null, 'invalid property' );
     t.doesNotThrow( doc.setAddress.bind(doc, 'street', '1'), null, 'invalid property' );

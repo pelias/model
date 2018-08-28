@@ -22,21 +22,21 @@ module.exports.tests.setId = function(test) {
   });
   test('setId - validate id type', function(t) {
     var doc = new Document('mysource','mylayer','myid');
-    t.throws( function(){
+    t.doesNotThrow( function(){
       doc.setId( undefined );
     });
     t.end();
   });
   test('setId - validate id length', function(t) {
     var doc = new Document('mysource','mylayer','myid');
-    t.throws( function(){
+    t.doesNotThrow( function(){
       doc.setId( '' );
     });
     t.end();
   });
   test('setId - validate not empty', function(t) {
     var doc = new Document('mysource','mylayer','myid');
-    t.throws( function(){
+    t.doesNotThrow( function(){
       doc.setId( ' ' );
     });
     t.end();

@@ -23,7 +23,7 @@ module.exports.tests.setSource = function(test) {
   test('setSource - validate', function(t) {
     var doc = new Document('mysource','mylayer','myid');
     t.throws( doc.setSource.bind(doc,1), null, 'invalid string' );
-    t.throws( doc.setSource.bind(doc,''), null, 'invalid length' );
+    t.doesNotThrow( doc.setSource.bind(doc,''), null, 'invalid length' );
     t.end();
   });
   test('setSource - transform', function(t) {
