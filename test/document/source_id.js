@@ -22,7 +22,7 @@ module.exports.tests.setSourceId = function(test) {
   });
   test('setSourceId - validate', function(t) {
     var doc = new Document('mysource','mylayer','myid');
-    t.throws( doc.setSourceId.bind(doc,''), null, 'invalid length' );
+    t.doesNotThrow( doc.setSourceId.bind(doc,''), null, 'invalid length' );
     t.end();
   });
   test('setSourceId - transform', function(t) {

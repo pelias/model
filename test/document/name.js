@@ -33,11 +33,11 @@ module.exports.tests.setName = function(test) {
   test('setName - validate val', function(t) {
     var doc = new Document('mysource','mylayer','myid');
     t.throws( doc.setName.bind(doc,'test',1), null, 'invalid value' );
-    t.throws( doc.setName.bind(doc,'test',''), null, 'invalid value' );
-    t.throws( doc.setName.bind(doc,'test',' '), null, 'invalid value' );
     t.throws( doc.setName.bind(doc,'test',null), null, 'invalid value' );
-    t.throws( doc.setName.bind(doc,'test','\t'), null, 'invalid value' );
     t.equal(doc.getName('test'), undefined, 'property not set');
+    t.doesNotThrow( doc.setName.bind(doc,'test',''), null, 'invalid value' );
+    t.doesNotThrow( doc.setName.bind(doc,'test',' '), null, 'invalid value' );
+    t.doesNotThrow( doc.setName.bind(doc,'test','\t'), null, 'invalid value' );
     t.end();
   });
 };
@@ -98,11 +98,11 @@ module.exports.tests.setNameAlias = function(test) {
   test('setNameAlias - validate val', function(t) {
     var doc = new Document('mysource','mylayer','myid');
     t.throws( doc.setNameAlias.bind(doc,'test',1), null, 'invalid value' );
-    t.throws( doc.setNameAlias.bind(doc,'test',''), null, 'invalid value' );
-    t.throws( doc.setNameAlias.bind(doc,'test',' '), null, 'invalid value' );
     t.throws( doc.setNameAlias.bind(doc,'test',null), null, 'invalid value' );
-    t.throws( doc.setNameAlias.bind(doc,'test','\t'), null, 'invalid value' );
     t.deepEqual(doc.getNameAliases('test'), [], 'property not set');
+    t.doesNotThrow( doc.setNameAlias.bind(doc,'test',''), null, 'invalid value' );
+    t.doesNotThrow( doc.setNameAlias.bind(doc,'test',' '), null, 'invalid value' );
+    t.doesNotThrow( doc.setNameAlias.bind(doc,'test','\t'), null, 'invalid value' );
     t.end();
   });
 };
