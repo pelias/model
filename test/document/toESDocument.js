@@ -132,6 +132,63 @@ module.exports.tests.toESDocument = function(test) {
 
   });
 
+  test('toESDocumentWithAddressAliases', function(t) {
+    var Document = proxyquire('../../Document', { 'pelias-config': fakeConfig });
+
+    var doc = new Document('mysource','mylayer','myid');
+    doc.setAddress('name', 'address name');
+    doc.setAddress('number', 'address number');
+    doc.setAddressAlias('street', 'astreet');
+    doc.setAddress('street', 'address street');
+    doc.setAddress('zip', 'address zip');
+    doc.setAddressAlias('zip', 'azip');
+    doc.setAddress('unit', 'address unit');
+
+    var esDoc = doc.toESDocument();
+
+    var expected = {
+      _index: 'pelias',
+      _type: 'mylayer',
+      _id: 'myid',
+      data: {
+        source: 'mysource',
+        layer: 'mylayer',
+        source_id: 'myid',
+        address_parts: {
+          name: 'address name',
+          number: 'address number',
+          street: ['address street','astreet'],
+          zip: ['address zip','azip'],
+          unit: 'address unit'
+        },
+        name: {},
+        phrase: {}
+      }
+    };
+
+    t.deepEqual(esDoc, expected, 'creates correct elasticsearch document');
+    t.end();
+  });
+
+  test('unset properties should not output in toESDocument', (t) => {
+    const Document = proxyquire('../../Document', { 'pelias-config': fakeConfig });
+
+    const esDoc = new Document('mysource','mylayer','myid').toESDocument();
+
+    // test that empty arrays/object are stripped from the doc before sending it
+    // downstream to elasticsearch.
+    t.false(esDoc.data.hasOwnProperty('address_parts'), 'does not include empty top-level maps');
+    t.false(esDoc.data.hasOwnProperty('category'), 'does not include empty top-level arrays');
+    t.false(esDoc.data.hasOwnProperty('parent'), 'does not include empty parent arrays');
+    t.false(esDoc.data.hasOwnProperty('bounding_box'), 'should not include bounding_box');
+    t.false(esDoc.data.hasOwnProperty('center_point'), 'should not include center');
+    t.false(esDoc.data.hasOwnProperty('population'), ' should not include population');
+    t.false(esDoc.data.hasOwnProperty('popularity'), ' should not include popularity');
+    t.false(esDoc.data.hasOwnProperty('polygon'), ' should not include polygon');
+    t.end();
+
+  });
+
 };
 
 module.exports.tests.toESDocumentWithCustomConfig = function(test) {
