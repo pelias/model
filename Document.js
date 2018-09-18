@@ -334,10 +334,10 @@ Document.prototype.addParent = function( field, name, id, abbr ){
 
     == you can now be sure that the abbreviation 'bingo' belongs to '2' and not '1'.
   **/
-  if (_.isUndefined(abbr)) {
-    add( field + '_a', null );
-  } else {
+  if (typeof abbr === 'string') {
     addValidate( field + '_a', abbr );
+  } else {
+    add( field + '_a', null );
   }
 
   // chainable
