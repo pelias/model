@@ -4,7 +4,7 @@ const transform = require('./util/transform');
 const _ = require('lodash');
 const codec = require('./codec');
 
-const addressFields = ['name', 'number', 'unit', 'street', 'zip'];
+const addressFields = ['name', 'number', 'unit', 'street', 'cross_street', 'zip'];
 
 const parentFields = [
   'continent',
@@ -37,6 +37,12 @@ function Document( source, layer, source_id ){
   // create a non-enumerable property for metadata
   Object.defineProperty( this, '_meta', { writable: true, value: {} });
 
+  // create a non-enumerable property for post-processing scripts
+  Object.defineProperty( this, '_post', { writable: true, value: [] });
+
+  // define default post-processing scripts
+  this.addPostProcessingScript( require('./post/intersections') );
+
   // mandatory properties
   this.setSource( source );
   this.setLayer( layer );
@@ -50,6 +56,26 @@ function Document( source, layer, source_id ){
   this.setType( layer );
 }
 
+// add a post-processing script which is run before generating the ES document
+Document.prototype.addPostProcessingScript = function( fn ){
+  validate.type('function', fn);
+  this._post.push(fn);
+  return this;
+};
+
+// remove a post-processing script
+Document.prototype.removePostProcessingScript = function( fn ){
+  validate.type('function', fn);
+  this._post = this._post.filter(p => p !== fn);
+  return this;
+};
+
+// call all post-processing scripts
+Document.prototype.callPostProcessingScripts = function(){
+  this._post.forEach(function(fn){ fn.call(this); }, this);
+  return this;
+};
+
 Document.prototype.toJSON = function(){
   return this;
 };
@@ -58,6 +84,10 @@ Document.prototype.toJSON = function(){
  * Returns an object in exactly the format that Elasticsearch wants for inserts
  */
 Document.prototype.toESDocument = function() {
+
+  // call all post-processing scripts
+  this.callPostProcessingScripts();
+
   var doc = {
     name: this.name,
     phrase: this.phrase,
