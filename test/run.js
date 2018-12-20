@@ -22,6 +22,7 @@ var tests = [
   require('./document/layer.js'),
   require('./document/source_id.js'),
   require('./document/toESDocument.js'),
+  require('./post/intersections.js'),
   require('./DocumentMapperStream.js'),
   require('./util/transform.js'),
   require('./util/valid.js'),
