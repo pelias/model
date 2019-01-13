@@ -217,6 +217,23 @@ module.exports.tests.toESDocumentWithCustomConfig = function(test) {
   });
 };
 
+module.exports.tests.toESDocumentCallsProcessingScripts = function(test) {
+  test('toESDocument must call all post-processing scripts', function(t) {
+    let Document = proxyquire('../../Document', { 'pelias-config': fakeConfig });
+    let doc = new Document('mysource','mylayer','myid');
+    doc._post = []; // remove any default scripts
+    t.plan(3);
+
+    // document pointer passed as first arg to scripts
+    doc.addPostProcessingScript((ref) => t.equal(doc, ref));
+    doc.addPostProcessingScript((ref) => t.equal(doc, ref));
+    doc.addPostProcessingScript((ref) => t.equal(doc, ref));
+
+    // toESDocument() should, in tern, call callPostProcessingScripts()
+    doc.toESDocument();
+  });
+};
+
 module.exports.all = function (tape, common) {
   function test(name, testFunction) {
     return tape('Document: ' + name, testFunction);

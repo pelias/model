@@ -72,7 +72,7 @@ Document.prototype.removePostProcessingScript = function( fn ){
 
 // call all post-processing scripts
 Document.prototype.callPostProcessingScripts = function(){
-  this._post.forEach(function(fn){ fn.call(this); }, this);
+  this._post.forEach(function(fn){ fn.call(null, this); }, this);
   return this;
 };
 
