@@ -12,9 +12,17 @@ module.exports.tests.functional = function(test) {
     intersections.call(doc);
     t.deepEqual(doc.getNameAliases('default'), [], 'no names set');
 
-    // street and cross_street set
+    // set street
     doc.setAddress('street', 'Example Street');
+
+    // street set, cross_street not set
+    intersections.call(doc);
+    t.deepEqual(doc.getNameAliases('default'), [], 'no names set');
+
+    // set cross_street
     doc.setAddress('cross_street', 'Cross Street');
+
+    // street and cross_street set
     intersections.call(doc);
 
     // intersection aliases defined
