@@ -1,4 +1,5 @@
-var proxyquire = require('proxyquire');
+const proxyquire = require('proxyquire');
+const codec = require('../../codec');
 
 var fakeGeneratedConfig = {
   schema: {
@@ -6,7 +7,7 @@ var fakeGeneratedConfig = {
   }
 };
 
-var fakeConfig = {
+const fakeConfig = {
   generate: function fakeGenerate() {
     return fakeGeneratedConfig;
   }
@@ -41,6 +42,8 @@ module.exports.tests.toESDocument = function(test) {
     doc.setPolygon({ key: 'value' });
     doc.addCategory('category 1');
     doc.addCategory('category 2');
+    doc.setAddendum('wikipedia', { slug: 'HackneyCityFarm' });
+    doc.setAddendum('geonames', { foreignkey: 1 });
 
     var esDoc = doc.toESDocument();
 
@@ -74,7 +77,11 @@ module.exports.tests.toESDocument = function(test) {
         category: [
           'category 1',
           'category 2'
-        ]
+        ],
+        addendum: {
+          wikipedia: codec.encode({ slug: 'HackneyCityFarm' }),
+          geonames: codec.encode({ foreignkey: 1 })
+        }
       }
     };
 

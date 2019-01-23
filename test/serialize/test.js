@@ -32,7 +32,8 @@ module.exports.tests.minimal = function(test) {
       'parent': {},
       'address_parts': {},
       'category': [],
-      'center_point': {}
+      'center_point': {},
+      'addendum': {}
     }, 'valid document body');
 
     t.end();
@@ -57,6 +58,8 @@ module.exports.tests.complete = function(test) {
       .removeCategory( 'foo' )
       .setPopulation(10)
       .setPopularity(3)
+      .setAddendum('wikipedia', { slug: 'HackneyCityFarm' })
+      .setAddendum('geonames', { foreignkey: 1 })
       .setCentroid({ lon: 0.5, lat: 50.1 })
       .setPolygon(fixtures.new_zealand)
       .setBoundingBox(fixtures.new_zealand_bbox);
@@ -128,7 +131,13 @@ module.exports.tests.complete = function(test) {
       'source_id': '1003',
       'category':['bar'],
       'population': 10,
-      'popularity': 3
+      'popularity': 3,
+
+      // addendum
+      'addendum': {
+        'wikipedia': { 'slug': 'HackneyCityFarm' },
+        'geonames': { 'foreignkey': 1 }
+      }
 
     }, 'valid document body');
 

@@ -11,6 +11,7 @@ var tests = [
   require('./document/popularity.js'),
   require('./document/population.js'),
   require('./document/name.js'),
+  require('./document/addendum.js'),
   require('./document/address.js'),
   require('./document/parent.js'),
   require('./document/polygon.js'),
