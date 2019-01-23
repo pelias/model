@@ -39,6 +39,8 @@ var poi = new Document( 'geoname', 'venue', 1003 )
   .removeCategory( 'foo' )
   .setPopulation(10)
   .setPopularity(3)
+  .setAddendum('wikipedia', { slug: 'HackneyCityFarm' })
+  .setAddendum('geonames', { foreignkey: 1 })
   .setCentroid({ lon: 0.5, lat: 50.1 })
   .setPolygon( geojsonObject /* any valid geojson object */ )
   .setBoundingBox( bboxObject /* see tests for bbox syntax */ );

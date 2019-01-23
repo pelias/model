@@ -1,8 +1,8 @@
-var config = require('pelias-config').generate();
-
-var validate = require('./util/valid');
-var transform = require('./util/transform');
-var _ = require('lodash');
+const config = require('pelias-config').generate();
+const validate = require('./util/valid');
+const transform = require('./util/transform');
+const _ = require('lodash');
+const codec = require('./codec');
 
 const addressFields = ['name', 'number', 'unit', 'street', 'zip'];
 
@@ -32,6 +32,7 @@ function Document( source, layer, source_id ){
   this.address_parts = {};
   this.center_point = {};
   this.category = [];
+  this.addendum = {};
 
   // create a non-enumerable property for metadata
   Object.defineProperty( this, '_meta', { writable: true, value: {} });
@@ -70,8 +71,14 @@ Document.prototype.toESDocument = function() {
     bounding_box: this.bounding_box,
     popularity: this.popularity,
     population: this.population,
+    addendum: {},
     polygon: this.shape
   };
+
+  // add encoded addendum namespaces
+  for( var namespace in this.addendum || {} ){
+    doc.addendum[namespace] = codec.encode(this.addendum[namespace]);
+  }
 
   // remove empty properties
   if( !Object.keys( doc.parent || {} ).length ){
@@ -94,6 +101,9 @@ Document.prototype.toESDocument = function() {
   }
   if (!this.popularity) {
     delete doc.popularity;
+  }
+  if( !Object.keys( doc.addendum || {} ).length ){
+    delete doc.addendum;
   }
   if( !Object.keys( doc.polygon || {} ).length ){
     delete doc.polygon;
@@ -488,6 +498,33 @@ Document.prototype.removeCategory = function( value ){
   }
 
   return this;
+};
+
+// addendum
+Document.prototype.setAddendum = function( namespace, value ){
+  validate.type('string', namespace);
+  validate.truthy(namespace);
+  validate.type('object', value);
+  if( Object.keys(value).length > 0 ){
+    this.addendum[ namespace ] = value;
+  }
+  return this;
+};
+
+Document.prototype.getAddendum = function( namespace ){
+  return this.addendum[ namespace ];
+};
+
+Document.prototype.hasAddendum = function( namespace ){
+  return this.addendum.hasOwnProperty( namespace );
+};
+
+Document.prototype.delAddendum = function( namespace ){
+  if( this.hasAddendum( namespace ) ){
+    delete this.addendum[ namespace ];
+    return true;
+  }
+  return false;
 };
 
 // centroid
