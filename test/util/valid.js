@@ -20,6 +20,14 @@ module.exports.tests.nonnegative = (test) => {
 
 };
 
+module.exports.tests.regex = (test) => {
+  test('regex nomatch', (t) => {
+    t.throws(valid.regex.nomatch.bind(null, 'hello', /he/), /invalid regex/);
+    t.doesNotThrow(valid.regex.nomatch.bind(null, 'hello', /bye/), /invalid regex/);
+    t.end();
+  });
+};
+
 module.exports.all = (tape, common) => {
 
   function test(name, testFunction) {

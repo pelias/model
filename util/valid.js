@@ -110,3 +110,13 @@ module.exports.boundingBox = function( val ) {
   
   return this;
 };
+
+module.exports.regex = {
+  nomatch: function(val, regex) {
+    if( regex.test(val) ){
+      throw new PeliasModelError(`invalid regex test, ${val} should not match ${regex}`);
+    }
+
+    return module.exports;
+  }
+};
