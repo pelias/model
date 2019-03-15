@@ -40,6 +40,12 @@ module.exports.tests.setName = function(test) {
     t.equal(doc.getName('test'), undefined, 'property not set');
     t.end();
   });
+  test('setName - http regex', function (t) {
+    var doc = new Document('mysource', 'mylayer', 'myid');
+    t.throws(doc.setName.bind(doc, 'default', 'http://www.pelias.io'), /invalid regex/, 'regex failure');
+    t.throws(doc.setName.bind(doc, 'default', 'AAhttp://www.pelias.ioBB'), /invalid regex/, 'regex failure');
+    t.end();
+  });
 };
 
 module.exports.tests.getNameAliases = function(test) {
@@ -103,6 +109,12 @@ module.exports.tests.setNameAlias = function(test) {
     t.throws( doc.setNameAlias.bind(doc,'test',null), null, 'invalid value' );
     t.throws( doc.setNameAlias.bind(doc,'test','\t'), null, 'invalid value' );
     t.deepEqual(doc.getNameAliases('test'), [], 'property not set');
+    t.end();
+  });
+  test('setNameAlias - http regex', function (t) {
+    var doc = new Document('mysource', 'mylayer', 'myid');
+    t.throws(doc.setNameAlias.bind(doc, 'default', 'http://www.pelias.io'), /invalid regex/, 'regex failure');
+    t.throws(doc.setNameAlias.bind(doc, 'default', 'AAhttp://www.pelias.ioBB'), /invalid regex/, 'regex failure');
     t.end();
   });
 };
