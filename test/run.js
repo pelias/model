@@ -24,6 +24,7 @@ var tests = [
   require('./document/toESDocument.js'),
   require('./document/post.js'),
   require('./post/intersections.js'),
+  require('./post/deduplication.js'),
   require('./DocumentMapperStream.js'),
   require('./util/transform.js'),
   require('./util/valid.js'),

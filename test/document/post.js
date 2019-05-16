@@ -1,7 +1,8 @@
 
 const Document = require('../../Document');
 const intersections = require('../../post/intersections');
-const DEFAULT_SCRIPTS = [ intersections ];
+const deduplication = require('../../post/deduplication');
+const DEFAULT_SCRIPTS = [ intersections, deduplication ];
 
 module.exports.tests = {};
 
