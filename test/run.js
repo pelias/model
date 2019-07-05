@@ -24,6 +24,7 @@ var tests = [
   require('./document/post.js'),
   require('./post/intersections.js'),
   require('./post/deduplication.js'),
+  require('./post/seperable_street_names.js'),
   require('./DocumentMapperStream.js'),
   require('./util/transform.js'),
   require('./util/valid.js'),

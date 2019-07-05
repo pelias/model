@@ -42,6 +42,7 @@ function Document( source, layer, source_id ){
 
   // define default post-processing scripts
   this.addPostProcessingScript( require('./post/intersections') );
+  this.addPostProcessingScript( require('./post/seperable_street_names').post );
   this.addPostProcessingScript( require('./post/deduplication') );
 
   // mandatory properties
@@ -80,8 +81,13 @@ Document.prototype.toJSON = function(){
  */
 Document.prototype.toESDocument = function() {
 
-  // call all post-processing scripts
-  this.callPostProcessingScripts();
+  try {
+    // call all post-processing scripts
+    this.callPostProcessingScripts();
+  } catch (e) {
+    console.error('a post processing error occurred');
+    console.error(e);
+  }
 
   var doc = {
     name: this.name,

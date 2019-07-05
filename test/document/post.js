@@ -1,8 +1,9 @@
 
 const Document = require('../../Document');
 const intersections = require('../../post/intersections');
+const seperable_street_names = require('../../post/seperable_street_names').post;
 const deduplication = require('../../post/deduplication');
-const DEFAULT_SCRIPTS = [ intersections, deduplication ];
+const DEFAULT_SCRIPTS = [ intersections, seperable_street_names, deduplication ];
 
 module.exports.tests = {};
 
