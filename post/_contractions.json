@@ -1,0 +1,46 @@
+{
+  "DEU": {
+    "platz": "platz",
+    "markt": "markt",
+    "brücke": "brücke",
+    "brucke": "brucke",
+    "bruecke": "bruecke",
+    "straße": "straße",
+    "strasse": "strasse",
+    "stiege": "stiege"
+  },
+  "CHE": {
+    "platz": "platz",
+    "markt": "markt",
+    "brücke": "brücke",
+    "brucke": "brucke",
+    "bruecke": "bruecke",
+    "straße": "straße",
+    "strasse": "strasse",
+    "stiege": "stiege"
+  },
+  "AUT": {
+    "platz": "platz",
+    "markt": "markt",
+    "brücke": "brücke",
+    "brucke": "brucke",
+    "bruecke": "bruecke",
+    "straße": "straße",
+    "strasse": "strasse",
+    "stiege": "stiege"
+  },
+  "NLD": {
+    "gracht": "gracht",
+    "hof": "hof",
+    "laan": "laan",
+    "lang": "lang",
+    "markt": "markt",
+    "plain": "plain",
+    "singel": "singel",
+    "straat": "straat",
+    "steenweg": "steenweg",
+    "verlengde": "verlengde",
+    "vliet": "vliet",
+    "weg": "weg"
+  }
+}
