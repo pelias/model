@@ -1,13 +1,14 @@
-var event_stream = require('event-stream');
-
 var createDocumentMapperStream = require('../DocumentMapperStream');
 var Document = require('../Document');
 
-function test_stream(input, testedStream, callback) {
-  var input_stream = event_stream.readArray(input);
-  var destination_stream = event_stream.writeArray(callback);
+const stream_mock = require('stream-mock');
 
-  input_stream.pipe(testedStream).pipe(destination_stream);
+function test_stream(input, testedStream, callback) {
+  const reader = new stream_mock.ObjectReadableMock(input);
+  const writer = new stream_mock.ObjectWritableMock();
+  writer.on('error', (e) => callback(e));
+  writer.on('finish', () => callback(null, writer.data));
+  reader.pipe(testedStream).pipe(writer);
 }
 
 module.exports.tests = {};
@@ -20,7 +21,7 @@ module.exports.tests.DocumentMapperStream = function(test) {
     test_stream([document], stream, function(err, results) {
       t.equal(results.length, 1, 'stream returns exactly one result');
       t.deepEqual(results[0], document.toESDocument(),
-                  'stream transforms Document into object ready to be inserted into Elasticsearch');
+        'stream transforms Document into object ready to be inserted into Elasticsearch');
       t.end();
     });
   });

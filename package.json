@@ -33,7 +33,7 @@
     "through2": "^3.0.0"
   },
   "devDependencies": {
-    "event-stream": "^4.0.0",
+    "stream-mock": "^2.0.3",
     "precommit-hook": "^3.0.0",
     "proxyquire": "^2.0.0",
     "tap-spec": "^5.0.0",
