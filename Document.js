@@ -143,7 +143,7 @@ Document.prototype.toESDocument = function() {
   return {
     _index: config.schema.indexName,
     _type: this.getType(),
-    _id: this.getId(),
+    _id: this.getGid(),
     data: doc
   };
 };
