@@ -15,7 +15,6 @@ var tests = [
   require('./document/address.js'),
   require('./document/parent.js'),
   require('./document/polygon.js'),
-  require('./document/type.js'),
   require('./document/category.js'),
   require('./document/boundingbox.js'),
   require('./document/source.js'),

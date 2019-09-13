@@ -9,9 +9,6 @@ module.exports.tests.interface = function(test) {
     t.equal(typeof Document.prototype.getId, 'function', 'getId() is a function');
     t.equal(typeof Document.prototype.setId, 'function', 'setId() is a function');
 
-    t.equal(typeof Document.prototype.getType, 'function', 'getType() is a function');
-    t.equal(typeof Document.prototype.setType, 'function', 'setType() is a function');
-
     t.equal(typeof Document.prototype.getSource, 'function', 'getSource() is a function');
     t.equal(typeof Document.prototype.setSource, 'function', 'setSource() is a function');
 
@@ -42,7 +39,6 @@ module.exports.tests.constructor = function(test) {
     t.equal(doc.layer, 'mylayer', 'setter called');
     t.equal(doc.source_id, 'myid', 'setter called');
     t.equal(doc._meta.id, 'myid', 'setter called');
-    t.equal(doc._meta.type, 'mylayer', 'setter called');
 
     t.end();
   });

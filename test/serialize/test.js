@@ -19,7 +19,6 @@ module.exports.tests.minimal = function(test) {
     var s = serializeDeserialize( doc );
 
     // document meta data
-    t.equal(doc.getMeta('type'), 'mylayer', 'correct _meta');
     t.equal(doc.getMeta('id'), 'myid', 'correct _id');
 
     // document body
@@ -67,7 +66,6 @@ module.exports.tests.complete = function(test) {
     var s = serializeDeserialize( doc );
 
     // document meta data
-    t.equal(doc.getMeta('type'), 'venue', 'correct _meta');
     t.equal(doc.getMeta('id'), '1003', 'correct _id');
 
     // document body
