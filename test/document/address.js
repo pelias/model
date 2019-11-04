@@ -49,10 +49,10 @@ module.exports.tests.setAddress = function(test) {
     t.equal(doc.getAddress('test'), undefined, 'property not set');
     t.end();
   });
-  test('setAddress - http regex', function (t) {
+  test('setAddress - http regex - throw false', function (t) {
     var doc = new Document('mysource', 'mylayer', 'myid');
-    t.throws(doc.setAddress.bind(doc, 'number', 'http://www.pelias.io'), /invalid regex/, 'regex failure');
-    t.throws(doc.setAddress.bind(doc, 'number', 'AAhttp://www.pelias.ioBB'), /invalid regex/, 'regex failure');
+    t.doesNotThrow(doc.setAddress.bind(doc, 'number', 'http://www.pelias.io'), /invalid regex/, 'regex failure');
+    t.doesNotThrow(doc.setAddress.bind(doc, 'number', 'AAhttp://www.pelias.ioBB'), /invalid regex/, 'regex failure');
     t.end();
   });
 };
@@ -114,10 +114,18 @@ module.exports.tests.setAddressAlias = function(test) {
     t.deepEqual(doc.getAddressAliases('test'), [], 'property not set');
     t.end();
   });
-  test('setAddressAlias - http regex', function (t) {
+  test('setAddressAlias - http regex - throw false', function (t) {
     var doc = new Document('mysource', 'mylayer', 'myid');
-    t.throws(doc.setAddressAlias.bind(doc, 'number', 'http://www.pelias.io'), /invalid regex/, 'regex failure');
-    t.throws(doc.setAddressAlias.bind(doc, 'number', 'AAhttp://www.pelias.ioBB'), /invalid regex/, 'regex failure');
+    t.doesNotThrow(
+      doc.setAddressAlias.bind(doc, 'number', 'http://www.pelias.io'),
+      /invalid regex/,
+      'regex failure'
+    );
+    t.doesNotThrow(
+      doc.setAddressAlias.bind(doc, 'number', 'AAhttp://www.pelias.ioBB'),
+      /invalid regex/,
+      'regex failure'
+    );
     t.end();
   });
 };
