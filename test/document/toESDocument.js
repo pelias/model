@@ -3,7 +3,8 @@ const codec = require('../../codec');
 
 var fakeGeneratedConfig = {
   schema: {
-    indexName: 'pelias'
+    indexName: 'example_index',
+    typeName: 'example_type'
   }
 };
 
@@ -48,8 +49,8 @@ module.exports.tests.toESDocument = function(test) {
     var esDoc = doc.toESDocument();
 
     var expected = {
-      _index: 'pelias',
-      _type: 'doc',
+      _index: 'example_index',
+      _type: 'example_type',
       _id: 'mysource:mylayer:myid',
       data: {
         layer: 'mylayer',
@@ -100,8 +101,8 @@ module.exports.tests.toESDocument = function(test) {
     var esDoc = doc.toESDocument();
 
     var expected = {
-      _index: 'pelias',
-      _type: 'doc',
+      _index: 'example_index',
+      _type: 'example_type',
       _id: 'mysource:mylayer:myid',
       data: {
         source: 'mysource',
@@ -154,8 +155,8 @@ module.exports.tests.toESDocument = function(test) {
     var esDoc = doc.toESDocument();
 
     var expected = {
-      _index: 'pelias',
-      _type: 'doc',
+      _index: 'example_index',
+      _type: 'example_type',
       _id: 'mysource:mylayer:myid',
       data: {
         source: 'mysource',
