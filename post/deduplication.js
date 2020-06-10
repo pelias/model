@@ -4,7 +4,7 @@
  */
 
 const _ = require('lodash');
-const prefixes = [ 'name', 'address_parts' ];
+const prefixes = [ 'name', 'phrase', 'address_parts' ];
 
 function deduplication( doc ){
   prefixes.forEach(prefix => {
