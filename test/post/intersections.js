@@ -7,7 +7,7 @@ module.exports.tests = {};
 module.exports.tests.functional = function(test) {
   test('functional', function(t) {
     var doc = new Document('mysource','intersection','myid');
-    
+
     // street and cross_street not set
     intersections(doc);
     t.deepEqual(doc.getNameAliases('default'), [], 'no names set');
@@ -28,13 +28,9 @@ module.exports.tests.functional = function(test) {
     // intersection aliases defined
     t.deepEqual(doc.getNameAliases('default'), [
       'Example Street & Cross Street',
-      'Example Street @ Cross Street',
       'Example Street at Cross Street',
-      'Corner of Example Street & Cross Street',
       'Cross Street & Example Street',
-      'Cross Street @ Example Street',
       'Cross Street at Example Street',
-      'Corner of Cross Street & Example Street'
     ]);
 
     t.end();
