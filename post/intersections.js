@@ -21,15 +21,15 @@ function intersections( doc ){
 
   // corner of A & B
   doc.setNameAlias('default', `${street} & ${cross_street}`);
-  doc.setNameAlias('default', `${street} @ ${cross_street}`);
-  doc.setNameAlias('default', `${street} at ${cross_street}`);
-  doc.setNameAlias('default', `Corner of ${street} & ${cross_street}`);
+  //doc.setNameAlias('default', `${street} @ ${cross_street}`);
+  //doc.setNameAlias('default', `${street} at ${cross_street}`);
+  //doc.setNameAlias('default', `Corner of ${street} & ${cross_street}`);
   
-  // corner of B & A
-  doc.setNameAlias('default', `${cross_street} & ${street}`);
-  doc.setNameAlias('default', `${cross_street} @ ${street}`);
-  doc.setNameAlias('default', `${cross_street} at ${street}`);
-  doc.setNameAlias('default', `Corner of ${cross_street} & ${street}`);
+  //// corner of B & A
+  //doc.setNameAlias('default', `${cross_street} & ${street}`);
+  //doc.setNameAlias('default', `${cross_street} @ ${street}`);
+  //doc.setNameAlias('default', `${cross_street} at ${street}`);
+  //doc.setNameAlias('default', `Corner of ${cross_street} & ${street}`);
 }
 
 module.exports = intersections;
