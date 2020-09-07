@@ -24,7 +24,7 @@ for( var x=0; x<iterations; x++ ){
     .setPopulation(10)
     .setPopularity(3)
     .setCentroid({ lon: 0.5, lat: 50.1 })
-    .setPolygon(fixtures.new_zealand)
+    .setShape(fixtures.new_zealand)
     .setBoundingBox(fixtures.new_zealand_bbox)
     .toESDocument();
 }
