@@ -14,7 +14,7 @@ var tests = [
   require('./document/addendum.js'),
   require('./document/address.js'),
   require('./document/parent.js'),
-  require('./document/polygon.js'),
+  require('./document/shape.js'),
   require('./document/category.js'),
   require('./document/boundingbox.js'),
   require('./document/source.js'),

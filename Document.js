@@ -103,7 +103,7 @@ Document.prototype.toESDocument = function() {
     popularity: this.popularity,
     population: this.population,
     addendum: {},
-    polygon: this.shape
+    shape: this.shape
   };
 
   // add encoded addendum namespaces
@@ -136,8 +136,8 @@ Document.prototype.toESDocument = function() {
   if( !Object.keys( doc.addendum || {} ).length ){
     delete doc.addendum;
   }
-  if( !Object.keys( doc.polygon || {} ).length ){
-    delete doc.polygon;
+  if( !Object.keys( doc.shape || {} ).length ){
+    delete doc.shape;
   }
 
   return {
@@ -576,7 +576,7 @@ Document.prototype.getCentroid = function(){
 };
 
 // shape
-Document.prototype.setPolygon = function( value ){
+Document.prototype.setShape = function( value ){
 
  validate.type('object', value);
  validate.truthy(value);
@@ -585,7 +585,7 @@ Document.prototype.setPolygon = function( value ){
  return this;
 };
 
-Document.prototype.getPolygon = function(){
+Document.prototype.getShape = function(){
   return this.shape;
 };
 

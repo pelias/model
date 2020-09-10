@@ -40,7 +40,7 @@ module.exports.tests.toESDocument = function(test) {
     });
     doc.setPopulation(123);
     doc.setPopularity(456);
-    doc.setPolygon({ key: 'value' });
+    doc.setShape({ key: 'value' });
     doc.addCategory('category 1');
     doc.addCategory('category 2');
     doc.setAddendum('wikipedia', { slug: 'HackneyCityFarm' });
@@ -72,7 +72,7 @@ module.exports.tests.toESDocument = function(test) {
         bounding_box: '{"min_lat":12.121212,"max_lat":13.131313,"min_lon":21.212121,"max_lon":31.313131}',
         population: 123,
         popularity: 456,
-        polygon: {
+        shape: {
           key: 'value'
         },
         category: [
@@ -135,7 +135,7 @@ module.exports.tests.toESDocument = function(test) {
     t.false(esDoc.data.hasOwnProperty('center_point'), 'should not include center');
     t.false(esDoc.data.hasOwnProperty('population'), ' should not include population');
     t.false(esDoc.data.hasOwnProperty('popularity'), ' should not include popularity');
-    t.false(esDoc.data.hasOwnProperty('polygon'), ' should not include polygon');
+    t.false(esDoc.data.hasOwnProperty('shape'), ' should not include shape');
     t.end();
 
   });
@@ -192,7 +192,7 @@ module.exports.tests.toESDocument = function(test) {
     t.false(esDoc.data.hasOwnProperty('center_point'), 'should not include center');
     t.false(esDoc.data.hasOwnProperty('population'), ' should not include population');
     t.false(esDoc.data.hasOwnProperty('popularity'), ' should not include popularity');
-    t.false(esDoc.data.hasOwnProperty('polygon'), ' should not include polygon');
+    t.false(esDoc.data.hasOwnProperty('shape'), ' should not include shape');
     t.end();
 
   });

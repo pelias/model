@@ -60,7 +60,7 @@ module.exports.tests.complete = function(test) {
       .setAddendum('wikipedia', { slug: 'HackneyCityFarm' })
       .setAddendum('geonames', { foreignkey: 1 })
       .setCentroid({ lon: 0.5, lat: 50.1 })
-      .setPolygon(fixtures.new_zealand)
+      .setShape(fixtures.new_zealand)
       .setBoundingBox(fixtures.new_zealand_bbox);
 
     var s = serializeDeserialize( doc );
