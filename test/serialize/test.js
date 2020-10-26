@@ -48,7 +48,7 @@ module.exports.tests.complete = function(test) {
       .setMeta( 'author', 'peter' )
       .setName( 'default', 'Hackney City Farm' )
       .setName( 'alt', 'Haggerston City Farm' )
-      .addParent( 'country', 'Great Britain', '1001', 'GreatB' )
+      .addParent( 'country', 'Great Britain', '1001', 'GBR' )
       .addParent( 'neighbourhood', 'Shoreditch', '2002' )
       .setAddress( 'number', '10' )
       .setAddress( 'street', 'pelias place' )
@@ -96,7 +96,8 @@ module.exports.tests.complete = function(test) {
       // WOF fields
       'parent': {
         'country': ['Great Britain'],
-        'country_a': ['GreatB'],
+        'country_a': ['GBR'],
+        'country_a2': ['GB'],
         'country_id': ['1001'],
         'neighbourhood': ['Shoreditch'],
         'neighbourhood_a': [null],

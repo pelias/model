@@ -1,4 +1,5 @@
 const config = require('pelias-config').generate();
+const getCountryISO2 = require('country-iso-3-to-2');
 const validate = require('./util/valid');
 const transform = require('./util/transform');
 const _ = require('lodash');
@@ -371,6 +372,17 @@ Document.prototype.addParent = function( field, name, id, abbr ){
     addValidate( field + '_a', abbr );
   } else {
     add( field + '_a', null );
+  }
+
+  // Mild hack to add in iso2 country codes, since wof-admin-lookup puts iso3
+  // country codes in country.abbrev.
+  if (field === 'country') {
+    const iso2 = getCountryISO2(abbr);
+    if (iso2) {
+      addValidate( field + '_a2', iso2 );
+    } else {
+      add( field + '_a2', null );
+    }
   }
 
   // chainable

@@ -28,6 +28,7 @@
     "node": ">= 10.0.0"
   },
   "dependencies": {
+    "country-iso-3-to-2": "^1.1.0",
     "lodash": "^4.6.1",
     "pelias-config": "^4.5.0",
     "through2": "^3.0.0"
