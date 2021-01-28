@@ -1,5 +1,6 @@
 const proxyquire = require('proxyquire');
 const codec = require('../../codec');
+const _ = require('lodash');
 
 var fakeGeneratedConfig = {
   schema: {
@@ -10,7 +11,7 @@ var fakeGeneratedConfig = {
 
 const fakeConfig = {
   generate: function fakeGenerate() {
-    return fakeGeneratedConfig;
+    return Object.assign({ get: _.get.bind(null, fakeGeneratedConfig) }, fakeGeneratedConfig);
   }
 };
 

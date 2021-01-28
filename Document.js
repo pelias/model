@@ -1,4 +1,4 @@
-const config = require('pelias-config').generate();
+const config = require('pelias-config').generate(require('./schema'));
 const validate = require('./util/valid');
 const transform = require('./util/transform');
 const _ = require('lodash');
@@ -44,6 +44,8 @@ function Document( source, layer, source_id ){
   this.addPostProcessingScript( require('./post/intersections') );
   this.addPostProcessingScript( require('./post/seperable_street_names').post );
   this.addPostProcessingScript( require('./post/deduplication') );
+  this.addPostProcessingScript( require('./post/language_default')(config) );
+  this.addPostProcessingScript( require('./post/language_field_filter')(config) );
   this.addPostProcessingScript( require('./post/language_field_trimming') );
 
   // mandatory properties

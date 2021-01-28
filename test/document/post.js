@@ -1,17 +1,26 @@
 
-const Document = require('../../Document');
+const _ = require('lodash');
+const proxyquire = require('proxyquire');
+const config = { get: _.get.bind(null, {}) };
+const Document = proxyquire('../../Document', { 'pelias-config': config });
 const intersections = require('../../post/intersections');
 const seperable_street_names = require('../../post/seperable_street_names').post;
 const deduplication = require('../../post/deduplication');
 const language_field_trimming = require('../../post/language_field_trimming');
-const DEFAULT_SCRIPTS = [intersections, seperable_street_names, deduplication, language_field_trimming ];
+const language_field_filter = require('../../post/language_field_filter');
+const language_default = require('../../post/language_default');
+const DEFAULT_SCRIPT_NAMES = [
+  intersections, seperable_street_names, deduplication,
+  language_default(config), language_field_filter(config), language_field_trimming
+].map(f => f.name);
 
 module.exports.tests = {};
 
 module.exports.tests.addPostProcessingScript = function(test) {
   test('default scripts', function(t) {
     let doc = new Document('mysource','mylayer','myid');
-    t.deepEqual(doc._post, DEFAULT_SCRIPTS, 'default processing scripts');
+    t.equal(doc._post.length, 6);
+    t.deepEqual(doc._post.map(f => f.name), DEFAULT_SCRIPT_NAMES, 'default processing scripts');
     t.end();
   });
   test('invalid type', function(t) {
@@ -26,7 +35,7 @@ module.exports.tests.addPostProcessingScript = function(test) {
     let script = function(){};
     let doc = new Document('mysource','mylayer','myid');
     doc.addPostProcessingScript( script );
-    t.deepEqual(doc._post, DEFAULT_SCRIPTS.concat( script ), 'default processing scripts');
+    t.deepEqual(doc._post.map(f => f.name), DEFAULT_SCRIPT_NAMES.concat( script.name ), 'default processing scripts');
     t.end();
   });
   test('set same function twice (allowed)', function(t) {
@@ -34,7 +43,11 @@ module.exports.tests.addPostProcessingScript = function(test) {
     let doc = new Document('mysource','mylayer','myid');
     doc.addPostProcessingScript( script );
     doc.addPostProcessingScript( script );
-    t.deepEqual(doc._post, DEFAULT_SCRIPTS.concat( script, script ), 'default processing scripts');
+    t.deepEqual(
+      doc._post.map(f => f.name),
+      DEFAULT_SCRIPT_NAMES.concat( script.name, script.name ),
+      'default processing scripts'
+    );
     t.end();
   });
 };
