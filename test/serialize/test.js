@@ -50,6 +50,7 @@ module.exports.tests.complete = function(test) {
       .setName( 'alt', 'Haggerston City Farm' )
       .addParent( 'country', 'Great Britain', '1001', 'GreatB' )
       .addParent( 'neighbourhood', 'Shoreditch', '2002' )
+      .addParent( 'locality', 'London', '3003', 'LD', 'whosonfirst' )
       .setAddress( 'number', '10' )
       .setAddress( 'street', 'pelias place' )
       .addCategory( 'foo' )
@@ -98,9 +99,15 @@ module.exports.tests.complete = function(test) {
         'country': ['Great Britain'],
         'country_a': ['GreatB'],
         'country_id': ['1001'],
+        'country_source': [null],
         'neighbourhood': ['Shoreditch'],
         'neighbourhood_a': [null],
-        'neighbourhood_id': ['2002']
+        'neighbourhood_id': ['2002'],
+        'neighbourhood_source': [null],
+        'locality': ['London'],
+        'locality_a': ['LD'],
+        'locality_id': ['3003'],
+        'locality_source': ['whosonfirst']
       },
 
       // geography

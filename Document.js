@@ -317,7 +317,7 @@ Document.prototype.delName = function( prop ){
 };
 
 // parent
-Document.prototype.addParent = function( field, name, id, abbr ){
+Document.prototype.addParent = function( field, name, id, abbr, source ){
 
   var add = function( prop, value ){
 
@@ -373,6 +373,12 @@ Document.prototype.addParent = function( field, name, id, abbr ){
     add( field + '_a', null );
   }
 
+  if (typeof source === 'string') {
+    addValidate( field + '_source', source );
+  } else {
+    add( field + '_source', null );
+  }
+
   // chainable
   return this;
 };
@@ -388,6 +394,7 @@ Document.prototype.clearParent = function(field) {
   this.parent[ field ] = [];
   this.parent[ field + '_id' ] = [];
   this.parent[ field + '_a' ] = [];
+  this.parent[ field + '_source' ] = [];
 
   return this;
 };
