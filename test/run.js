@@ -25,11 +25,14 @@ var tests = [
   require('./post/intersections.js'),
   require('./post/deduplication.js'),
   require('./post/seperable_street_names.js'),
+  require('./post/language_default.js'),
+  require('./post/language_field_filter.js'),
   require('./post/language_field_trimming.js'),
   require('./DocumentMapperStream.js'),
   require('./util/transform.js'),
   require('./util/valid.js'),
   require('./serialize/test.js'),
+  require('./schema.js'),
 ];
 
 tests.map(function(t) {
