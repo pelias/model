@@ -45,6 +45,7 @@ function Document( source, layer, source_id ){
   this.addPostProcessingScript( require('./post/seperable_street_names').post );
   this.addPostProcessingScript( require('./post/deduplication') );
   this.addPostProcessingScript( require('./post/language_field_trimming') );
+  this.addPostProcessingScript( require('./post/popularity') );
 
   // mandatory properties
   this.setSource( source );

@@ -4,7 +4,8 @@ const intersections = require('../../post/intersections');
 const seperable_street_names = require('../../post/seperable_street_names').post;
 const deduplication = require('../../post/deduplication');
 const language_field_trimming = require('../../post/language_field_trimming');
-const DEFAULT_SCRIPTS = [intersections, seperable_street_names, deduplication, language_field_trimming ];
+const popularity = require('../../post/popularity');
+const DEFAULT_SCRIPTS = [intersections, seperable_street_names, deduplication, language_field_trimming, popularity];
 
 module.exports.tests = {};
 
