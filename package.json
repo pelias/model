@@ -9,7 +9,6 @@
   "scripts": {
     "units": "./bin/units",
     "test": "npm run units",
-    "travis": "npm test",
     "lint": "jshint .",
     "validate": "npm ls"
   },
