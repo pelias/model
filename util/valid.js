@@ -1,6 +1,6 @@
 
-var _ = require('lodash'),
-    PeliasModelError = require('../errors').PeliasModelError;
+const _ = require('lodash');
+const PeliasModelError = require('../errors').PeliasModelError;
 
 module.exports.type = function( type, val ){
   if( type.toLowerCase() === 'array' ){
@@ -112,9 +112,14 @@ module.exports.boundingBox = function( val ) {
 };
 
 module.exports.regex = {
-  nomatch: function(val, regex) {
+  nomatch: function(val, regex, options) {
     if( regex.test(val) ){
-      throw new PeliasModelError(`invalid regex test, ${val} should not match ${regex}`);
+      const message = `invalid regex test, ${val} should not match ${regex}`;
+      if( _.get(options, 'throw', true) === false ){
+        console.warn(message);
+      } else {
+        throw new PeliasModelError(message);
+      }
     }
 
     return module.exports;

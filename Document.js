@@ -247,7 +247,7 @@ Document.prototype.setName = function( prop, value ){
 
   validate.type('string', value);
   validate.truthy(value);
-  validate.regex.nomatch(value, /https?:\/\//);
+  validate.regex.nomatch(value, /https?:\/\//, { throw: false });
 
   // must copy name to 'phrase' index
   if( Array.isArray( this.name[ prop ] ) ){
@@ -265,7 +265,7 @@ Document.prototype.setNameAlias = function( prop, value ){
 
   validate.type('string', value);
   validate.truthy(value);
-  validate.regex.nomatch(value, /https?:\/\//);
+  validate.regex.nomatch(value, /https?:\/\//, { throw: false });
 
   // is this the first time setting this prop? ensure it's an array
   if( !this.hasName( prop ) ){
@@ -414,7 +414,7 @@ Document.prototype.setAddress = function( prop, value ){
   validate.type('string', value);
   validate.truthy(value);
   validate.property(addressFields, prop);
-  validate.regex.nomatch(value, /https?:\/\//);
+  validate.regex.nomatch(value, /https?:\/\//, { throw: false });
 
   if( Array.isArray( this.address_parts[ prop ] ) ){
     this.address_parts[ prop ][ 0 ] = value;
@@ -430,7 +430,7 @@ Document.prototype.setAddressAlias = function( prop, value ){
   validate.type('string', value);
   validate.truthy(value);
   validate.property(addressFields, prop);
-  validate.regex.nomatch(value, /https?:\/\//);
+  validate.regex.nomatch(value, /https?:\/\//, { throw: false });
 
   // is this the first time setting this prop? ensure it's an array
   if( !this.hasAddress( prop ) ){
