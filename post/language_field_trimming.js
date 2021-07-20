@@ -27,7 +27,12 @@ function deduplication(doc) {
 
     // fetch the 'default' language
     var defaults = _.get(field, 'default');
-    if (!_.isArray(defaults) || _.isEmpty(defaults)) { return; }
+
+    // no default names, nothing to do; continue
+    if (_.isEmpty(defaults)) { return; }
+
+    // convert scalar values to arrays
+    defaults = _.castArray(defaults);
 
     // iterate over other languages in the field
     _.each(field, (names, lang) => {
@@ -35,14 +40,23 @@ function deduplication(doc) {
       // skip the 'default' language
       if (lang === 'default'){ return; }
 
+      // no names, nothing to do; continue
+      if (_.isEmpty(names)) { return; }
+
+      // convert scalar values to arrays
+      names = _.castArray(names);
+
       // filter entries from this language which appear in the 'default' lang
-      if (_.isArray(names) || !_.isEmpty(names)) {
-        field[lang] = _.difference(names, defaults);
-      }
+      field[lang] = _.difference(names, defaults);
 
       // clean up empty language arrays
       if (_.isEmpty(field[lang])) {
         delete field[lang];
+      }
+
+      // flatten single-value arrays
+      else if(_.size(field[lang]) === 1) {
+        field[lang] = _.first(field[lang]);
       }
     });
   });
