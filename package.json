@@ -9,6 +9,7 @@
   "scripts": {
     "units": "./bin/units",
     "test": "npm run units",
+    "ci": "npm run units",
     "lint": "jshint .",
     "validate": "npm ls"
   },
