@@ -1,0 +1,23 @@
+{
+  "DEU": {
+    "platz": "pl",
+    "markt": "mkt",
+    "straße": "str",
+    "strasse": "str"
+  },
+  "CHE": {
+    "platz": "pl",
+    "markt": "mkt",
+    "straße": "str",
+    "strasse": "str"
+  },
+  "AUT": {
+    "platz": "pl",
+    "markt": "mkt",
+    "straße": "str",
+    "strasse": "str"
+  },
+  "NLD": {
+    "straat": "str"
+  }
+}
