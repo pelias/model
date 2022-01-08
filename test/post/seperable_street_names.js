@@ -1,11 +1,12 @@
-
-var Document = require('../../Document');
-var ssn = require('../../post/seperable_street_names');
+const _ = require('lodash');
+const Document = require('../../Document');
+const ssn = require('../../post/seperable_street_names');
+const dedupe = require('../../post/deduplication');
 
 module.exports.tests = {};
 
 module.exports.tests.expand = function (test) {
-  test('expand DEU', function (t) {  
+  test('expand DEU', function (t) {
     t.equals('Example Weg', ssn.expand('Examplew.', ssn.expansions.DEU) );
     t.equals('Example Weg', ssn.expand('Exampleweg', ssn.expansions.DEU) );
     t.equals('Example Quelle', ssn.expand('Exampleq.', ssn.expansions.DEU) );
@@ -180,17 +181,23 @@ module.exports.tests.functional = function (test) {
 
     // name aliases defined
     t.deepEqual(doc.getNameAliases('default'), [
-      'Example Straße & Cross Platz'
+      'Example Straße & Cross Platz',
+      'Examplestraße & Crossplatz',
+      'Examplestr & Crosspl'
     ]);
 
     // street aliases defined
     t.deepEqual(doc.getAddressAliases('street'), [
       'Example Straße',
+      'Examplestraße',
+      'Examplestr'
     ]);
 
     // cross_street aliases defined
     t.deepEqual(doc.getAddressAliases('cross_street'), [
       'Cross Platz',
+      'Crossplatz',
+      'Crosspl'
     ]);
 
     t.end();
@@ -208,17 +215,20 @@ module.exports.tests.functional = function (test) {
 
     // name aliases defined
     t.deepEqual(doc.getNameAliases('default'), [
-      'Examplestraße & Crossplatz'
+      'Examplestraße & Crossplatz',
+      'Examplestr & Crosspl'
     ]);
 
     // street aliases defined
     t.deepEqual(doc.getAddressAliases('street'), [
       'Examplestraße',
+      'Examplestr'
     ]);
 
     // cross_street aliases defined
     t.deepEqual(doc.getAddressAliases('cross_street'), [
       'Crossplatz',
+      'Crosspl'
     ]);
 
     t.end();
@@ -235,12 +245,14 @@ module.exports.tests.functional = function (test) {
 
     // name aliases defined
     t.deepEqual(doc.getNameAliases('default'), [
-      'Eberswalderstraße'
+      'Eberswalderstraße',
+      'Eberswalderstr'
     ]);
 
     // street aliases defined
     t.deepEqual(doc.getAddressAliases('street'), [
-      'Eberswalderstraße'
+      'Eberswalderstraße',
+      'Eberswalderstr'
     ]);
 
     t.end();
@@ -259,17 +271,23 @@ module.exports.tests.functional = function (test) {
     // name aliases defined
     t.deepEqual(doc.getNameAliases('default'), [
       'Example Straße & Cross Platz',
-      'Examplestraße & Crossplatz'
+      'Examplestraße & Crossplatz',
+      'Examplestraße & Crossplatz',
+      'Examplestr & Crossplatz',
+      'Examplestr & Crosspl'
     ]);
 
     // street aliases defined
     t.deepEqual(doc.getAddressAliases('street'), [
       'Examplestraße',
+      'Examplestr'
     ]);
 
     // cross_street aliases defined
     t.deepEqual(doc.getAddressAliases('cross_street'), [
       'Cross Platz',
+      'Crossplatz',
+      'Crosspl'
     ]);
 
     t.end();
@@ -290,6 +308,42 @@ module.exports.tests.functional = function (test) {
     doc.setName('default', 'example');
     doc.setAddress('street', 'example');
     t.doesNotThrow(() => ssn.post(doc));
+    t.end();
+  });
+
+  test('germanic separable street names', function (t) {
+
+    let generate = (input) => {
+      var doc = new Document('mysource', 'street', 'myid');
+      doc.addParent('country', 'Germany', '1001', 'DEU');
+      doc.setName('default', input);
+      doc.setAddress('street', input);
+      doc.setAddress('cross_street', input);
+      ssn.post(doc);
+      dedupe(doc);
+
+      return doc;
+    };
+
+    // test all permutations expand to all forms
+    // Separated / Compounded + Abbreviated / Compounded Non-Abbreviated
+    // note: Separated tokens are easily handled by elasticsearch synonyms
+    // and so do not require explicit substiution here.
+    t.deepEqual(_.castArray(generate('Foostrasse').name.default), ['Foostrasse', 'Foo Strasse', 'Foostr']);
+    t.deepEqual(_.castArray(generate('Foostraße').name.default), ['Foostraße', 'Foo Straße', 'Foostr']);
+    t.deepEqual(_.castArray(generate('Foostr.').name.default), ['Foostr.', 'Foo Straße', 'Foostraße']);
+    t.deepEqual(_.castArray(generate('Foostr').name.default), ['Foostr', 'Foo Straße', 'Foostraße']);
+    t.deepEqual(_.castArray(generate('Foo Strasse').name.default), ['Foo Strasse', 'Foostrasse', 'Foostr']);
+    t.deepEqual(_.castArray(generate('Foo Straße').name.default), ['Foo Straße', 'Foostraße', 'Foostr']);
+
+    // note: these forms with the abbreviated generic are not handled within this script.
+    // I considered adding synonym substitution functionality but it's complex and better
+    // handled by https://github.com/pelias/openaddresses/pull/477
+    // note: as a general rule, names at index-time should be provided un-abbreviated but may
+    // be in either abbreviated on un-abbreviated at search time.
+    // t.deepEqual(_.castArray(generate('Foo Str.').name.default), ['Foo Str.', 'Foostraße', 'Foostr']);
+    // t.deepEqual(_.castArray(generate('Foo Str').name.default), ['Foo Str', 'Foostraße', 'Foostr']);
+
     t.end();
   });
 };
