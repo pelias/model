@@ -4,16 +4,24 @@
  */
 
 const _ = require('lodash');
-const prefixes = [ 'name', 'phrase', 'address_parts' ];
+const prefixes = ['name', 'phrase', 'address_parts'];
+const punctuation = /[\.]+/g;
+const normalize = (v) => _.isString(v) ? _.replace(v.toLowerCase(), punctuation, '') : v;
 
-function deduplication( doc ){
+// if values are strings then apply a string
+// normalization function to both strings.
+const comparitor = (value, other) => {
+  return _.isEqual(normalize(value), normalize(other));
+};
+
+function deduplication(doc) {
   prefixes.forEach(prefix => {
     let index = doc[prefix];
-    if ( _.isPlainObject( index ) ){
-      for( let field in index ){
+    if (_.isPlainObject(index)) {
+      for (let field in index) {
         let values = index[field];
-        if( _.isArray( values ) && values.length > 1 ){
-          index[field] = _.uniq(values);
+        if (_.isArray(values) && values.length > 1) {
+          index[field] = _.uniqWith(values, comparitor);
         }
       }
     }

@@ -13,6 +13,7 @@ module.exports.tests.dedupe = function (test) {
     doc.setNameAlias('default', 'test');
     doc.setNameAlias('default', 'test 2');
     doc.setNameAlias('default', 'test');
+    doc.setNameAlias('default', '.Test.');
 
     deduplication(doc);
     t.deepEquals(doc.name.default, ['test', 'test 2']);
@@ -27,6 +28,7 @@ module.exports.tests.dedupe = function (test) {
     doc.setAddressAlias('street', 'test');
     doc.setAddressAlias('street', 'test 2');
     doc.setAddressAlias('street', 'test');
+    doc.setAddressAlias('street', '..Test..');
 
     deduplication(doc);
     t.deepEquals(doc.address_parts.street, ['test', 'test 2']);
@@ -42,6 +44,7 @@ module.exports.tests.dedupe = function (test) {
     doc.setNameAlias('default', 'test');
     doc.setNameAlias('default', 'test 2');
     doc.setNameAlias('default', 'test');
+    doc.setNameAlias('default', '...Te...st...');
 
     deduplication(doc);
     t.deepEquals(doc.phrase.default, ['test', 'test 2']);
