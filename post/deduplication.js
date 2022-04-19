@@ -4,7 +4,7 @@
  */
 
 const _ = require('lodash');
-const prefixes = ['name', 'phrase', 'address_parts'];
+const prefixes = ['name', 'address_parts'];
 const punctuation = /[\.]+/g;
 const normalize = (v) => _.isString(v) ? _.replace(v.toLowerCase(), punctuation, '') : v;
 

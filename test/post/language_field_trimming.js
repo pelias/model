@@ -28,29 +28,6 @@ module.exports.tests.dedupe = function (test) {
     t.end();
   });
 
-  test('dedupe - phrase', function (t) {
-    var doc = new Document('mysource', 'mylayer', 'myid');
-
-    doc.setName('default', 'test1');
-    doc.setNameAlias('default', 'test2');
-    doc.setNameAlias('default', 'test3');
-
-    doc.setName('en', 'test1');
-    doc.setNameAlias('en', 'test3');
-    doc.setNameAlias('en', 'test4');
-
-    doc.setName('de', 'test1');
-    doc.setNameAlias('de', 'test2');
-
-    language_field_trimming(doc);
-
-    t.deepEquals(doc.phrase.default, ['test1', 'test2', 'test3']);
-    t.deepEquals(doc.phrase.en, 'test4');
-    t.false(doc.phrase.de);
-
-    t.end();
-  });
-
   test('dedupe - two default names, one from a language code', function (t) {
     var doc = new Document('mysource', 'mylayer', 'myid');
 

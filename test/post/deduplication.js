@@ -35,22 +35,6 @@ module.exports.tests.dedupe = function (test) {
 
     t.end();
   });
-
-  test('dedupe - phrase', function (t) {
-    var doc = new Document('mysource', 'mylayer', 'myid');
-
-    doc.setNameAlias('default', 'test');
-    doc.setName('default', 'test');
-    doc.setNameAlias('default', 'test');
-    doc.setNameAlias('default', 'test 2');
-    doc.setNameAlias('default', 'test');
-    doc.setNameAlias('default', '...Te...st...');
-
-    deduplication(doc);
-    t.deepEquals(doc.phrase.default, ['test', 'test 2']);
-
-    t.end();
-  });
 };
 
 module.exports.all = function (tape, common) {
