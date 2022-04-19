@@ -27,7 +27,6 @@ const parentFields = [
 
 function Document( source, layer, source_id ){
   this.name = {};
-  this.phrase = {};
   this.parent = {};
   this.address_parts = {};
   this.center_point = {};
@@ -93,7 +92,7 @@ Document.prototype.toESDocument = function() {
 
   var doc = {
     name: this.name,
-    phrase: this.phrase,
+    phrase: this.name,
     parent: this.parent,
     address_parts: this.address_parts,
     center_point: this.center_point,
@@ -249,13 +248,10 @@ Document.prototype.setName = function( prop, value ){
   validate.truthy(value);
   validate.regex.nomatch(value, /https?:\/\//);
 
-  // must copy name to 'phrase' index
   if( Array.isArray( this.name[ prop ] ) ){
     this.name[ prop ][ 0 ] = value;
-    this.phrase[ prop ][ 0 ] = value;
   } else {
     this.name[ prop ] = value;
-    this.phrase[ prop ] = value;
   }
 
   return this;
@@ -270,14 +266,12 @@ Document.prototype.setNameAlias = function( prop, value ){
   // is this the first time setting this prop? ensure it's an array
   if( !this.hasName( prop ) ){
     this.name[ prop ] = [];
-    this.phrase[ prop ] = [];
   }
 
   // is casting required to convert a scalar field to an array?
   else if( 'string' === typeof this.name[ prop ] ){
     var stringValue = this.name[ prop ];
     this.name[ prop ] = [ stringValue ];
-    this.phrase[ prop ] = [ stringValue ];
   }
 
   // is the array empty? ie. no prior call to setName()
@@ -288,7 +282,6 @@ Document.prototype.setNameAlias = function( prop, value ){
 
   // set the alias as the second, third, fourth, etc value in the array
   this.name[ prop ].push( value );
-  this.phrase[ prop ].push( value );
 
   return this;
 };

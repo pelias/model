@@ -27,7 +27,6 @@ module.exports.tests.minimal = function(test) {
       'layer': 'mylayer',
       'source_id': 'myid',
       'name': {},
-      'phrase': {},
       'parent': {},
       'address_parts': {},
       'category': [],
@@ -78,12 +77,6 @@ module.exports.tests.complete = function(test) {
 
       // place name (ngram analysis)
       'name':{
-        'default': 'Hackney City Farm',
-        'alt': 'Haggerston City Farm'
-      },
-
-      // place name (phrase analysis)
-      'phrase':{
         'default': 'Hackney City Farm',
         'alt': 'Haggerston City Farm'
       },

@@ -18,7 +18,6 @@ module.exports.tests.setName = function(test) {
     var doc = new Document('mysource','mylayer','myid');
     t.equal(doc.setName('foo','bar'), doc, 'chainable');
     t.equal(doc.name.foo, 'bar', 'setter works');
-    t.equal(doc.phrase.foo, 'bar', 'setter works');
     t.end();
   });
   test('setName - validate key', function(t) {
@@ -70,9 +69,6 @@ module.exports.tests.setNameAlias = function(test) {
     t.equal(doc.name.foo[0], 'bar', 'setter works');
     t.equal(doc.name.foo[1], 'bar', 'setter works');
     t.equal(doc.name.foo[2], 'baz', 'setter works');
-    t.equal(doc.phrase.foo[0], 'bar', 'setter works');
-    t.equal(doc.phrase.foo[1], 'bar', 'setter works');
-    t.equal(doc.phrase.foo[2], 'baz', 'setter works');
     t.equal(doc.getName('foo'), 'bar', 'name set');
     t.deepEqual(doc.getNameAliases('foo'), ['bar','baz'], 'aliases set');
     t.end();
@@ -85,9 +81,6 @@ module.exports.tests.setNameAlias = function(test) {
     t.equal(doc.name.foo[0], 'bar', 'setter works');
     t.equal(doc.name.foo[1], 'baz', 'setter works');
     t.equal(doc.name.foo[2], 'boo', 'setter works');
-    t.equal(doc.phrase.foo[0], 'bar', 'setter works');
-    t.equal(doc.phrase.foo[1], 'baz', 'setter works');
-    t.equal(doc.phrase.foo[2], 'boo', 'setter works');
     t.equal(doc.getName('foo'), 'bar', 'name set');
     t.deepEqual(doc.getNameAliases('foo'), ['baz','boo'], 'aliases set');
     t.end();
