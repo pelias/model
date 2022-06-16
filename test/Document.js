@@ -140,6 +140,20 @@ module.exports.tests.parent_types = (test) => {
 
   });
 
+  test('Invalid parent field name', (t) => {
+    const doc = new Document('mysource', 'mylayer', 'myid');
+
+    t.throws(
+      () => doc.addParent('someRandomName', 'name 1', 'id 1', 'abbr 1'),
+      'invalid property: someRandomName, should be one of: ' +
+      'continent,country,dependency,macroregion,region,macrocounty,county,borough,' +
+      'locality,localadmin,macrohood,neighbourhood,postalcode,ocean,marinearea,empire',
+      'Should fail for invalid parent field.');
+
+    t.end();
+
+  });
+
   test('non-WOF placetype arguments should return false', (t) => {
     const doc = new Document('mysource', 'mylayer', 'myid');
 
