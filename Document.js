@@ -17,7 +17,6 @@ const parentFields = [
   'borough',
   'locality',
   'localadmin',
-  'macrohood',
   'neighbourhood',
   'postalcode',
   'ocean',
