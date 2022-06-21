@@ -1,0 +1,6 @@
+name: Continuous Integration
+on: pull_request
+jobs:
+  unit-tests:
+    if: github.event.repository.name != 'pelias'
+    uses: ./.github/workflows/_test.yml
