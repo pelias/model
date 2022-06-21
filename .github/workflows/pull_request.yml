@@ -2,5 +2,6 @@ name: Continuous Integration
 on: pull_request
 jobs:
   unit-tests:
-    if: github.repository_owner != 'pelias'
+    # only run this job for forks
+    if: github.event.pull_request.head.repo.full_name != github.repository
     uses: ./.github/workflows/_test.yml
