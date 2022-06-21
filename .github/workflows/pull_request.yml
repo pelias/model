@@ -2,5 +2,5 @@ name: Continuous Integration
 on: pull_request
 jobs:
   unit-tests:
-    if: github.event.repository.name != 'pelias'
+    if: github.repository_owner != 'pelias'
     uses: ./.github/workflows/_test.yml
