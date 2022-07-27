@@ -104,7 +104,6 @@ module.exports.tests.parent_types = (test) => {
       'borough',
       'locality',
       'localadmin',
-      'macrohood',
       'neighbourhood',
       'postalcode',
       'ocean',
@@ -147,7 +146,7 @@ module.exports.tests.parent_types = (test) => {
       () => doc.addParent('someRandomName', 'name 1', 'id 1', 'abbr 1'),
       'invalid property: someRandomName, should be one of: ' +
       'continent,country,dependency,macroregion,region,macrocounty,county,borough,' +
-      'locality,localadmin,macrohood,neighbourhood,postalcode,ocean,marinearea,empire',
+      'locality,localadmin,neighbourhood,postalcode,ocean,marinearea,empire',
       'Should fail for invalid parent field.');
 
     t.end();
