@@ -17,7 +17,6 @@ const parentFields = [
   'borough',
   'locality',
   'localadmin',
-  'macrohood',
   'neighbourhood',
   'postalcode',
   'ocean',
@@ -313,6 +312,8 @@ Document.prototype.delName = function( prop ){
 // parent
 Document.prototype.addParent = function( field, name, id, abbr, source ){
 
+  validate.property(parentFields, field);
+
   var add = function( prop, value ){
 
     // create new parent array if required
@@ -377,7 +378,7 @@ Document.prototype.addParent = function( field, name, id, abbr, source ){
   return this;
 };
 
-// clear all all added values
+// clear all added values
 Document.prototype.clearParent = function(field) {
 
   // field has never been set
@@ -436,7 +437,7 @@ Document.prototype.setAddressAlias = function( prop, value ){
     this.address_parts[ prop ] = [ stringValue ];
   }
 
-  // is the array empty? ie. no prior call to setAddress()
+  // is the array empty? i.e. no prior call to setAddress()
   // in this case we will also set element 0 (the element used for display)
   if( !this.address_parts[ prop ].length ){
     this.setAddress( prop, value );
