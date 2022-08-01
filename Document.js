@@ -44,6 +44,7 @@ function Document( source, layer, source_id ){
   this.addPostProcessingScript( require('./post/deduplication') );
   this.addPostProcessingScript( require('./post/language_field_trimming') );
   this.addPostProcessingScript( require('./post/popularity') );
+  this.addPostProcessingScript( require('./post/explode_fields') );
 
   // mandatory properties
   this.setSource( source );
