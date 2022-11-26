@@ -1,7 +1,8 @@
-var createDocumentMapperStream = require('../DocumentMapperStream');
-var Document = require('../Document');
+const createDocumentMapperStream = require('../DocumentMapperStream');
+const testDocument = require('./TestDocument');
 
 const stream_mock = require('stream-mock');
+const Document = testDocument();
 
 function test_stream(input, testedStream, callback) {
   const reader = new stream_mock.ObjectReadableMock(input);
@@ -15,8 +16,8 @@ module.exports.tests = {};
 
 module.exports.tests.DocumentMapperStream = function(test) {
   test('createDocumentMapperStream', function(t) {
-    var stream = createDocumentMapperStream();
-    var document = new Document('source', 'layer', 'id');
+    const stream = createDocumentMapperStream();
+    const document = new Document('source', 'layer', 'id');
 
     test_stream([document], stream, function(err, results) {
       t.equal(results.length, 1, 'stream returns exactly one result');
@@ -32,7 +33,7 @@ module.exports.all = function (tape, common) {
     return tape('DocumentMapperStream: ' + name, testFunction);
   }
 
-  for( var testCase in module.exports.tests ){
+  for( const testCase in module.exports.tests ){
     module.exports.tests[testCase](test, common);
   }
 };

@@ -77,6 +77,8 @@ Document.prototype.toJSON = function(){
   return this;
 };
 
+Document.prototype.configuredAddendumNamespaces = config.get('addendum_namespaces');
+
 /*
  * Returns an object in exactly the format that Elasticsearch wants for inserts
  */
@@ -90,7 +92,7 @@ Document.prototype.toESDocument = function() {
     console.error(e);
   }
 
-  var doc = {
+  const doc = {
     name: this.name,
     phrase: this.name,
     parent: this.parent,
@@ -107,9 +109,13 @@ Document.prototype.toESDocument = function() {
     shape: this.shape
   };
 
-  // add encoded addendum namespaces
-  for( var namespace in this.addendum || {} ){
-    doc.addendum[namespace] = codec.encode(this.addendum[namespace]);
+  // encode non-configured addendum namespaces
+  for( const namespace in this.addendum || {} ){
+    if (this.configuredAddendumNamespaces.hasOwnProperty(namespace)) {
+      doc.addendum[namespace] = this.addendum[namespace];
+    } else {
+      doc.addendum[namespace] = codec.encode(this.addendum[namespace]);
+    }
   }
 
   // remove empty properties
@@ -145,7 +151,7 @@ Document.prototype.toESDocument = function() {
     _index: _.get(config, 'schema.indexName', 'pelias'),
     _id: this.getGid(),
     // In ES7, the only allowed document type will be `_doc`.
-    // However underscores are not allowed until ES6, so use `doc` for now
+    // However, underscores are not allowed until ES6, so use `doc` for now
     // see https://github.com/elastic/elasticsearch/pull/27816
     _type: _.get(config, 'schema.typeName', 'doc'),
     data: doc
@@ -219,7 +225,6 @@ Document.prototype.getGid = function(){
 };
 
 // meta
-
 Document.prototype.setMeta = function( prop, val ){
   this._meta[prop] = val;
   return this;
@@ -274,7 +279,7 @@ Document.prototype.setNameAlias = function( prop, value ){
     this.name[ prop ] = [ stringValue ];
   }
 
-  // is the array empty? ie. no prior call to setName()
+  // is the array empty? i.e. no prior call to setName()
   // in this case we will also set element 0 (the element used for display)
   if( !this.name[ prop ].length ){
     this.setName( prop, value );
@@ -530,10 +535,10 @@ Document.prototype.removeCategory = function( value ){
 Document.prototype.setAddendum = function( namespace, value ){
   validate.type('string', namespace);
   validate.truthy(namespace);
-  validate.type('object', value);
-  if( Object.keys(value).length > 0 ){
-    this.addendum[ namespace ] = value;
-  }
+  const configuredNamespace = this.configuredAddendumNamespaces[namespace];
+  const validationType =  configuredNamespace ? configuredNamespace.type : 'object';
+  validate.type(validationType, value);
+  this.addendum[ namespace ] = value;
   return this;
 };
 
@@ -607,7 +612,6 @@ Document.prototype.setBoundingBox = function( value ){
 Document.prototype.getBoundingBox = function(){
   return this.bounding_box;
 };
-
 
 Document.prototype.isSupportedParent = (placetype) => {
   return parentFields.indexOf(placetype) !== -1;

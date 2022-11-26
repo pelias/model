@@ -29,7 +29,7 @@
   },
   "dependencies": {
     "lodash": "^4.6.1",
-    "pelias-config": "^4.5.0",
+    "pelias-config": "/Users/mansoor.sajjad/entur/pelias/config",
     "through2": "^3.0.0"
   },
   "devDependencies": {

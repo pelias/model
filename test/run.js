@@ -1,7 +1,7 @@
-var tape = require('tape');
-var common = {};
+const tape = require('tape');
+const common = {};
 
-var tests = [
+const tests = [
   require('./Document.js'),
   require('./errors.js'),
   require('./document/centroid.js'),

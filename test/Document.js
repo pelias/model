@@ -1,9 +1,11 @@
-var Document = require('../Document');
+const _ = require('lodash');
+const testDocument = require('./TestDocument');
+const Document = testDocument();
 
 module.exports.tests = {};
 
-module.exports.tests.interface = function(test) {
-  test('valid interface', function(t) {
+module.exports.tests.interface = (test) => {
+  test('valid interface', (t) => {
     t.equal(typeof Document, 'function', 'Document is a function');
 
     t.equal(typeof Document.prototype.getId, 'function', 'getId() is a function');
@@ -19,10 +21,10 @@ module.exports.tests.interface = function(test) {
   });
 };
 
-module.exports.tests.constructor = function(test) {
-  test('constructor args', function(t) {
+module.exports.tests.constructor = (test) => {
+  test('constructor args', (t) => {
 
-    var doc = new Document('mysource','mylayer','myid');
+    const doc = new Document('mysource', 'mylayer', 'myid');
 
     // initial values
     t.deepEqual(doc.name, {}, 'initial value');
@@ -44,9 +46,9 @@ module.exports.tests.constructor = function(test) {
   });
 };
 
-module.exports.tests.clearParent = function(test) {
-  test('clearParent should remove all effects of addParent calls', function(t) {
-    var doc = new Document('mysource','mylayer','myid');
+module.exports.tests.clearParent = (test) => {
+  test('clearParent should remove all effects of addParent calls', (t) => {
+    const doc = new Document('mysource', 'mylayer', 'myid');
     doc.addParent('locality', 'name 1', 'id 1', 'abbr 1');
     doc.addParent('locality', 'name 2', 'id 2', 'abbr 2');
 
@@ -67,7 +69,7 @@ module.exports.tests.clearParent = function(test) {
 
 module.exports.tests.clearAllParents = (test) => {
   test('clearParents should remove all effects of all addParent calls', (t) => {
-    const doc = new Document('mysource','mylayer','myid');
+    const doc = new Document('mysource', 'mylayer', 'myid');
     doc.getParentFields().forEach((type) => {
       doc.addParent(type, 'name 1', 'id 1', 'abbr 1');
       doc.addParent(type, 'name 2', 'id 2', 'abbr 2');
@@ -155,13 +157,132 @@ module.exports.tests.parent_types = (test) => {
 
 };
 
+module.exports.tests.addendum_namespaces = (test) => {
+  test('addendum namespace configured as array should be validated and kept as array in ESDocument', (t) => {
+
+    const Document = testDocument({
+      addendum_namespaces: {
+        tariff_zone_ids: {
+          type: 'array'
+        }
+      }
+    });
+    const doc = new Document('mysource', 'mylayer', 'myid');
+    doc.setAddendum('tariff_zone_ids', ['12', '34', '56']);
+
+    const esDocument = doc.toESDocument();
+    t.true(_.isArray(esDocument.data.addendum.tariff_zone_ids), 'should be array');
+    t.end();
+  });
+
+  test('addendum namespace configured as object should be validated and kept as object in ESDocument', (t) => {
+
+    const Document = testDocument({
+      addendum_namespaces: {
+        tariff_zone_ids: {
+          type: 'object'
+        }
+      }
+    });
+    const doc = new Document('mysource', 'mylayer', 'myid');
+    doc.setAddendum('tariff_zone_ids', { id: '123' });
+
+    const esDocument = doc.toESDocument();
+    t.true(_.isObject(esDocument.data.addendum.tariff_zone_ids), 'should be object');
+    t.deepEqual(esDocument.data.addendum.tariff_zone_ids, { id: '123' }, 'should be a valid object');
+    t.end();
+  });
+
+  test('addendum namespace configured as array should be validated and kept as array in ESDocument', (t) => {
+
+    const Document = testDocument({
+      addendum_namespaces: {
+        tariff_zone_ids: {
+          type: 'array'
+        }
+      }
+    });
+    const doc = new Document('mysource', 'mylayer', 'myid');
+    doc.setAddendum('tariff_zone_ids', ['123', '456', '789']);
+
+    const esDocument = doc.toESDocument();
+    t.true(_.isArray(esDocument.data.addendum.tariff_zone_ids), 'should be array');
+    t.deepEqual(esDocument.data.addendum.tariff_zone_ids, ['123', '456', '789'], 'should be a valid array');
+    t.end();
+  });
+
+  test('addendum namespace not configured should be validated as object and kept as encoded string in ESDocument',
+    (t) => {
+      const Document = testDocument();
+      const doc = new Document('mysource', 'mylayer', 'myid');
+      doc.setAddendum('tariff_zone_ids', { id: '123' });
+
+      const esDocument = doc.toESDocument();
+      t.false(_.isObject(esDocument.data.addendum.tariff_zone_ids), 'should not be object');
+      t.equal(esDocument.data.addendum.tariff_zone_ids, '{"id":"123"}', 'should be encoded object string');
+      t.end();
+    });
+
+  test('mix of configured and non-configured addendum namespaces should be properly handled',
+    (t) => {
+      const Document = testDocument({
+        addendum_namespaces: {
+          description: {
+            type: 'object'
+          }
+        }
+      });
+      const doc = new Document('mysource', 'mylayer', 'myid');
+      doc.setAddendum('tariff_zone_ids', { id: '123' });
+      doc.setAddendum('description', { nor: 'this is something' });
+
+      const esDocument = doc.toESDocument();
+      t.false(_.isObject(esDocument.data.addendum.tariff_zone_ids), 'should not be object');
+      t.equal(esDocument.data.addendum.tariff_zone_ids, '{"id":"123"}', 'should be encoded object string');
+      t.true(_.isObject(esDocument.data.addendum.description), 'should be object');
+      t.deepEqual(esDocument.data.addendum.description, { nor: 'this is something' }, 'should be object');
+      t.end();
+    });
+
+  test('setAddendum should fail if the configured type does not match with provided data', (t) => {
+
+    const Document = testDocument({
+      addendum_namespaces: {
+        tariff_zone_ids: {
+          type: 'array'
+        }
+      }
+    });
+    const doc = new Document('mysource', 'mylayer', 'myid');
+
+    t.throws(
+      () => doc.setAddendum('tariff_zone_ids', '12,34,56'),
+      /invalid document type, expecting: array got: 12,34,56/,
+      'Should fail for invalid data type.');
+
+    t.end();
+  });
+
+  test('non-configured type should always be a valid object', (t) => {
+
+    const doc = new Document('mysource', 'mylayer', 'myid');
+
+    t.throws(
+      () => doc.setAddendum('tariff_zone_ids', [123, 456, 789]),
+      /invalid document type, expecting: object, got array: 123,456,789/,
+      'Should always be a object');
+
+    t.end();
+  });
+};
+
 module.exports.all = function (tape, common) {
 
   function test(name, testFunction) {
     return tape('Document: ' + name, testFunction);
   }
 
-  for( var testCase in module.exports.tests ){
+  for (const testCase in module.exports.tests) {
     module.exports.tests[testCase](test, common);
   }
 };

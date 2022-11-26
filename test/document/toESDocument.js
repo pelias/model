@@ -1,27 +1,12 @@
-const proxyquire = require('proxyquire');
 const codec = require('../../codec');
-
-var fakeGeneratedConfig = {
-  schema: {
-    indexName: 'example_index',
-    typeName: 'example_type'
-  }
-};
-
-const fakeConfig = {
-  generate: function fakeGenerate() {
-    return fakeGeneratedConfig;
-  }
-};
-
+const testDocument = require('../TestDocument');
 
 module.exports.tests = {};
 
-module.exports.tests.toESDocument = function(test) {
-  test('toESDocument', function(t) {
-    var Document = proxyquire('../../Document', { 'pelias-config': fakeConfig });
-
-    var doc = new Document('mysource','mylayer','myid');
+module.exports.tests.toESDocument = function (test) {
+  test('toESDocument', function (t) {
+    const Document = testDocument();
+    const doc = new Document('mysource', 'mylayer', 'myid');
     doc.setName('myprop', 'myname');
     doc.setAddress('name', 'address name');
     doc.setAddress('number', 'address number');
@@ -46,9 +31,9 @@ module.exports.tests.toESDocument = function(test) {
     doc.setAddendum('wikipedia', { slug: 'HackneyCityFarm' });
     doc.setAddendum('geonames', { foreignkey: 1 });
 
-    var esDoc = doc.toESDocument();
+    const esDoc = doc.toESDocument();
 
-    var expected = {
+    const expected = {
       _index: 'example_index',
       _type: 'example_type',
       _id: 'mysource:mylayer:myid',
@@ -90,17 +75,17 @@ module.exports.tests.toESDocument = function(test) {
     t.end();
   });
 
-  test('toESDocumentWithNameAliases', function(t) {
-    var Document = proxyquire('../../Document', { 'pelias-config': fakeConfig });
+  test('toESDocumentWithNameAliases', function (t) {
+    const Document = testDocument();
 
-    var doc = new Document('mysource','mylayer','myid');
+    const doc = new Document('mysource', 'mylayer', 'myid');
     doc.setName('myprop', 'myname');
     doc.setNameAlias('myprop', 'myname2');
     doc.setNameAlias('myprop', 'myname3');
 
-    var esDoc = doc.toESDocument();
+    const esDoc = doc.toESDocument();
 
-    var expected = {
+    const expected = {
       _index: 'example_index',
       _type: 'example_type',
       _id: 'mysource:mylayer:myid',
@@ -109,10 +94,10 @@ module.exports.tests.toESDocument = function(test) {
         layer: 'mylayer',
         source_id: 'myid',
         name: {
-          myprop: [ 'myname', 'myname2', 'myname3' ]
+          myprop: ['myname', 'myname2', 'myname3']
         },
         phrase: {
-          myprop: [ 'myname', 'myname2', 'myname3' ]
+          myprop: ['myname', 'myname2', 'myname3']
         }
       }
     };
@@ -122,9 +107,9 @@ module.exports.tests.toESDocument = function(test) {
   });
 
   test('unset properties should not output in toESDocument', (t) => {
-    const Document = proxyquire('../../Document', { 'pelias-config': fakeConfig });
+    const Document = testDocument();
 
-    const esDoc = new Document('mysource','mylayer','myid').toESDocument();
+    const esDoc = new Document('mysource', 'mylayer', 'myid').toESDocument();
 
     // test that empty arrays/object are stripped from the doc before sending it
     // downstream to elasticsearch.
@@ -140,10 +125,10 @@ module.exports.tests.toESDocument = function(test) {
 
   });
 
-  test('toESDocumentWithAddressAliases', function(t) {
-    var Document = proxyquire('../../Document', { 'pelias-config': fakeConfig });
+  test('toESDocumentWithAddressAliases', function (t) {
+    const Document = testDocument();
 
-    var doc = new Document('mysource','mylayer','myid');
+    const doc = new Document('mysource', 'mylayer', 'myid');
     doc.setAddress('name', 'address name');
     doc.setAddress('number', 'address number');
     doc.setAddressAlias('street', 'astreet');
@@ -152,9 +137,9 @@ module.exports.tests.toESDocument = function(test) {
     doc.setAddressAlias('zip', 'azip');
     doc.setAddress('unit', 'address unit');
 
-    var esDoc = doc.toESDocument();
+    const esDoc = doc.toESDocument();
 
-    var expected = {
+    const expected = {
       _index: 'example_index',
       _type: 'example_type',
       _id: 'mysource:mylayer:myid',
@@ -165,8 +150,8 @@ module.exports.tests.toESDocument = function(test) {
         address_parts: {
           name: 'address name',
           number: 'address number',
-          street: ['address street','astreet'],
-          zip: ['address zip','azip'],
+          street: ['address street', 'astreet'],
+          zip: ['address zip', 'azip'],
           unit: 'address unit'
         },
         name: {},
@@ -179,9 +164,9 @@ module.exports.tests.toESDocument = function(test) {
   });
 
   test('unset properties should not output in toESDocument', (t) => {
-    const Document = proxyquire('../../Document', { 'pelias-config': fakeConfig });
+    const Document = testDocument();
 
-    const esDoc = new Document('mysource','mylayer','myid').toESDocument();
+    const esDoc = new Document('mysource', 'mylayer', 'myid').toESDocument();
 
     // test that empty arrays/object are stripped from the doc before sending it
     // downstream to elasticsearch.
@@ -199,18 +184,16 @@ module.exports.tests.toESDocument = function(test) {
 
 };
 
-module.exports.tests.toESDocumentWithCustomConfig = function(test) {
-  test('toESDocument with custom config', function(t) {
-    fakeGeneratedConfig = {
+module.exports.tests.toESDocumentWithCustomConfig = function (test) {
+  test('toESDocument with custom config', function (t) {
+    const Document = testDocument({
       schema: {
         indexName: 'alternateindexname'
       }
-    };
+    });
 
-    var Document = proxyquire('../../Document', { 'pelias-config': fakeConfig });
-
-    var doc = new Document('mysource','mylayer','myid');
-    var esDoc = doc.toESDocument();
+    const doc = new Document('mysource', 'mylayer', 'myid');
+    const esDoc = doc.toESDocument();
 
     t.deepEqual(esDoc._index, 'alternateindexname', 'document has correct index');
 
@@ -218,10 +201,10 @@ module.exports.tests.toESDocumentWithCustomConfig = function(test) {
   });
 };
 
-module.exports.tests.toESDocumentCallsProcessingScripts = function(test) {
-  test('toESDocument must call all post-processing scripts', function(t) {
-    let Document = proxyquire('../../Document', { 'pelias-config': fakeConfig });
-    let doc = new Document('mysource','mylayer','myid');
+module.exports.tests.toESDocumentCallsProcessingScripts = function (test) {
+  test('toESDocument must call all post-processing scripts', function (t) {
+    let Document = testDocument();
+    let doc = new Document('mysource', 'mylayer', 'myid');
     doc._post = []; // remove any default scripts
     t.plan(3);
 
@@ -240,7 +223,7 @@ module.exports.all = function (tape, common) {
     return tape('Document: ' + name, testFunction);
   }
 
-  for( var testCase in module.exports.tests ){
+  for (const testCase in module.exports.tests) {
     module.exports.tests[testCase](test, common);
   }
 };
