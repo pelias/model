@@ -1,6 +1,7 @@
+const fixtures = require('./fixtures');
+const testDocument = require('../TestDocument');
 
-var Document = require('../../Document'),
-    fixtures = require('./fixtures');
+const Document = testDocument();
 
 module.exports.tests = {};
 
@@ -15,8 +16,8 @@ module.exports.tests.minimal = function(test) {
   test('minimal', function(t) {
 
     // create a new doc and serialize it
-    var doc = new Document('mysource','mylayer','myid');
-    var s = serializeDeserialize( doc );
+    const doc = new Document('mysource','mylayer','myid');
+    const s = serializeDeserialize( doc );
 
     // document meta data
     t.equal(doc.getMeta('id'), 'myid', 'correct _id');
@@ -43,7 +44,7 @@ module.exports.tests.complete = function(test) {
   test('complete', function(t) {
 
     // create a new doc and serialize it
-    var doc = new Document( 'geoname', 'venue', 1003 )
+    const doc = new Document( 'geoname', 'venue', 1003 )
       .setMeta( 'author', 'peter' )
       .setName( 'default', 'Hackney City Farm' )
       .setName( 'alt', 'Haggerston City Farm' )
@@ -63,7 +64,7 @@ module.exports.tests.complete = function(test) {
       .setShape(fixtures.new_zealand)
       .setBoundingBox(fixtures.new_zealand_bbox);
 
-    var s = serializeDeserialize( doc );
+    const s = serializeDeserialize( doc );
 
     // document meta data
     t.equal(doc.getMeta('id'), '1003', 'correct _id');
@@ -149,7 +150,7 @@ module.exports.all = function (tape, common) {
     return tape('serialize: ' + name, testFunction);
   }
 
-  for( var testCase in module.exports.tests ){
+  for( const testCase in module.exports.tests ){
     module.exports.tests[testCase](test, common);
   }
 };
