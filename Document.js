@@ -111,7 +111,7 @@ Document.prototype.toESDocument = function() {
 
   // encode non-configured addendum namespaces
   for( const namespace in this.addendum || {} ){
-    if (this.configuredAddendumNamespaces.hasOwnProperty(namespace)) {
+    if (this.configuredAddendumNamespaces && this.configuredAddendumNamespaces.hasOwnProperty(namespace)) {
       doc.addendum[namespace] = this.addendum[namespace];
     } else {
       doc.addendum[namespace] = codec.encode(this.addendum[namespace]);
@@ -535,7 +535,7 @@ Document.prototype.removeCategory = function( value ){
 Document.prototype.setAddendum = function( namespace, value ){
   validate.type('string', namespace);
   validate.truthy(namespace);
-  const configuredNamespace = this.configuredAddendumNamespaces[namespace];
+  const configuredNamespace = this.configuredAddendumNamespaces && this.configuredAddendumNamespaces[namespace];
   const validationType =  configuredNamespace ? configuredNamespace.type : 'object';
   validate.type(validationType, value);
   this.addendum[ namespace ] = value;
