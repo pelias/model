@@ -1,5 +1,7 @@
-const Document = require('../../Document');
+const testDocument = require('../TestDocument');
 module.exports.tests = {};
+
+const Document = testDocument();
 
 const fixture = {
   wikipedia: { slug: 'Wikipedia', population: 100 },
@@ -8,7 +10,7 @@ const fixture = {
 
 module.exports.tests.getAddendum = function(test) {
   test('getAddendum', function(t) {
-    var doc = new Document('mysource','mylayer','myid');
+    const doc = new Document('mysource','mylayer','myid');
     t.equal(doc.getAddendum('wikipedia'), undefined, 'getter works');
     doc.addendum = fixture;
     t.equal(doc.getAddendum('wikipedia'), fixture.wikipedia, 'getter works');
@@ -18,13 +20,13 @@ module.exports.tests.getAddendum = function(test) {
 
 module.exports.tests.setAddendum = function(test) {
   test('setAddendum', function(t) {
-    var doc = new Document('mysource','mylayer','myid');
+    const doc = new Document('mysource','mylayer','myid');
     t.equal(doc.setAddendum('wikipedia',fixture.wikipedia), doc, 'chainable');
     t.equal(doc.addendum.wikipedia, fixture.wikipedia, 'setter works');
     t.end();
   });
   test('setAddendum - validate namespace', function(t) {
-    var doc = new Document('mysource','mylayer','myid');
+    const doc = new Document('mysource','mylayer','myid');
     t.throws( doc.setAddendum.bind(doc,1,fixture), null, 'invalid type' );
     t.throws( doc.setAddendum.bind(doc,'',fixture), null, 'invalid length' );
     t.throws( doc.setAddendum.bind(doc,' ',fixture), null, 'invalid length' );
@@ -33,7 +35,7 @@ module.exports.tests.setAddendum = function(test) {
     t.end();
   });
   test('setAddendum - validate val', function(t) {
-    var doc = new Document('mysource','mylayer','myid');
+    const doc = new Document('mysource','mylayer','myid');
     t.throws( doc.setAddendum.bind(doc,'wikipedia',1), null, 'invalid value' );
     t.throws( doc.setAddendum.bind(doc,'wikipedia',''), null, 'invalid value' );
     t.throws( doc.setAddendum.bind(doc,'wikipedia',' '), null, 'invalid value' );
@@ -46,7 +48,7 @@ module.exports.tests.setAddendum = function(test) {
 
 module.exports.tests.hasAddendum = function(test) {
   test('hasAddendum', function(t) {
-    var doc = new Document('mysource','mylayer','myid');
+    const doc = new Document('mysource','mylayer','myid');
     t.equal(doc.hasAddendum('wikipedia'), false, 'hasser works');
     doc.addendum = fixture;
     t.equal(doc.hasAddendum('wikipedia'), true, 'hasser works');
@@ -56,7 +58,7 @@ module.exports.tests.hasAddendum = function(test) {
 
 module.exports.tests.delAddendum = function(test) {
   test('delAddendum', function(t) {
-    var doc = new Document('mysource','mylayer','myid');
+    const doc = new Document('mysource','mylayer','myid');
     t.equal(doc.delAddendum('wikipedia'), false, 'deller works');
     doc.addendum = fixture;
     t.equal(doc.delAddendum('wikipedia'), true, 'deller works');
@@ -71,7 +73,7 @@ module.exports.all = function (tape, common) {
     return tape('addendum: ' + name, testFunction);
   }
 
-  for( var testCase in module.exports.tests ){
+  for( const testCase in module.exports.tests ){
     module.exports.tests[testCase](test, common);
   }
 };
