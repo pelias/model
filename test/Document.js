@@ -106,7 +106,6 @@ module.exports.tests.parent_types = (test) => {
       'borough',
       'locality',
       'localadmin',
-      'macrohood',
       'neighbourhood',
       'postalcode',
       'ocean',
@@ -137,6 +136,20 @@ module.exports.tests.parent_types = (test) => {
       t.notOk(doc.isSupportedParent(`${type}_a`), `${type}_a should not be supported`);
       t.notOk(doc.isSupportedParent(`${type}_id`), `${type}_id should not be supported`);
     });
+
+    t.end();
+
+  });
+
+  test('Invalid parent field name', (t) => {
+    const doc = new Document('mysource', 'mylayer', 'myid');
+
+    t.throws(
+      () => doc.addParent('someRandomName', 'name 1', 'id 1', 'abbr 1'),
+      'invalid property: someRandomName, should be one of: ' +
+      'continent,country,dependency,macroregion,region,macrocounty,county,borough,' +
+      'locality,localadmin,neighbourhood,postalcode,ocean,marinearea,empire',
+      'Should fail for invalid parent field.');
 
     t.end();
 
