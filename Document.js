@@ -143,10 +143,6 @@ Document.prototype.toESDocument = function() {
   return {
     _index: _.get(config, 'schema.indexName', 'pelias'),
     _id: this.getGid(),
-    // In ES7, the only allowed document type will be `_doc`.
-    // However underscores are not allowed until ES6, so use `doc` for now
-    // see https://github.com/elastic/elasticsearch/pull/27816
-    _type: _.get(config, 'schema.typeName', 'doc'),
     data: doc
   };
 };
