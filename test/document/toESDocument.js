@@ -3,8 +3,7 @@ const codec = require('../../codec');
 
 var fakeGeneratedConfig = {
   schema: {
-    indexName: 'example_index',
-    typeName: 'example_type'
+    indexName: 'example_index'
   }
 };
 
@@ -50,7 +49,6 @@ module.exports.tests.toESDocument = function(test) {
 
     var expected = {
       _index: 'example_index',
-      _type: 'example_type',
       _id: 'mysource:mylayer:myid',
       data: {
         layer: 'mylayer',
@@ -102,7 +100,6 @@ module.exports.tests.toESDocument = function(test) {
 
     var expected = {
       _index: 'example_index',
-      _type: 'example_type',
       _id: 'mysource:mylayer:myid',
       data: {
         source: 'mysource',
@@ -156,7 +153,6 @@ module.exports.tests.toESDocument = function(test) {
 
     var expected = {
       _index: 'example_index',
-      _type: 'example_type',
       _id: 'mysource:mylayer:myid',
       data: {
         source: 'mysource',
