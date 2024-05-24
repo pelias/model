@@ -106,10 +106,14 @@ module.exports.tests.toESDocument = function(test) {
         layer: 'mylayer',
         source_id: 'myid',
         name: {
-          myprop: [ 'myname', 'myname2', 'myname3' ]
+          myprop: 'myname',
+          myprop_1: 'myname2',
+          myprop_2: 'myname3'
         },
         phrase: {
-          myprop: [ 'myname', 'myname2', 'myname3' ]
+          myprop: 'myname',
+          myprop_1: 'myname2',
+          myprop_2: 'myname3'
         }
       }
     };
