@@ -1,7 +1,7 @@
-var tape = require('tape');
-var common = {};
+const tape = require('tape');
+const common = {};
 
-var tests = [
+const tests = [
   require('./Document.js'),
   require('./errors.js'),
   require('./document/centroid.js'),
@@ -23,6 +23,7 @@ var tests = [
   require('./document/toESDocument.js'),
   require('./document/post.js'),
   require('./post/intersections.js'),
+  require('./post/alphanumeric_postcodes.js'),
   require('./post/deduplication.js'),
   require('./post/seperable_street_names.js'),
   require('./post/language_field_trimming.js'),
