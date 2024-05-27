@@ -62,6 +62,27 @@ module.exports.tests.noop = function(test) {
 
     t.end();
   });
+
+  test('noop: no postcode', function(t) {
+    const doc = new Document('mysource','address','myid');
+
+    // no alias added
+    t.deepEqual(doc.getAddressAliases('zip'), [], 'no alias set');
+
+    t.end();
+  });
+
+  test('noop: no numeric', function(t) {
+    const doc = new Document('mysource','address','myid');
+
+    // set postcode
+    doc.setAddress('zip', '3040');
+
+    // no alias added
+    t.deepEqual(doc.getAddressAliases('zip'), [], 'no alias set');
+
+    t.end();
+  });
 };
 
 module.exports.all = function (tape, common) {

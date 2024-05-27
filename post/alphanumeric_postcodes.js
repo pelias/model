@@ -34,7 +34,7 @@ function postcodes( doc ){
 
   // ensure postcode is alphanumeric
   let matches = postcode.match(ALPHANUMERIC_POSTCODE);
-  if( matches.length !== 4 ){ return; }
+  if( !Array.isArray( matches ) || matches.length !== 4 ){ return; }
 
   // generate postcode aliases for the postcode.
   let [ , numeric, spaces, alpha ] = matches;
