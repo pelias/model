@@ -26,6 +26,12 @@ module.exports.tests.regex = (test) => {
     t.doesNotThrow(valid.regex.nomatch.bind(null, 'hello', /bye/), /invalid regex/);
     t.end();
   });
+
+  test('regex nomatch - throw false', (t) => {
+    const options = { throw: false };
+    t.doesNotThrow(valid.regex.nomatch.bind(null, 'hello', /he/, options), /invalid regex/);
+    t.end();
+  });
 };
 
 module.exports.all = (tape, common) => {
