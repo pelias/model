@@ -41,8 +41,10 @@ module.exports.tests.setName = function(test) {
   });
   test('setName - http regex', function (t) {
     var doc = new Document('mysource', 'mylayer', 'myid');
-    t.throws(doc.setName.bind(doc, 'default', 'http://www.pelias.io'), /invalid regex/, 'regex failure');
-    t.throws(doc.setName.bind(doc, 'default', 'AAhttp://www.pelias.ioBB'), /invalid regex/, 'regex failure');
+    t.doesNotThrow(doc.setName.bind(doc, 'default', 'http://www.pelias.io'), /invalid regex/);
+    t.doesNotThrow(doc.setName.bind(doc, 'default', 'AAhttp://www.pelias.ioBB'), /invalid regex/);
+    t.doesNotThrow(doc.setName.bind(doc, 'default', 'AA http://www.pelias.io BB'), /invalid regex/);
+    t.deepEqual(doc.name.default, 'AA  BB', 'URLs removed');
     t.end();
   });
 };
@@ -106,8 +108,10 @@ module.exports.tests.setNameAlias = function(test) {
   });
   test('setNameAlias - http regex', function (t) {
     var doc = new Document('mysource', 'mylayer', 'myid');
-    t.throws(doc.setNameAlias.bind(doc, 'default', 'http://www.pelias.io'), /invalid regex/, 'regex failure');
-    t.throws(doc.setNameAlias.bind(doc, 'default', 'AAhttp://www.pelias.ioBB'), /invalid regex/, 'regex failure');
+    t.doesNotThrow(doc.setNameAlias.bind(doc, 'default', 'http://www.pelias.io'), /invalid regex/);
+    t.doesNotThrow(doc.setNameAlias.bind(doc, 'default', 'AAhttp://www.pelias.ioBB'), /invalid regex/);
+    t.doesNotThrow(doc.setNameAlias.bind(doc, 'default', 'AA http://www.pelias.io BB'), /invalid regex/);
+    t.deepEqual(doc.name.default, ['AA', 'AA', 'AA  BB'], 'URLs removed');
     t.end();
   });
 };
