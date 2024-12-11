@@ -31,3 +31,5 @@ module.exports.toULLR = function( val ) {
     max_lon: val.lowerRight.lon
   });
 };
+
+module.exports.stripURLs = (val) => val.replace(/(?:https?|ftp):\/\/\S*/g, '').trim();

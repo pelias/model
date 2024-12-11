@@ -51,8 +51,10 @@ module.exports.tests.setAddress = function(test) {
   });
   test('setAddress - http regex', function (t) {
     var doc = new Document('mysource', 'mylayer', 'myid');
-    t.throws(doc.setAddress.bind(doc, 'number', 'http://www.pelias.io'), /invalid regex/, 'regex failure');
-    t.throws(doc.setAddress.bind(doc, 'number', 'AAhttp://www.pelias.ioBB'), /invalid regex/, 'regex failure');
+    t.doesNotThrow(doc.setAddress.bind(doc, 'number', 'http://www.pelias.io'), /invalid regex/);
+    t.doesNotThrow(doc.setAddress.bind(doc, 'number', 'AAhttp://www.pelias.ioBB'), /invalid regex/);
+    t.doesNotThrow(doc.setAddress.bind(doc, 'number', 'AA http://www.pelias.io BB'), /invalid regex/);
+    t.deepEqual(doc.address_parts.number, 'AA  BB', 'URLs removed');
     t.end();
   });
 };
@@ -116,8 +118,10 @@ module.exports.tests.setAddressAlias = function(test) {
   });
   test('setAddressAlias - http regex', function (t) {
     var doc = new Document('mysource', 'mylayer', 'myid');
-    t.throws(doc.setAddressAlias.bind(doc, 'number', 'http://www.pelias.io'), /invalid regex/, 'regex failure');
-    t.throws(doc.setAddressAlias.bind(doc, 'number', 'AAhttp://www.pelias.ioBB'), /invalid regex/, 'regex failure');
+    t.doesNotThrow(doc.setAddressAlias.bind(doc, 'number', 'http://www.pelias.io'), /invalid regex/);
+    t.doesNotThrow(doc.setAddressAlias.bind(doc, 'number', 'AAhttp://www.pelias.ioBB'), /invalid regex/);
+    t.doesNotThrow(doc.setAddressAlias.bind(doc, 'number', 'AA http://www.pelias.io BB'), /invalid regex/);
+    t.deepEqual(doc.address_parts.number, ['AA', 'AA', 'AA  BB'], 'URLs removed');
     t.end();
   });
 };
