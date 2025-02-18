@@ -24,6 +24,7 @@ const tests = [
   require('./document/post.js'),
   require('./post/intersections.js'),
   require('./post/alphanumeric_postcodes.js'),
+  require('./post/zero_prefixed_house_numbers.js'),
   require('./post/deduplication.js'),
   require('./post/seperable_street_names.js'),
   require('./post/language_field_trimming.js'),

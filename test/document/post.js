@@ -3,12 +3,13 @@ const Document = require('../../Document');
 const intersections = require('../../post/intersections');
 const seperable_street_names = require('../../post/seperable_street_names').post;
 const alphanumeric_postcodes = require('../../post/alphanumeric_postcodes');
+const zero_prefixed_house_numbers = require('../../post/zero_prefixed_house_numbers');
 const deduplication = require('../../post/deduplication');
 const language_field_trimming = require('../../post/language_field_trimming');
 const popularity = require('../../post/popularity');
 const DEFAULT_SCRIPTS = [
   intersections, seperable_street_names, alphanumeric_postcodes, 
-  deduplication, language_field_trimming, popularity
+  zero_prefixed_house_numbers, deduplication, language_field_trimming, popularity
 ];
 
 module.exports.tests = {};
