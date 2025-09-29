@@ -28,14 +28,15 @@
     "node": ">= 10.0.0"
   },
   "dependencies": {
+    "glob": "^11.0.3",
     "lodash": "^4.6.1",
     "pelias-config": "^6.0.0",
     "through2": "^3.0.0"
   },
   "devDependencies": {
-    "stream-mock": "^2.0.3",
     "precommit-hook": "^3.0.0",
     "proxyquire": "^2.0.0",
+    "stream-mock": "^2.0.3",
     "tap-spec": "^5.0.0",
     "tape": "^5.0.0"
   },

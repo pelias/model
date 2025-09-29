@@ -29,6 +29,7 @@ const tests = [
   require('./post/seperable_street_names.js'),
   require('./post/language_field_trimming.js'),
   require('./post/popularity.js'),
+  require('./post/patch.js'),
   require('./DocumentMapperStream.js'),
   require('./util/transform.js'),
   require('./util/valid.js'),

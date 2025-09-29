@@ -7,9 +7,10 @@ const zero_prefixed_house_numbers = require('../../post/zero_prefixed_house_numb
 const deduplication = require('../../post/deduplication');
 const language_field_trimming = require('../../post/language_field_trimming');
 const popularity = require('../../post/popularity');
+const patch = require('../../post/patch');
 const DEFAULT_SCRIPTS = [
-  intersections, seperable_street_names, alphanumeric_postcodes, 
-  zero_prefixed_house_numbers, deduplication, language_field_trimming, popularity
+  intersections, seperable_street_names, alphanumeric_postcodes, zero_prefixed_house_numbers,
+  deduplication, language_field_trimming, popularity, patch
 ];
 
 module.exports.tests = {};
