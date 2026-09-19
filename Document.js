@@ -24,6 +24,37 @@ const parentFields = [
   'empire'
 ];
 
+// suffixed parent field names, eg. 'country' -> country_id, country_a, country_source
+// these are precomputed since addParent is called for every parent of every document
+const parentFieldNames = {};
+parentFields.forEach(function( field ){
+  parentFieldNames[ field ] = {
+    id: field + '_id',
+    abbr: field + '_a',
+    source: field + '_source'
+  };
+});
+
+function addParentValue( doc, prop, value ){
+
+  // create new parent array if required
+  if( !Object.prototype.hasOwnProperty.call( doc.parent, prop ) ){
+    doc.parent[ prop ] = [];
+  }
+
+  // add value to array if not already present
+  var values = doc.parent[ prop ];
+  if( -1 === values.indexOf( value ) ){
+    values.push( value );
+  }
+}
+
+function addParentValueValidated( doc, prop, value ){
+  validate.type('string', value);
+  validate.truthy(value);
+  addParentValue( doc, prop, value );
+}
+
 function Document( source, layer, source_id ){
   this.name = {};
   this.parent = {};
@@ -313,30 +344,12 @@ Document.prototype.delName = function( prop ){
 // parent
 Document.prototype.addParent = function( field, name, id, abbr, source ){
 
-  validate.property(parentFields, field);
-
-  var add = function( prop, value ){
-
-    // create new parent array if required
-    if( !this.parent.hasOwnProperty( prop ) ){
-      this.parent[ prop ] = [];
-    }
-
-    // add value to array if not already present
-    if( -1 === this.parent[prop].indexOf(value) ){
-      this.parent[prop].push(value);
-    }
-  }.bind(this);
-
-  var addValidate = function( prop, value ){
-    validate.type('string', value);
-    validate.truthy(value);
-    add( prop, value );
-  }.bind(this);
+  var names = parentFieldNames[ field ];
+  if( names === undefined ){ validate.property(parentFields, field); }
 
   // mandatory fields, eg: 'country', 'country_id'
-  addValidate( field, name );
-  addValidate( field + '_id', id );
+  addParentValueValidated( this, field, name );
+  addParentValueValidated( this, names.id, id );
 
   // optional field, eg: 'country_a', defaults to `null` for downstream ES
   /**
@@ -364,15 +377,15 @@ Document.prototype.addParent = function( field, name, id, abbr, source ){
     == you can now be sure that the abbreviation 'bingo' belongs to '2' and not '1'.
   **/
   if (typeof abbr === 'string') {
-    addValidate( field + '_a', abbr );
+    addParentValueValidated( this, names.abbr, abbr );
   } else {
-    add( field + '_a', null );
+    addParentValue( this, names.abbr, null );
   }
 
   if (typeof source === 'string') {
-    addValidate( field + '_source', source );
+    addParentValueValidated( this, names.source, source );
   } else {
-    add( field + '_source', null );
+    addParentValue( this, names.source, null );
   }
 
   // chainable
