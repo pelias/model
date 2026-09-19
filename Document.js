@@ -4,6 +4,18 @@ const transform = require('./util/transform');
 const _ = require('lodash');
 const codec = require('./codec');
 
+// post-processing scripts which run on every record befor generating ES document
+const defaultPostProcessingScripts = [
+  require('./post/intersections'),
+  require('./post/seperable_street_names').post,
+  require('./post/alphanumeric_postcodes'),
+  require('./post/zero_prefixed_house_numbers'),
+  require('./post/deduplication'),
+  require('./post/language_field_trimming'),
+  require('./post/popularity'),
+  require('./post/patch')
+];
+
 const addressFields = ['name', 'number', 'unit', 'street', 'cross_street', 'zip'];
 
 const parentFields = [
@@ -66,18 +78,9 @@ function Document( source, layer, source_id ){
   // create a non-enumerable property for metadata
   Object.defineProperty( this, '_meta', { writable: true, value: {} });
 
-  // create a non-enumerable property for post-processing scripts
-  Object.defineProperty( this, '_post', { writable: true, value: [] });
-
-  // define default post-processing scripts
-  this.addPostProcessingScript( require('./post/intersections') );
-  this.addPostProcessingScript( require('./post/seperable_street_names').post );
-  this.addPostProcessingScript( require('./post/alphanumeric_postcodes') );
-  this.addPostProcessingScript( require('./post/zero_prefixed_house_numbers') );
-  this.addPostProcessingScript( require('./post/deduplication') );
-  this.addPostProcessingScript( require('./post/language_field_trimming') );
-  this.addPostProcessingScript( require('./post/popularity') );
-  this.addPostProcessingScript( require('./post/patch') );
+  // create a non-enumerable property for post-processing scripts,
+  // seeded with a copy of the defaults so it stays writable per document
+  Object.defineProperty( this, '_post', { writable: true, value: defaultPostProcessingScripts.slice() });
 
   // mandatory properties
   this.setSource( source );
